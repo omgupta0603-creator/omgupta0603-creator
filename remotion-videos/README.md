@@ -152,6 +152,22 @@ npx remotion render EcommerceExplainer out/EcommerceExplainer.mp4
 Text: `src/compositions/EcommerceExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `StrategyExplainer`: SEO Strategy
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 69 s. It has 12
+scenes: title, an 8-step roadmap, one scene per step (audit, keyword research,
+competitor analysis, on-page, technical, content strategy, off-page and digital
+PR, measurement and improvement), a recap roadmap with a "continuously improve"
+loop, and a thank-you outro. Step scenes are slightly longer than the narration
+so each visual can play out. Scores, counts and keywords are illustrative.
+
+```bash
+npx remotion render StrategyExplainer out/StrategyExplainer.mp4
+```
+
+Text: `src/compositions/StrategyExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -171,6 +187,7 @@ src/
     TechnicalExplainer/ "What is Technical SEO?" explainer
     InternationalExplainer/ "What is International SEO?" explainer
     EcommerceExplainer/ "What is E-commerce SEO?" explainer
+    StrategyExplainer/ "SEO Strategy" 8-step explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

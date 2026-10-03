@@ -42,6 +42,11 @@ import {
   ecommerceExplainerSchema,
   getEcommerceTiming,
 } from "./compositions/EcommerceExplainer";
+import {
+  getStrategyTiming,
+  StrategyExplainer,
+  strategyExplainerSchema,
+} from "./compositions/StrategyExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -332,6 +337,37 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getEcommerceTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="StrategyExplainer"
+          component={StrategyExplainer}
+          schema={strategyExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 5,
+              roadmap: 6,
+              audit: 6,
+              keywords: 6.5,
+              competitors: 6.5,
+              onpage: 6.5,
+              technical: 6.5,
+              content: 7,
+              offpage: 7.5,
+              measure: 8.5,
+              recap: 6,
+              thanks: 4,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getStrategyTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>
