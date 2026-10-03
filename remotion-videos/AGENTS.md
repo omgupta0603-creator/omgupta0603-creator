@@ -52,6 +52,7 @@ out/                      Render output (git-ignored)
 | `Stage` | 1920×1080 design canvas scaled to the real size; `exitAt` animates content out. |
 | `AnimatedText` | Kinetic typography: per-word or per-char spring in, optional gradient fill. |
 | `FadeIn` | Fade + slide any element in after `delay` frames, from any side. |
+| `Highlight` | Marker underline that sweeps behind inline text, even across wrapped lines. |
 | `DrawLine` | Underline/bar that draws itself left → right. |
 | `ShapeBadge` | `@remotion/shapes` circle/triangle/square/star/hexagon with pop-in + float. |
 | `CountUp` | Number counter between two frames. |

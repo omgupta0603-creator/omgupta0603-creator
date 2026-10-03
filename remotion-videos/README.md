@@ -37,6 +37,23 @@ with a music bed that fades in and out.
 - **Duration:** `sceneSeconds` and `transitionSeconds` props (Studio props panel, or `--props`)
 - **Text, colours, features:** props in `src/Root.tsx`, editable live in Studio
 
+## `SeoExplainer`: What is SEO and what are its types?
+
+1920×1080 · 30 fps · about 75.6 s. Ten scenes follow the script: title, the S-E-O
+definition, a search example ("best SEO company in Delhi"), On-Page, Technical,
+Off-Page and Local SEO, International and E-commerce SEO, a summary quote and a
+thank-you outro.
+
+- **On-screen text:** `src/compositions/SeoExplainer/content.ts`
+- **Scene lengths:** the `sceneSeconds` props (Studio, or `--props`)
+- **Voiceover:** add `public/audio/seo-voiceover.mp3`, then render with
+  `--props='{"voiceoverSrc":"audio/seo-voiceover.mp3", ...}'` or set it in Studio,
+  and match `sceneSeconds` to your narration
+
+```bash
+npx remotion render SeoExplainer out/SeoExplainer.mp4
+```
+
 ## Structure
 
 ```
@@ -45,9 +62,10 @@ src/
   config/video.ts     width / height / fps
   theme/theme.ts      colours, gradients, fonts, type scale
   utils/              animation, audio-sync and layout helpers
-  components/         AnimatedText, Background, Stage, FadeIn, DrawLine, ShapeBadge, CountUp, Card
+  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card
   compositions/
     Showcase/         sample video (scenes/, schema.ts, timing.ts)
+    SeoExplainer/     "What is SEO" explainer (content.ts, scenes/, visuals/)
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

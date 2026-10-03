@@ -7,6 +7,11 @@ import {
   showcaseSchema,
 } from "./compositions/Showcase";
 import { Template, templateSchema } from "./compositions/_Template";
+import {
+  getSeoTiming,
+  SeoExplainer,
+  seoExplainerSchema,
+} from "./compositions/SeoExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -82,6 +87,37 @@ export const RemotionRoot: React.FC = () => {
               props.durationInSeconds,
               VIDEO.fps,
             ),
+          })}
+        />
+      </Folder>
+      <Folder name="Explainers">
+        <Composition
+          id="SeoExplainer"
+          component={SeoExplainer}
+          schema={seoExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 5,
+              definition: 9,
+              example: 9,
+              onPage: 9,
+              technical: 9,
+              offPage: 9,
+              local: 8,
+              more: 10,
+              summary: 8,
+              thanks: 5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getSeoTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>
