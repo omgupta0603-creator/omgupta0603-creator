@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
-import { colors } from "../../../theme/theme";
-import { progress, springIn, springs } from "../../../utils/animation";
+import { colors } from "../theme/theme";
+import { progress, springIn, springs } from "../utils/animation";
 
 /** Round check mark that pops in and draws its tick. */
 export const Check: React.FC<{

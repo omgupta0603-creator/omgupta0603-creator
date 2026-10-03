@@ -9,3 +9,4 @@ export { Stage } from "./Stage";
 export { ShapeBadge, type ShapeKind } from "./ShapeBadge";
 export { Pill } from "./Pill";
 export { TopicLayout } from "./TopicLayout";
+export { Check } from "./Check";

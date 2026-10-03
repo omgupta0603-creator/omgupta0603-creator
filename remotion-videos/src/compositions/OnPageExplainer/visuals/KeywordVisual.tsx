@@ -4,7 +4,7 @@ import { Card, Pill } from "../../../components";
 import { colors, fonts } from "../../../theme/theme";
 import { mix, progress, springIn, springs } from "../../../utils/animation";
 import { content } from "../content";
-import { Check } from "./Check";
+import { Check } from "../../../components";
 
 /** Target keyword → natural placements (checked) → keyword stuffing (struck out). */
 export const KeywordVisual: React.FC<{ color: string }> = ({ color }) => {

@@ -17,6 +17,11 @@ import {
   OnPageExplainer,
   onPageExplainerSchema,
 } from "./compositions/OnPageExplainer";
+import {
+  getOffPageTiming,
+  OffPageExplainer,
+  offPageExplainerSchema,
+} from "./compositions/OffPageExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -154,6 +159,36 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getOnPageTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="OffPageExplainer"
+          component={OffPageExplainer}
+          schema={offPageExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 8.5,
+              compare: 8,
+              links: 13,
+              quality: 10.5,
+              pr: 9,
+              more: 8,
+              local: 8,
+              objective: 7,
+              summary: 8,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getOffPageTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

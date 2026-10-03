@@ -4,7 +4,7 @@ import { Card } from "../../../components";
 import { colors, fonts } from "../../../theme/theme";
 import { mix, progress } from "../../../utils/animation";
 import { content } from "../content";
-import { Check } from "./Check";
+import { Check } from "../../../components";
 
 /** A document with a quality score ring; each quality gets ticked off. */
 export const ContentVisual: React.FC<{ color: string }> = ({ color }) => {

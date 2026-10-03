@@ -70,6 +70,22 @@ npx remotion render OnPageExplainer out/OnPageExplainer.mp4
 Text: `src/compositions/OnPageExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `OffPageExplainer`: What is Off-Page SEO?
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 85 s, timed for the
+script at about 3.3 words/s. It has 11 scenes: title, definition (activities
+outside your website), On-Page vs Off-Page, link building, quality over quantity,
+digital PR, other activities (brand mentions, citations, directories, partnerships,
+community), Off-Page for Local SEO (consistent listings and reviews), the main
+objective, a summary and a thank-you outro.
+
+```bash
+npx remotion render OffPageExplainer out/OffPageExplainer.mp4
+```
+
+Text: `src/compositions/OffPageExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -78,12 +94,13 @@ src/
   config/video.ts     width / height / fps
   theme/theme.ts      colours, gradients, fonts, type scale
   utils/              animation, audio-sync and layout helpers
-  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, TopicLayout
+  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, Check, TopicLayout
   scenes/             shared TitleCard, QuoteSummary, ThankYou
   compositions/
     Showcase/         sample video (scenes/, schema.ts, timing.ts)
     SeoExplainer/     "What is SEO" explainer (content.ts, scenes/, visuals/)
     OnPageExplainer/  "What is On-Page SEO?" explainer
+    OffPageExplainer/ "What is Off-Page SEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills
