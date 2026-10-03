@@ -2,7 +2,7 @@ import React from "react";
 import { useCurrentFrame } from "remotion";
 import { colors, fonts } from "../../../theme/theme";
 import { progress } from "../../../utils/animation";
-import { Pill } from "./Pill";
+import { Pill } from "../../../components";
 
 const W = 820;
 const H = 560;

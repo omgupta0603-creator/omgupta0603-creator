@@ -54,6 +54,22 @@ thank-you outro.
 npx remotion render SeoExplainer out/SeoExplainer.mp4
 ```
 
+## `OnPageExplainer`: What is On-Page SEO?
+
+Same look as `SeoExplainer`. 1920×1080 · 30 fps · about 88.9 s, timed for the script
+at the pace of the SeoExplainer voiceover (about 3.3 words/s). It has 12 scenes:
+title, definition, "in simple words" with the six elements, then keyword
+optimization, title tag, meta description, heading structure, content optimization
+and internal linking, other elements (URL, images, alt text, schema, readability),
+a summary and a thank-you outro.
+
+```bash
+npx remotion render OnPageExplainer out/OnPageExplainer.mp4
+```
+
+Text: `src/compositions/OnPageExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -62,10 +78,12 @@ src/
   config/video.ts     width / height / fps
   theme/theme.ts      colours, gradients, fonts, type scale
   utils/              animation, audio-sync and layout helpers
-  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card
+  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, TopicLayout
+  scenes/             shared TitleCard, QuoteSummary, ThankYou
   compositions/
     Showcase/         sample video (scenes/, schema.ts, timing.ts)
     SeoExplainer/     "What is SEO" explainer (content.ts, scenes/, visuals/)
+    OnPageExplainer/  "What is On-Page SEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

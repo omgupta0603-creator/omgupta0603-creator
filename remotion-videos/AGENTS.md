@@ -36,6 +36,8 @@ src/theme/theme.ts        colors, gradients, fonts (Google Fonts via @remotion/g
 src/utils/animation.ts    springs, eases, springIn, progress, mix, fadeInOut, stagger, float
 src/utils/audio.ts        beatToFrame, framesPerBeat, fadeVolume (audio sync)
 src/utils/layout.ts       useScale(): size multiplier relative to 1920x1080
+src/utils/timing.ts       getSceneTiming(): scene frames + total for TransitionSeries
+src/scenes/               Shared full-frame scenes (TitleCard, QuoteSummary, ThankYou)
 src/components/           Reusable building blocks (see table below)
 src/compositions/<Name>/  One folder per video: <Name>.tsx, schema.ts, scenes/
 src/compositions/_Template/  Starter copied by `npm run new`
@@ -57,9 +59,31 @@ out/                      Render output (git-ignored)
 | `ShapeBadge` | `@remotion/shapes` circle/triangle/square/star/hexagon with pop-in + float. |
 | `CountUp` | Number counter between two frames. |
 | `Card` | Frosted surface for grouping content. |
+| `Pill` | Label chip that springs in at `delay`. |
+| `TopicLayout` | Numbered topic scene: outline number, title and body on the left, any visual on the right. |
 
 Prefer composing these over writing new one-off animation code. Put new reusable
 pieces in `src/components/` and export them from `src/components/index.ts`.
+
+### Shared scenes (`src/scenes`)
+
+Full-frame scenes that take their text as props, used by the explainer videos:
+`TitleCard` (eyebrow + two-line title), `QuoteSummary` (closing quote with two
+underlined phrases) and `ThankYou` (outro that fades to black).
+
+### Multi-scene timing
+
+`getSceneTiming(order, sceneSeconds, transitionSeconds, fps)` in
+`src/utils/timing.ts` turns per-scene seconds into frames and the total length
+for a `<TransitionSeries>`. See `src/compositions/OnPageExplainer/timing.ts`.
+
+### Explainer videos with a voiceover
+
+`SeoExplainer` and `OnPageExplainer` share one structure: copy in `content.ts`,
+scene lengths as `sceneSeconds` props, and an optional `voiceoverSrc`. To sync a
+narration, size each scene to its part of the script. Their voiceover runs at about
+3.3 words per second, so scene seconds ≈ words ÷ 3.3 + 0.6 (the transition overlap)
++ a short pause.
 
 ## Creating a new composition
 

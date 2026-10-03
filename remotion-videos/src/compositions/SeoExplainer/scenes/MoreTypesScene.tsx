@@ -10,7 +10,7 @@ import {
 import { colors, fonts, typeScale } from "../../../theme/theme";
 import { mix, springIn, springs, stagger } from "../../../utils/animation";
 import { content } from "../content";
-import { Pill } from "../visuals/Pill";
+import { Pill } from "../../../components";
 
 const Globe: React.FC<{ color: string }> = ({ color }) => {
   const frame = useCurrentFrame();

@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
-import { colors, fonts } from "../../../theme/theme";
-import { mix, springIn, springs } from "../../../utils/animation";
+import { colors, fonts } from "../theme/theme";
+import { mix, springIn, springs } from "../utils/animation";
 
 /** Label chip that pops in with a spring at `delay`. */
 export const Pill: React.FC<{

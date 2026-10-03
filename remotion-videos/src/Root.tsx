@@ -12,6 +12,11 @@ import {
   SeoExplainer,
   seoExplainerSchema,
 } from "./compositions/SeoExplainer";
+import {
+  getOnPageTiming,
+  OnPageExplainer,
+  onPageExplainerSchema,
+} from "./compositions/OnPageExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -118,6 +123,37 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getSeoTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="OnPageExplainer"
+          component={OnPageExplainer}
+          schema={onPageExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 8,
+              simple: 8.5,
+              keyword: 9,
+              titleTag: 8,
+              meta: 8.5,
+              headings: 9,
+              content: 7.5,
+              linking: 8.5,
+              other: 7,
+              summary: 10.5,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getOnPageTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

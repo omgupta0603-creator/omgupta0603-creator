@@ -7,12 +7,16 @@ import {
   FadeIn,
   ShapeBadge,
   Stage,
-} from "../../../components";
-import { colors, fonts, gradients, typeScale } from "../../../theme/theme";
-import { content } from "../content";
+} from "../components";
+import { colors, fonts, gradients, typeScale } from "../theme/theme";
 
-export const TitleScene: React.FC<{ exitAt?: number }> = ({ exitAt }) => {
-  const c = content.title;
+/** Opening title card: eyebrow pill, two-line kinetic title, floating shapes. */
+export const TitleCard: React.FC<{
+  eyebrow: string;
+  line1: string;
+  line2: string;
+  exitAt?: number;
+}> = ({ exitAt, ...c }) => {
   return (
     <AbsoluteFill>
       <Background />

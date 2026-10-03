@@ -7,3 +7,5 @@ export { FadeIn } from "./FadeIn";
 export { Highlight } from "./Highlight";
 export { Stage } from "./Stage";
 export { ShapeBadge, type ShapeKind } from "./ShapeBadge";
+export { Pill } from "./Pill";
+export { TopicLayout } from "./TopicLayout";

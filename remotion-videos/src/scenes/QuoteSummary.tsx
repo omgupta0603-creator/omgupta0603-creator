@@ -1,11 +1,16 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { Background, FadeIn, Highlight, Stage } from "../../../components";
-import { colors, fonts, gradients, typeScale } from "../../../theme/theme";
-import { content } from "../content";
+import { Background, FadeIn, Highlight, Stage } from "../components";
+import { colors, fonts, gradients, typeScale } from "../theme/theme";
 
-export const SummaryScene: React.FC<{ exitAt?: number }> = ({ exitAt }) => {
-  const c = content.summary;
+/** Closing quote; phrases `a` and `b` get animated marker underlines. */
+export const QuoteSummary: React.FC<{
+  lead: string;
+  a: string;
+  joiner: string;
+  b: string;
+  exitAt?: number;
+}> = ({ exitAt, ...c }) => {
   return (
     <AbsoluteFill>
       <Background intensity={0.55} />

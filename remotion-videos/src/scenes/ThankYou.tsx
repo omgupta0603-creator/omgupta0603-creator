@@ -1,14 +1,15 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { AnimatedText, Background, FadeIn, Stage } from "../../../components";
-import { colors, fonts, gradients, typeScale } from "../../../theme/theme";
-import { content } from "../content";
+import { AnimatedText, Background, FadeIn, Stage } from "../components";
+import { colors, fonts, gradients, typeScale } from "../theme/theme";
 
-export const ThanksScene: React.FC<{ durationInFrames: number }> = ({
-  durationInFrames,
-}) => {
+/** Outro: short line + big "Thank you!", then fade to black. */
+export const ThankYou: React.FC<{
+  line: string;
+  big: string;
+  durationInFrames: number;
+}> = ({ durationInFrames, ...c }) => {
   const frame = useCurrentFrame();
-  const c = content.thanks;
   // Last scene: fade to black over its final 20 frames.
   const fadeOut = interpolate(
     frame,

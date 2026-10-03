@@ -14,19 +14,21 @@ import { QuoteSummary, ThankYou, TitleCard } from "../../scenes";
 import { colors } from "../../theme/theme";
 import { fadeVolume } from "../../utils/audio";
 import { content } from "./content";
-import type { SeoExplainerProps } from "./schema";
+import type { OnPageExplainerProps } from "./schema";
 import { DefinitionScene } from "./scenes/DefinitionScene";
-import { MoreTypesScene } from "./scenes/MoreTypesScene";
-import { SearchExampleScene } from "./scenes/SearchExampleScene";
-import { getSeoTiming } from "./timing";
-import { LocalVisual } from "./visuals/LocalVisual";
-import { OffPageVisual } from "./visuals/OffPageVisual";
-import { OnPageVisual } from "./visuals/OnPageVisual";
-import { TechnicalVisual } from "./visuals/TechnicalVisual";
+import { OtherElementsScene } from "./scenes/OtherElementsScene";
+import { SimpleWordsScene } from "./scenes/SimpleWordsScene";
+import { getOnPageTiming } from "./timing";
+import { ContentVisual } from "./visuals/ContentVisual";
+import { HeadingsVisual } from "./visuals/HeadingsVisual";
+import { KeywordVisual } from "./visuals/KeywordVisual";
+import { LinkingVisual } from "./visuals/LinkingVisual";
+import { MetaVisual } from "./visuals/MetaVisual";
+import { TitleTagVisual } from "./visuals/TitleTagVisual";
 
-export const SeoExplainer: React.FC<SeoExplainerProps> = (props) => {
+export const OnPageExplainer: React.FC<OnPageExplainerProps> = (props) => {
   const { fps, durationInFrames } = useVideoConfig();
-  const { scenes, transitionFrames } = getSeoTiming(props, fps);
+  const { scenes, transitionFrames } = getOnPageTiming(props, fps);
   const exitAt = (n: number) => Math.max(0, n - transitionFrames - 6);
 
   const fadeT = (
@@ -71,81 +73,107 @@ export const SeoExplainer: React.FC<SeoExplainerProps> = (props) => {
         </TransitionSeries.Sequence>
         {fadeT}
         <TransitionSeries.Sequence
-          name="Search example"
-          durationInFrames={scenes.example}
+          name="In simple words"
+          durationInFrames={scenes.simple}
           premountFor={fps}
         >
-          <SearchExampleScene exitAt={exitAt(scenes.example)} />
+          {/* The element list appears about 60% in, when the narration introduces it. */}
+          <SimpleWordsScene
+            exitAt={exitAt(scenes.simple)}
+            elementsAt={Math.round(scenes.simple * 0.6)}
+          />
         </TransitionSeries.Sequence>
         {slideT}
         <TransitionSeries.Sequence
-          name="01 On-Page"
-          durationInFrames={scenes.onPage}
+          name="01 Keywords"
+          durationInFrames={scenes.keyword}
           premountFor={fps}
         >
           <TopicLayout
-            {...content.onPage}
-            color={colors.primary}
-            exitAt={exitAt(scenes.onPage)}
-          >
-            <OnPageVisual color={colors.primary} />
-          </TopicLayout>
-        </TransitionSeries.Sequence>
-        {slideT}
-        <TransitionSeries.Sequence
-          name="02 Technical"
-          durationInFrames={scenes.technical}
-          premountFor={fps}
-        >
-          <TopicLayout
-            {...content.technical}
-            color={colors.secondary}
-            exitAt={exitAt(scenes.technical)}
-          >
-            <TechnicalVisual
-              items={content.technical.items}
-              color={colors.secondary}
-            />
-          </TopicLayout>
-        </TransitionSeries.Sequence>
-        {slideT}
-        <TransitionSeries.Sequence
-          name="03 Off-Page"
-          durationInFrames={scenes.offPage}
-          premountFor={fps}
-        >
-          <TopicLayout
-            {...content.offPage}
-            color={colors.accent}
-            exitAt={exitAt(scenes.offPage)}
-          >
-            <OffPageVisual
-              sources={content.offPage.sources}
-              color={colors.accent}
-            />
-          </TopicLayout>
-        </TransitionSeries.Sequence>
-        {slideT}
-        <TransitionSeries.Sequence
-          name="04 Local"
-          durationInFrames={scenes.local}
-          premountFor={fps}
-        >
-          <TopicLayout
-            {...content.local}
+            {...content.keyword}
             color={colors.warm}
-            exitAt={exitAt(scenes.local)}
+            exitAt={exitAt(scenes.keyword)}
           >
-            <LocalVisual queries={content.local.queries} color={colors.warm} />
+            <KeywordVisual color={colors.warm} />
+          </TopicLayout>
+        </TransitionSeries.Sequence>
+        {slideT}
+        <TransitionSeries.Sequence
+          name="02 Title tag"
+          durationInFrames={scenes.titleTag}
+          premountFor={fps}
+        >
+          <TopicLayout
+            {...content.titleTag}
+            color={colors.primary}
+            exitAt={exitAt(scenes.titleTag)}
+          >
+            <TitleTagVisual color={colors.primary} />
+          </TopicLayout>
+        </TransitionSeries.Sequence>
+        {slideT}
+        <TransitionSeries.Sequence
+          name="03 Meta description"
+          durationInFrames={scenes.meta}
+          premountFor={fps}
+        >
+          <TopicLayout
+            {...content.meta}
+            color={colors.secondary}
+            exitAt={exitAt(scenes.meta)}
+          >
+            <MetaVisual color={colors.secondary} />
+          </TopicLayout>
+        </TransitionSeries.Sequence>
+        {slideT}
+        <TransitionSeries.Sequence
+          name="04 Headings"
+          durationInFrames={scenes.headings}
+          premountFor={fps}
+        >
+          <TopicLayout
+            {...content.headings}
+            color={colors.accent}
+            exitAt={exitAt(scenes.headings)}
+          >
+            <HeadingsVisual />
+          </TopicLayout>
+        </TransitionSeries.Sequence>
+        {slideT}
+        <TransitionSeries.Sequence
+          name="05 Content"
+          durationInFrames={scenes.content}
+          premountFor={fps}
+        >
+          <TopicLayout
+            {...content.content}
+            color={colors.success}
+            exitAt={exitAt(scenes.content)}
+          >
+            <ContentVisual color={colors.success} />
+          </TopicLayout>
+        </TransitionSeries.Sequence>
+        {slideT}
+        <TransitionSeries.Sequence
+          name="06 Internal links"
+          durationInFrames={scenes.linking}
+          premountFor={fps}
+        >
+          <TopicLayout
+            {...content.linking}
+            color={colors.primary}
+            exitAt={exitAt(scenes.linking)}
+          >
+            <LinkingVisual color={colors.primary} />
           </TopicLayout>
         </TransitionSeries.Sequence>
         {wipeT}
         <TransitionSeries.Sequence
-          name="International + E-commerce"
-          durationInFrames={scenes.more}
+          name="Other elements"
+          durationInFrames={scenes.other}
           premountFor={fps}
         >
-          <MoreTypesScene exitAt={exitAt(scenes.more)} />
+          <OtherElementsScene exitAt={exitAt(scenes.other)} />
         </TransitionSeries.Sequence>
         {fadeT}
         <TransitionSeries.Sequence

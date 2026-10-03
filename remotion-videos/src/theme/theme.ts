@@ -28,6 +28,8 @@ export const colors = {
   secondary: "#00D1FF",
   accent: "#FF4D8D",
   warm: "#FFB547",
+  success: "#2EE6A6",
+  danger: "#FF5A5F",
 } as const;
 
 export const gradients = {

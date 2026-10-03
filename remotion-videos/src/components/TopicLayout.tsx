@@ -1,10 +1,13 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { AnimatedText, Background, FadeIn, Stage } from "../../../components";
-import { colors, fonts, typeScale } from "../../../theme/theme";
+import { AnimatedText } from "./AnimatedText";
+import { Background } from "./Background";
+import { FadeIn } from "./FadeIn";
+import { Stage } from "./Stage";
+import { colors, fonts, typeScale } from "../theme/theme";
 
-/** Shared layout for the "type of SEO" scenes: copy on the left, visual on the right. */
-export const TypeLayout: React.FC<{
+/** Numbered topic layout: big outline number, title and body on the left, a visual on the right. */
+export const TopicLayout: React.FC<{
   number: string;
   title: string;
   body: string;
