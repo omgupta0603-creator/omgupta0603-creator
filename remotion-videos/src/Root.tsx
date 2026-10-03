@@ -37,6 +37,11 @@ import {
   InternationalExplainer,
   internationalExplainerSchema,
 } from "./compositions/InternationalExplainer";
+import {
+  EcommerceExplainer,
+  ecommerceExplainerSchema,
+  getEcommerceTiming,
+} from "./compositions/EcommerceExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -296,6 +301,37 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getInternationalTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="EcommerceExplainer"
+          component={EcommerceExplainer}
+          schema={ecommerceExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 10.5,
+              example: 9.5,
+              keywords: 8,
+              category: 8.5,
+              product: 8,
+              technical: 10.5,
+              linking: 7,
+              schema: 8.5,
+              ux: 8,
+              summary: 9,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getEcommerceTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

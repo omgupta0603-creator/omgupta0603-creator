@@ -136,6 +136,22 @@ npx remotion render InternationalExplainer out/InternationalExplainer.mp4
 Text: `src/compositions/InternationalExplainer/content.ts`. Timing and voiceover:
 the `sceneSeconds` and `voiceoverSrc` props.
 
+## `EcommerceExplainer`: What is E-commerce SEO?
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 92 s, timed for the
+script at about 3.3 words/s. It has 12 scenes: title, the store structure, two
+product searches, keyword research (customer journey), category pages, product
+pages, technical SEO, internal linking, product schema, UX and performance, a
+summary and a thank-you outro. Store, products, prices and counts are
+illustrative.
+
+```bash
+npx remotion render EcommerceExplainer out/EcommerceExplainer.mp4
+```
+
+Text: `src/compositions/EcommerceExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -154,6 +170,7 @@ src/
     LocalExplainer/   "What is Local SEO?" explainer
     TechnicalExplainer/ "What is Technical SEO?" explainer
     InternationalExplainer/ "What is International SEO?" explainer
+    EcommerceExplainer/ "What is E-commerce SEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

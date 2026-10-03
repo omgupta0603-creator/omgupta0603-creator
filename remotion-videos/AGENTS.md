@@ -84,7 +84,7 @@ for a `<TransitionSeries>`. See `src/compositions/OnPageExplainer/timing.ts`.
 ### Explainer videos with a voiceover
 
 `SeoExplainer`, `OnPageExplainer`, `OffPageExplainer`, `LocalExplainer`,
-`TechnicalExplainer` and `InternationalExplainer` share one structure: copy in `content.ts`,
+`TechnicalExplainer`, `InternationalExplainer` and `EcommerceExplainer` share one structure: copy in `content.ts`,
 scene lengths as `sceneSeconds` props, and an optional `voiceoverSrc`. To sync a
 narration, size each scene to its part of the script. Their voiceover runs at about
 3.3 words per second, so scene seconds ≈ words ÷ 3.3 + 0.6 (the transition overlap)
