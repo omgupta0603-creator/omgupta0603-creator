@@ -1,0 +1,12 @@
+{
+  "name": "seo-explainer-reel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "^5.0.0",
+    "three": "^0.170.0"
+  }
+}

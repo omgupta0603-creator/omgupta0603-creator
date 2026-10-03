@@ -1,0 +1,4 @@
+node_modules/
+out/*
+!out/what-is-seo-and-its-types.mp4
+!out/cues.json
