@@ -37,7 +37,7 @@ src/utils/animation.ts    springs, eases, springIn, progress, mix, fadeInOut, st
 src/utils/audio.ts        beatToFrame, framesPerBeat, fadeVolume (audio sync)
 src/utils/layout.ts       useScale(): size multiplier relative to 1920x1080
 src/utils/timing.ts       getSceneTiming(): scene frames + total for TransitionSeries
-src/scenes/               Shared full-frame scenes (TitleCard, ElementsIntro, QuoteSummary, ThankYou)
+src/scenes/               Shared full-frame scenes (TitleCard, AcronymScene, ElementsIntro, QuoteSummary, ThankYou)
 src/components/           Reusable building blocks (see table below)
 src/compositions/<Name>/  One folder per video: <Name>.tsx, schema.ts, scenes/
 src/compositions/_Template/  Starter copied by `npm run new`
@@ -71,7 +71,8 @@ pieces in `src/components/` and export them from `src/components/index.ts`.
 ### Shared scenes (`src/scenes`)
 
 Full-frame scenes that take their text as props, used by the explainer videos:
-`TitleCard` (eyebrow + two-line title), `ElementsIntro` ("in simple words" line
+`TitleCard` (eyebrow + two-line title), `AcronymScene` (letters expand into
+words; children render below), `ElementsIntro` ("in simple words" line
 plus numbered topic chips), `QuoteSummary` (closing quote with two
 underlined phrases) and `ThankYou` (outro that fades to black).
 
@@ -84,8 +85,8 @@ for a `<TransitionSeries>`. See `src/compositions/OnPageExplainer/timing.ts`.
 ### Explainer videos with a voiceover
 
 `SeoExplainer`, `OnPageExplainer`, `OffPageExplainer`, `LocalExplainer`,
-`TechnicalExplainer`, `InternationalExplainer`, `EcommerceExplainer` and
-`StrategyExplainer` share one structure: copy in `content.ts`,
+`TechnicalExplainer`, `InternationalExplainer`, `EcommerceExplainer`,
+`StrategyExplainer` and `AeoExplainer` share one structure: copy in `content.ts`,
 scene lengths as `sceneSeconds` props, and an optional `voiceoverSrc`. To sync a
 narration, size each scene to its part of the script. Their voiceover runs at about
 3.3 words per second, so scene seconds ≈ words ÷ 3.3 + 0.6 (the transition overlap)

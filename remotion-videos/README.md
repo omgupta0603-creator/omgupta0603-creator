@@ -168,6 +168,22 @@ npx remotion render StrategyExplainer out/StrategyExplainer.mp4
 Text: `src/compositions/StrategyExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `AeoExplainer`: What is AEO?
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 104 s, timed for the
+script at about 3.3 words/s. It has 13 scenes: title, the A-E-O definition, SEO
+vs AEO, a direct-answer example, five optimization steps (search intent, direct
+answers, content structure, topical depth, trustworthy information), a
+structured-data tip, a summary, SEO + AEO and a thank-you outro. Questions,
+answers and sources are illustrative.
+
+```bash
+npx remotion render AeoExplainer out/AeoExplainer.mp4
+```
+
+Text: `src/compositions/AeoExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -177,7 +193,7 @@ src/
   theme/theme.ts      colours, gradients, fonts, type scale
   utils/              animation, audio-sync and layout helpers
   components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, Check, TopicLayout, SearchBar/SerpResult, CodeCard
-  scenes/             shared TitleCard, ElementsIntro, QuoteSummary, ThankYou
+  scenes/             shared TitleCard, AcronymScene, ElementsIntro, QuoteSummary, ThankYou
   compositions/
     Showcase/         sample video (scenes/, schema.ts, timing.ts)
     SeoExplainer/     "What is SEO" explainer (content.ts, scenes/, visuals/)
@@ -188,6 +204,7 @@ src/
     InternationalExplainer/ "What is International SEO?" explainer
     EcommerceExplainer/ "What is E-commerce SEO?" explainer
     StrategyExplainer/ "SEO Strategy" 8-step explainer
+    AeoExplainer/     "What is AEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

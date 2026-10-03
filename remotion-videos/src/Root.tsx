@@ -47,6 +47,11 @@ import {
   StrategyExplainer,
   strategyExplainerSchema,
 } from "./compositions/StrategyExplainer";
+import {
+  AeoExplainer,
+  aeoExplainerSchema,
+  getAeoTiming,
+} from "./compositions/AeoExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -368,6 +373,38 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getStrategyTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="AeoExplainer"
+          component={AeoExplainer}
+          schema={aeoExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 13,
+              compare: 8,
+              example: 12,
+              intent: 7.5,
+              answers: 7.5,
+              structure: 9,
+              depth: 9,
+              trust: 7.5,
+              schema: 8.5,
+              summary: 10.5,
+              future: 7.5,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getAeoTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>
