@@ -3,3 +3,4 @@ out/*
 !out/what-is-seo-and-its-types.mp4
 !out/cues.json
 __pycache__/
+!out/vo.json

@@ -81,12 +81,14 @@ def voiceover(tts_dir, voice):
             speed = min(1.45, speed * (len(a) / SR) / slot * 1.02)
         start = s + 0.18
         place(vo, a, start)
-        spans.append((start, start + len(a) / SR))
+        spans.append((start, start + len(a) / SR, text))
         print(f"{s:>4}s  {len(a)/SR:4.2f}s  speed {speed:.2f}  {text}")
     # gentle presence EQ + normalise
     vo = vo + 0.25 * hp(vo, 2500)
     vo = hp(vo, 80)
     vo /= np.max(np.abs(vo)) + 1e-9
+    # caption timings for the renderer (burned-in captions)
+    json.dump([{"s": round(s0, 3), "e": round(e0, 3), "text": tx} for s0, e0, tx in spans], open(os.path.join(OUT, "vo.json"), "w"), indent=1)
     return vo * 0.9, spans
 
 
@@ -207,12 +209,13 @@ def main():
     ap.add_argument("--voice", default="hm_omega")
     ap.add_argument("--out", default=os.path.join(OUT, "mix.wav"))
     a = ap.parse_args()
-    cues = json.load(open(os.path.join(OUT, "cues.json")))
+    cues_path = os.path.join(OUT, "cues.json")
+    cues = json.load(open(cues_path)) if os.path.exists(cues_path) else {}
     vo, spans = voiceover(a.tts_dir, a.voice)
     mus = music()
     # duck the music under the voice
     duck = np.ones(N)
-    for s, e in spans:
+    for s, e, _ in spans:
         duck[int((s - 0.1) * SR): int((e + 0.15) * SR)] = 0.45
     k = int(0.15 * SR)
     duck = np.convolve(duck, np.ones(k) / k, mode="same")
