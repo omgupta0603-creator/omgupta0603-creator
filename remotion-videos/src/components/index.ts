@@ -10,3 +10,4 @@ export { ShapeBadge, type ShapeKind } from "./ShapeBadge";
 export { Pill } from "./Pill";
 export { TopicLayout } from "./TopicLayout";
 export { Check } from "./Check";
+export { SearchBar, SerpResult, useTyped } from "./Serp";

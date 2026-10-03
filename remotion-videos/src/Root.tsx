@@ -22,6 +22,11 @@ import {
   OffPageExplainer,
   offPageExplainerSchema,
 } from "./compositions/OffPageExplainer";
+import {
+  getLocalTiming,
+  LocalExplainer,
+  localExplainerSchema,
+} from "./compositions/LocalExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -189,6 +194,36 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getOffPageTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="LocalExplainer"
+          component={LocalExplainer}
+          schema={localExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 8.5,
+              example: 11.5,
+              gbp: 13.5,
+              keywords: 10.5,
+              reviews: 8,
+              citations: 8.5,
+              other: 7,
+              summary: 9.5,
+              strategy: 7,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getLocalTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

@@ -8,7 +8,9 @@ export const Check: React.FC<{
   delay: number;
   color: string;
   size?: number;
-}> = ({ delay, color, size = 40 }) => {
+  /** Tick colour; use a dark one on light backgrounds. */
+  tickColor?: string;
+}> = ({ delay, color, size = 40, tickColor = colors.text }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pop = springIn({ frame, fps, delay, config: springs.bouncy });
@@ -31,7 +33,7 @@ export const Check: React.FC<{
       <path
         d="M13 22.5 L19.5 29 L31 16"
         fill="none"
-        stroke={colors.text}
+        stroke={tickColor}
         strokeWidth={4}
         strokeLinecap="round"
         strokeLinejoin="round"

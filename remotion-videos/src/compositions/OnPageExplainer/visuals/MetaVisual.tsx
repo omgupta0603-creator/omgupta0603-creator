@@ -3,7 +3,7 @@ import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../../../theme/theme";
 import { mix, progress, springIn, springs } from "../../../utils/animation";
 import { content } from "../content";
-import { SerpResult, useTyped } from "./Serp";
+import { SerpResult, useTyped } from "../../../components";
 
 /** The description writes itself under the result, then a cursor clicks it and CTR rises. */
 export const MetaVisual: React.FC<{ color: string }> = ({ color }) => {

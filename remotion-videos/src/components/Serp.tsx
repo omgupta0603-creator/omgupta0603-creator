@@ -1,6 +1,6 @@
 import React from "react";
 import { interpolate, useCurrentFrame } from "remotion";
-import { fonts } from "../../../theme/theme";
+import { fonts } from "../theme/theme";
 
 /** Number of characters of `text` visible for a typewriter effect. */
 export const useTyped = (text: string, start: number, charsPerFrame = 1) => {

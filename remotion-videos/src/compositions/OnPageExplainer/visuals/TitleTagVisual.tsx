@@ -3,7 +3,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../../../theme/theme";
 import { mix, progress, springIn, springs } from "../../../utils/animation";
 import { content } from "../content";
-import { SearchBar, SerpResult, useTyped } from "./Serp";
+import { SearchBar, SerpResult, useTyped } from "../../../components";
 
 /** Query typed → result title typed in → length meter + "matches the query" check. */
 export const TitleTagVisual: React.FC<{ color: string }> = ({ color }) => {
