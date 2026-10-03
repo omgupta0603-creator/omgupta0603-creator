@@ -11,3 +11,4 @@ export { Pill } from "./Pill";
 export { TopicLayout } from "./TopicLayout";
 export { Check } from "./Check";
 export { SearchBar, SerpResult, useTyped } from "./Serp";
+export { CodeCard } from "./CodeCard";

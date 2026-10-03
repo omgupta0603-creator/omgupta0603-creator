@@ -3,7 +3,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../../../theme/theme";
 import { mix, springIn, springs } from "../../../utils/animation";
 import { content } from "../content";
-import { CodeCard } from "./CodeCard";
+import { CodeCard } from "../../../components";
 
 const colorize = (text: string) => {
   const m = text.match(/^(User-agent|Disallow|Allow|Sitemap)(:?)(.*)$/);

@@ -1,6 +1,6 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
-import { colors, fonts } from "../../../theme/theme";
+import { colors, fonts } from "../theme/theme";
 
 /**
  * Editor-style file card. Lines type in one after another from `start`

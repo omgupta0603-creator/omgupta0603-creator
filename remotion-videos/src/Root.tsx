@@ -32,6 +32,11 @@ import {
   TechnicalExplainer,
   technicalExplainerSchema,
 } from "./compositions/TechnicalExplainer";
+import {
+  getInternationalTiming,
+  InternationalExplainer,
+  internationalExplainerSchema,
+} from "./compositions/InternationalExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -261,6 +266,36 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getTechnicalTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="InternationalExplainer"
+          component={InternationalExplainer}
+          schema={internationalExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 10,
+              example: 14,
+              targeting: 10,
+              hreflang: 8,
+              keywords: 11.5,
+              urls: 9,
+              localization: 9,
+              other: 6.5,
+              summary: 7.5,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getInternationalTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

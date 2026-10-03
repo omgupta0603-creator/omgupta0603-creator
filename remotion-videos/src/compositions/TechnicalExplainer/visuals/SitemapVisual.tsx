@@ -4,7 +4,7 @@ import { Check } from "../../../components";
 import { colors, fonts } from "../../../theme/theme";
 import { progress, springIn, springs } from "../../../utils/animation";
 import { content } from "../content";
-import { CodeCard } from "./CodeCard";
+import { CodeCard } from "../../../components";
 
 /** sitemap.xml lists the important URLs; each one is ticked as "discovered". */
 export const SitemapVisual: React.FC<{ color: string }> = ({ color }) => {

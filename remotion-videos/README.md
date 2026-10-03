@@ -120,6 +120,22 @@ npx remotion render TechnicalExplainer out/TechnicalExplainer.mp4
 Text: `src/compositions/TechnicalExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `InternationalExplainer`: What is International SEO?
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 90.5 s, timed for
+the script at about 3.3 words/s. It has 11 scenes: title, definition (one site,
+localized versions), the India / US / UK market example, country and language
+targeting, hreflang, international keyword research (literal translation vs
+local research), URL structure, content localization, other considerations, a
+summary and a thank-you outro. Domains, prices and search terms are illustrative.
+
+```bash
+npx remotion render InternationalExplainer out/InternationalExplainer.mp4
+```
+
+Text: `src/compositions/InternationalExplainer/content.ts`. Timing and voiceover:
+the `sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -128,7 +144,7 @@ src/
   config/video.ts     width / height / fps
   theme/theme.ts      colours, gradients, fonts, type scale
   utils/              animation, audio-sync and layout helpers
-  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, Check, TopicLayout, SearchBar/SerpResult
+  components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, Check, TopicLayout, SearchBar/SerpResult, CodeCard
   scenes/             shared TitleCard, ElementsIntro, QuoteSummary, ThankYou
   compositions/
     Showcase/         sample video (scenes/, schema.ts, timing.ts)
@@ -137,6 +153,7 @@ src/
     OffPageExplainer/ "What is Off-Page SEO?" explainer
     LocalExplainer/   "What is Local SEO?" explainer
     TechnicalExplainer/ "What is Technical SEO?" explainer
+    InternationalExplainer/ "What is International SEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

@@ -62,6 +62,7 @@ out/                      Render output (git-ignored)
 | `Pill` | Label chip that springs in at `delay`. |
 | `Check` | Round check mark that pops in and draws its tick (`tickColor` for light backgrounds). |
 | `SearchBar` / `SerpResult` | Google-style search box and result card; `useTyped()` for a typewriter effect. |
+| `CodeCard` | Editor-style file card whose lines type in; `renderLine` for syntax colours. |
 | `TopicLayout` | Numbered topic scene: outline number, title and body on the left, any visual on the right (`titleSize` for long titles). |
 
 Prefer composing these over writing new one-off animation code. Put new reusable
@@ -82,8 +83,8 @@ for a `<TransitionSeries>`. See `src/compositions/OnPageExplainer/timing.ts`.
 
 ### Explainer videos with a voiceover
 
-`SeoExplainer`, `OnPageExplainer`, `OffPageExplainer`, `LocalExplainer` and
-`TechnicalExplainer` share one structure: copy in `content.ts`,
+`SeoExplainer`, `OnPageExplainer`, `OffPageExplainer`, `LocalExplainer`,
+`TechnicalExplainer` and `InternationalExplainer` share one structure: copy in `content.ts`,
 scene lengths as `sceneSeconds` props, and an optional `voiceoverSrc`. To sync a
 narration, size each scene to its part of the script. Their voiceover runs at about
 3.3 words per second, so scene seconds ≈ words ÷ 3.3 + 0.6 (the transition overlap)
