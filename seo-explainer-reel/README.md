@@ -1,4 +1,4 @@
-# "What Is SEO and Its Types?" — 60s vertical explainer reel
+# "What Is SEO and Its Types?": 60s vertical explainer reel (Digital Bharat Agency)
 
 `out/what-is-seo-and-its-types.mp4` — 1080×1920, 30 fps, 60 s, H.264 + AAC.
 
@@ -23,3 +23,12 @@ ffmpeg -i out/video_silent.mp4 -i out/mix.wav -map 0:v -map 1:a -c:v copy -c:a a
 ```
 
 The voiceover uses the Kokoro-82M Hindi male voice `hm_omega` reading English, which gives an Indian-English accent. To change the voice, pass `--voice` with another voice name, for example `hf_beta` (female) or `am_michael`.
+
+## Brand
+
+The reel follows the Digital Bharat Agency brand guidelines:
+
+- **Colours:** Deep Navy `#0B1F3A`, Saffron `#FF7A1A` for key words and the CTA, Emerald `#12A150` for growth elements, and Off-White `#F7F5F0` for the background. Soft Red `#E5484D` is used only for the "Rankings" strike-through.
+- **Fonts:** Poppins for headlines, Inter for body text.
+- **Logo:** `src/assets/logo.png`, a cutout made from the 150 px logo. Replace it with a high-res or vector version for a sharper end card.
+- **Captions:** burned in using Poppins Bold, white on a navy box. They are timed from `out/vo.json`, which the audio step writes. Run the audio step before rendering.
