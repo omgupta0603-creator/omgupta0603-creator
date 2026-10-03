@@ -103,6 +103,23 @@ npx remotion render LocalExplainer out/LocalExplainer.mp4
 Text: `src/compositions/LocalExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `TechnicalExplainer`: What is Technical SEO?
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 99 s, timed for the
+script at about 3.3 words/s. It has 13 scenes: title, the technical foundation
+(crawl, understand, index), "in simple words" with the six areas, then crawling
+and indexing, robots.txt, XML sitemap, canonicalization, speed and Core Web
+Vitals, mobile optimization, other areas, the "great content that can't be
+crawled" example, a summary and a thank-you outro. URLs and metric values are
+illustrative.
+
+```bash
+npx remotion render TechnicalExplainer out/TechnicalExplainer.mp4
+```
+
+Text: `src/compositions/TechnicalExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -112,13 +129,14 @@ src/
   theme/theme.ts      colours, gradients, fonts, type scale
   utils/              animation, audio-sync and layout helpers
   components/         AnimatedText, Background, Stage, FadeIn, Highlight, DrawLine, ShapeBadge, CountUp, Card, Pill, Check, TopicLayout, SearchBar/SerpResult
-  scenes/             shared TitleCard, QuoteSummary, ThankYou
+  scenes/             shared TitleCard, ElementsIntro, QuoteSummary, ThankYou
   compositions/
     Showcase/         sample video (scenes/, schema.ts, timing.ts)
     SeoExplainer/     "What is SEO" explainer (content.ts, scenes/, visuals/)
     OnPageExplainer/  "What is On-Page SEO?" explainer
     OffPageExplainer/ "What is Off-Page SEO?" explainer
     LocalExplainer/   "What is Local SEO?" explainer
+    TechnicalExplainer/ "What is Technical SEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills

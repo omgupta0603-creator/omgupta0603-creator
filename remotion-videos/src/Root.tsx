@@ -27,6 +27,11 @@ import {
   LocalExplainer,
   localExplainerSchema,
 } from "./compositions/LocalExplainer";
+import {
+  getTechnicalTiming,
+  TechnicalExplainer,
+  technicalExplainerSchema,
+} from "./compositions/TechnicalExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -224,6 +229,38 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getLocalTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="TechnicalExplainer"
+          component={TechnicalExplainer}
+          schema={technicalExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 6.5,
+              definition: 11,
+              simple: 8.5,
+              crawl: 11,
+              robots: 8.5,
+              sitemap: 7,
+              canonical: 10,
+              speed: 8,
+              mobile: 7.5,
+              other: 7.5,
+              example: 9,
+              summary: 7.5,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getTechnicalTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

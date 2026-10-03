@@ -1,9 +1,8 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { Background, FadeIn, Highlight, Stage } from "../../../components";
-import { colors, fonts, typeScale } from "../../../theme/theme";
-import { mix, springIn, springs } from "../../../utils/animation";
-import { content } from "../content";
+import { Background, FadeIn, Highlight, Stage } from "../components";
+import { colors, fonts, typeScale } from "../theme/theme";
+import { mix, springIn, springs } from "../utils/animation";
 
 const CHIP_COLORS = [
   colors.warm,
@@ -14,14 +13,19 @@ const CHIP_COLORS = [
   colors.primary,
 ];
 
-/** "In simple words…" definition, then the six elements covered next. */
-export const SimpleWordsScene: React.FC<{
-  exitAt?: number;
+/** "In simple words…" statement with a highlighted ending, then numbered chips for the topics covered next. */
+export const ElementsIntro: React.FC<{
+  label: string;
+  lead: string;
+  highlight: string;
+  elementsLabel: string;
+  elements: readonly string[];
+  /** Frame at which the element chips appear. */
   elementsAt: number;
-}> = ({ exitAt, elementsAt }) => {
+  exitAt?: number;
+}> = ({ exitAt, elementsAt, ...c }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.simple;
 
   return (
     <AbsoluteFill>
@@ -86,7 +90,7 @@ export const SimpleWordsScene: React.FC<{
               delay: elementsAt + 6 + i * 5,
               config: springs.snappy,
             });
-            const col = CHIP_COLORS[i];
+            const col = CHIP_COLORS[i % CHIP_COLORS.length];
             return (
               <div
                 key={e}

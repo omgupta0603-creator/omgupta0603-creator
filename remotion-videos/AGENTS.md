@@ -37,7 +37,7 @@ src/utils/animation.ts    springs, eases, springIn, progress, mix, fadeInOut, st
 src/utils/audio.ts        beatToFrame, framesPerBeat, fadeVolume (audio sync)
 src/utils/layout.ts       useScale(): size multiplier relative to 1920x1080
 src/utils/timing.ts       getSceneTiming(): scene frames + total for TransitionSeries
-src/scenes/               Shared full-frame scenes (TitleCard, QuoteSummary, ThankYou)
+src/scenes/               Shared full-frame scenes (TitleCard, ElementsIntro, QuoteSummary, ThankYou)
 src/components/           Reusable building blocks (see table below)
 src/compositions/<Name>/  One folder per video: <Name>.tsx, schema.ts, scenes/
 src/compositions/_Template/  Starter copied by `npm run new`
@@ -62,7 +62,7 @@ out/                      Render output (git-ignored)
 | `Pill` | Label chip that springs in at `delay`. |
 | `Check` | Round check mark that pops in and draws its tick (`tickColor` for light backgrounds). |
 | `SearchBar` / `SerpResult` | Google-style search box and result card; `useTyped()` for a typewriter effect. |
-| `TopicLayout` | Numbered topic scene: outline number, title and body on the left, any visual on the right. |
+| `TopicLayout` | Numbered topic scene: outline number, title and body on the left, any visual on the right (`titleSize` for long titles). |
 
 Prefer composing these over writing new one-off animation code. Put new reusable
 pieces in `src/components/` and export them from `src/components/index.ts`.
@@ -70,7 +70,8 @@ pieces in `src/components/` and export them from `src/components/index.ts`.
 ### Shared scenes (`src/scenes`)
 
 Full-frame scenes that take their text as props, used by the explainer videos:
-`TitleCard` (eyebrow + two-line title), `QuoteSummary` (closing quote with two
+`TitleCard` (eyebrow + two-line title), `ElementsIntro` ("in simple words" line
+plus numbered topic chips), `QuoteSummary` (closing quote with two
 underlined phrases) and `ThankYou` (outro that fades to black).
 
 ### Multi-scene timing
@@ -81,7 +82,8 @@ for a `<TransitionSeries>`. See `src/compositions/OnPageExplainer/timing.ts`.
 
 ### Explainer videos with a voiceover
 
-`SeoExplainer`, `OnPageExplainer`, `OffPageExplainer` and `LocalExplainer` share one structure: copy in `content.ts`,
+`SeoExplainer`, `OnPageExplainer`, `OffPageExplainer`, `LocalExplainer` and
+`TechnicalExplainer` share one structure: copy in `content.ts`,
 scene lengths as `sceneSeconds` props, and an optional `voiceoverSrc`. To sync a
 narration, size each scene to its part of the script. Their voiceover runs at about
 3.3 words per second, so scene seconds ≈ words ÷ 3.3 + 0.6 (the transition overlap)

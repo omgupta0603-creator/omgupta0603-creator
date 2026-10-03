@@ -13,8 +13,18 @@ export const TopicLayout: React.FC<{
   body: string;
   color: string;
   exitAt?: number;
+  /** Override the title size for long titles (default typeScale.h1). */
+  titleSize?: number;
   children: React.ReactNode;
-}> = ({ number, title, body, color, exitAt, children }) => (
+}> = ({
+  number,
+  title,
+  body,
+  color,
+  exitAt,
+  titleSize = typeScale.h1,
+  children,
+}) => (
   <AbsoluteFill>
     <Background intensity={0.4} />
     <Stage exitAt={exitAt}>
@@ -51,7 +61,7 @@ export const TopicLayout: React.FC<{
           <AnimatedText
             text={title}
             delay={6}
-            fontSize={typeScale.h1}
+            fontSize={titleSize}
             align="left"
           />
           <FadeIn delay={18}>

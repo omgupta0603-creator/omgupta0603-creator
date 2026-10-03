@@ -14,20 +14,23 @@ import { ElementsIntro, QuoteSummary, ThankYou, TitleCard } from "../../scenes";
 import { colors } from "../../theme/theme";
 import { fadeVolume } from "../../utils/audio";
 import { content } from "./content";
-import type { OnPageExplainerProps } from "./schema";
+import type { TechnicalExplainerProps } from "./schema";
 import { DefinitionScene } from "./scenes/DefinitionScene";
-import { OtherElementsScene } from "./scenes/OtherElementsScene";
-import { getOnPageTiming } from "./timing";
-import { ContentVisual } from "./visuals/ContentVisual";
-import { HeadingsVisual } from "./visuals/HeadingsVisual";
-import { KeywordVisual } from "./visuals/KeywordVisual";
-import { LinkingVisual } from "./visuals/LinkingVisual";
-import { MetaVisual } from "./visuals/MetaVisual";
-import { TitleTagVisual } from "./visuals/TitleTagVisual";
+import { ExampleScene } from "./scenes/ExampleScene";
+import { OtherScene } from "./scenes/OtherScene";
+import { getTechnicalTiming } from "./timing";
+import { CanonicalVisual } from "./visuals/CanonicalVisual";
+import { CrawlVisual } from "./visuals/CrawlVisual";
+import { MobileVisual } from "./visuals/MobileVisual";
+import { RobotsVisual } from "./visuals/RobotsVisual";
+import { SitemapVisual } from "./visuals/SitemapVisual";
+import { SpeedVisual } from "./visuals/SpeedVisual";
 
-export const OnPageExplainer: React.FC<OnPageExplainerProps> = (props) => {
+export const TechnicalExplainer: React.FC<TechnicalExplainerProps> = (
+  props,
+) => {
   const { fps, durationInFrames } = useVideoConfig();
-  const { scenes, transitionFrames } = getOnPageTiming(props, fps);
+  const { scenes, transitionFrames } = getTechnicalTiming(props, fps);
   const exitAt = (n: number) => Math.max(0, n - transitionFrames - 6);
 
   const fadeT = (
@@ -76,104 +79,112 @@ export const OnPageExplainer: React.FC<OnPageExplainerProps> = (props) => {
           durationInFrames={scenes.simple}
           premountFor={fps}
         >
-          {/* The element list appears about 60% in, when the narration introduces it. */}
           <ElementsIntro
             {...content.simple}
             exitAt={exitAt(scenes.simple)}
-            elementsAt={Math.round(scenes.simple * 0.6)}
+            elementsAt={Math.round(scenes.simple * 0.55)}
           />
         </TransitionSeries.Sequence>
         {slideT}
         <TransitionSeries.Sequence
-          name="01 Keywords"
-          durationInFrames={scenes.keyword}
+          name="01 Crawling & indexing"
+          durationInFrames={scenes.crawl}
           premountFor={fps}
         >
           <TopicLayout
-            {...content.keyword}
-            color={colors.warm}
-            exitAt={exitAt(scenes.keyword)}
-          >
-            <KeywordVisual color={colors.warm} />
-          </TopicLayout>
-        </TransitionSeries.Sequence>
-        {slideT}
-        <TransitionSeries.Sequence
-          name="02 Title tag"
-          durationInFrames={scenes.titleTag}
-          premountFor={fps}
-        >
-          <TopicLayout
-            {...content.titleTag}
+            {...content.crawl}
             color={colors.primary}
-            exitAt={exitAt(scenes.titleTag)}
+            exitAt={exitAt(scenes.crawl)}
           >
-            <TitleTagVisual color={colors.primary} />
+            <CrawlVisual color={colors.primary} />
           </TopicLayout>
         </TransitionSeries.Sequence>
         {slideT}
         <TransitionSeries.Sequence
-          name="03 Meta description"
-          durationInFrames={scenes.meta}
+          name="02 Robots.txt"
+          durationInFrames={scenes.robots}
           premountFor={fps}
         >
           <TopicLayout
-            {...content.meta}
+            {...content.robots}
             color={colors.secondary}
-            exitAt={exitAt(scenes.meta)}
+            exitAt={exitAt(scenes.robots)}
           >
-            <MetaVisual color={colors.secondary} />
+            <RobotsVisual />
           </TopicLayout>
         </TransitionSeries.Sequence>
         {slideT}
         <TransitionSeries.Sequence
-          name="04 Headings"
-          durationInFrames={scenes.headings}
+          name="03 XML sitemap"
+          durationInFrames={scenes.sitemap}
           premountFor={fps}
         >
           <TopicLayout
-            {...content.headings}
+            {...content.sitemap}
+            color={colors.warm}
+            exitAt={exitAt(scenes.sitemap)}
+          >
+            <SitemapVisual color={colors.warm} />
+          </TopicLayout>
+        </TransitionSeries.Sequence>
+        {slideT}
+        <TransitionSeries.Sequence
+          name="04 Canonicalization"
+          durationInFrames={scenes.canonical}
+          premountFor={fps}
+        >
+          <TopicLayout
+            {...content.canonical}
+            titleSize={76}
             color={colors.accent}
-            exitAt={exitAt(scenes.headings)}
+            exitAt={exitAt(scenes.canonical)}
           >
-            <HeadingsVisual />
+            <CanonicalVisual color={colors.accent} />
           </TopicLayout>
         </TransitionSeries.Sequence>
         {slideT}
         <TransitionSeries.Sequence
-          name="05 Content"
-          durationInFrames={scenes.content}
+          name="05 Speed & CWV"
+          durationInFrames={scenes.speed}
           premountFor={fps}
         >
           <TopicLayout
-            {...content.content}
+            {...content.speed}
             color={colors.success}
-            exitAt={exitAt(scenes.content)}
+            exitAt={exitAt(scenes.speed)}
           >
-            <ContentVisual color={colors.success} />
+            <SpeedVisual />
           </TopicLayout>
         </TransitionSeries.Sequence>
         {slideT}
         <TransitionSeries.Sequence
-          name="06 Internal links"
-          durationInFrames={scenes.linking}
+          name="06 Mobile"
+          durationInFrames={scenes.mobile}
           premountFor={fps}
         >
           <TopicLayout
-            {...content.linking}
+            {...content.mobile}
             color={colors.primary}
-            exitAt={exitAt(scenes.linking)}
+            exitAt={exitAt(scenes.mobile)}
           >
-            <LinkingVisual color={colors.primary} />
+            <MobileVisual color={colors.primary} />
           </TopicLayout>
         </TransitionSeries.Sequence>
         {wipeT}
         <TransitionSeries.Sequence
-          name="Other elements"
+          name="Other areas"
           durationInFrames={scenes.other}
           premountFor={fps}
         >
-          <OtherElementsScene exitAt={exitAt(scenes.other)} />
+          <OtherScene exitAt={exitAt(scenes.other)} />
+        </TransitionSeries.Sequence>
+        {fadeT}
+        <TransitionSeries.Sequence
+          name="Example"
+          durationInFrames={scenes.example}
+          premountFor={fps}
+        >
+          <ExampleScene exitAt={exitAt(scenes.example)} />
         </TransitionSeries.Sequence>
         {fadeT}
         <TransitionSeries.Sequence
