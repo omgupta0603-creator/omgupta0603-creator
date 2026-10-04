@@ -57,6 +57,11 @@ import {
   geoExplainerSchema,
   getGeoTiming,
 } from "./compositions/GeoExplainer";
+import {
+  ClaudeMarketingReel,
+  CLIPS,
+  reelSeconds,
+} from "./compositions/ClaudeMarketing";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -441,6 +446,29 @@ export const RemotionRoot: React.FC = () => {
           calculateMetadata={({ props }) => ({
             durationInFrames: getGeoTiming(props, VIDEO.fps).total,
           })}
+        />
+      </Folder>
+      <Folder name="ClaudeMarketing">
+        {/* Graphics pack for "Why Use Claude for Digital Marketing": one
+            composition per clip (edit text in content.ts, lengths in clips.ts). */}
+        {CLIPS.map((clip) => (
+          <Composition
+            key={clip.id}
+            id={clip.id}
+            component={clip.component}
+            width={VIDEO.width}
+            height={VIDEO.height}
+            fps={VIDEO.fps}
+            durationInFrames={secondsToFrames(clip.seconds, VIDEO.fps)}
+          />
+        ))}
+        <Composition
+          id="CM00-Reel"
+          component={ClaudeMarketingReel}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={secondsToFrames(reelSeconds, VIDEO.fps)}
         />
       </Folder>
       {/* @new-compositions (used by `npm run new`, keep this line) */}

@@ -92,6 +92,16 @@ narration, size each scene to its part of the script. Their voiceover runs at ab
 3.3 words per second, so scene seconds ≈ words ÷ 3.3 + 0.6 (the transition overlap)
 + a short pause.
 
+### Graphics packs (`ClaudeMarketing`)
+
+For talking-head scripts, make one short composition per on-screen moment
+instead of one long video. `src/compositions/ClaudeMarketing/clips.ts` lists
+the clips (`id`, `cue`, `seconds`, `component`). `Root.tsx` registers each clip
+by mapping over that list, along with a `CM00-Reel` that plays them all.
+`ClipShell` in `parts.tsx` adds the background and exits the content in the
+last 14 frames. `ChatComposer` is a generic AI prompt box that types a prompt.
+Render the pack with `npm run render:claude`.
+
 ## Creating a new composition
 
 ```bash

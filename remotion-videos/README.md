@@ -202,6 +202,41 @@ npx remotion render GeoExplainer out/GeoExplainer.mp4
 Text: `src/compositions/GeoExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `ClaudeMarketing`: graphics pack for "Why Use Claude for Digital Marketing"
+
+The script is a talking-head video with screen demos, so this is not one video.
+It is a pack of 20 short clips, one for each `[TEXT]` and graphic moment in
+the script. You cut them in between your face cam and screen recordings.
+Each clip is its own composition, `CM01-Hook` … `CM20-EndScreen`.
+`CM00-Reel` plays them all back to back so you can review the pack.
+
+```bash
+npm run render:claude              # every clip → out/claude-marketing/<id>.mp4
+npm run render:claude -- CM08      # one clip
+npx remotion render CM00-Reel out/claude-marketing/CM00-Reel.mp4
+```
+
+| Clip | Script cue | Length |
+|---|---|---|
+| CM01-Hook | Hook: "Sabka content same kyun lagta hai?" | 7 s |
+| CM02-ChannelSting | Intro sting | 3 s |
+| CM03-Agenda | Aaj ka agenda | 10 s |
+| CM04–06 Problem1–3 | Generic output / Har baar context dobara / Badi files | 6 s each |
+| CM07-Strengths | Claude ki 4 strengths (one card every 2 s) | 11 s |
+| CM08, CM10–13 UseCase1–5 | Use-case title + prompt typing in a chat box | 9 s each |
+| CM09-ProTip | Cross-check numbers | 6 s |
+| CM14-Limitations | 3 cheezein dhyan rakho | 9 s |
+| CM15-DraftDecision | AI = Draft. Aap = Decision. | 5 s |
+| CM16-RCTF | R-C-T-F formula, row by row | 15 s |
+| CM17-VagueVsRCTF | Vague prompt = Vague output | 11 s |
+| CM18-Recap | Quick recap | 8 s |
+| CM19-CommentCTA | Comment + "PROMPTS" | 8 s |
+| CM20-EndScreen | 20 s end screen with spaces for YouTube's video and subscribe elements | 20 s |
+
+To change the text, edit `src/compositions/ClaudeMarketing/content.ts`. To
+change a clip's length, edit `seconds` in `clips.ts`. Each clip's content
+animates out in its last 14 frames, so a hard cut back to camera is clean.
+
 ## Structure
 
 ```
@@ -224,6 +259,7 @@ src/
     StrategyExplainer/ "SEO Strategy" 8-step explainer
     AeoExplainer/     "What is AEO?" explainer
     GeoExplainer/     "What is GEO?" explainer
+    ClaudeMarketing/  graphics pack (20 clips + reel) for the Claude video
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills
