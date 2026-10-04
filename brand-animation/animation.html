@@ -14,7 +14,7 @@
 /*
  * HiddenMarketing360 — 10s icon brand-story animation.
  * Deterministic: renderFrame(t) draws the exact frame for time t (seconds).
- * Journey: Search (need) → Chat (interaction) → Target → Analytics → Megaphone
+ * Journey: SEO search (need) → PPC click (interaction) → Email → Social → CRO funnel
  *          (process) → flowing 360 gradient line (delivery) → growth (result) → logo.
  * Every icon is 4 stroke "slots" (A–D) resampled to N points, so each icon
  * morphs point-for-point into the next; the last set lands on the logo's own
@@ -123,11 +123,37 @@ const K_CHART = {
   C: S(rrect(-30, -10, 60, 150, 14), 1, 0),
   D: S(rrect(80, -70, 60, 210, 14), 1, 0),
 };
-// 3c. PROCESS — promotion / megaphone
+// --- Service icons drawn from the HiddenMarketing360 service illustrations ---
+// PPC — the click: cursor arrow with click rays
+const cur = ([x, y]) => [x + 12, y + 37];
+const K_CLICK = {
+  xf: { cx: 960, cy: 520, s: 1.05 }, lw: 13, grad: [820, 1100],
+  A: S(poly([[50, 99], [35, 105], [0, 30], [-40, 70], [-40, -110], [85, 15], [30, 18], [65, 92], [50, 99]]).map(cur), 1, 1),
+  B: S([[-62, -132], [-92, -162]].map(cur), 1, 0),
+  C: S([[-40, -142], [-40, -184]].map(cur), 1, 0),
+  D: S([[-72, -110], [-114, -110]].map(cur), 1, 0),
+};
+// EMAIL — envelope
+const K_MAIL = {
+  xf: { cx: 960, cy: 520, s: 1 }, lw: 13, grad: [800, 1120],
+  A: S(rrect(-150, -100, 300, 200, 18), 1, 1),
+  B: S([[-140, -86], [0, 18], [140, -86]], 1, 0),
+  C: S([[-138, 90], [-50, 6]], 1, 0),
+  D: S([[138, 90], [50, 6]], 1, 0),
+};
+// CRO — conversion funnel dropping a coin
+const K_FUNNEL = {
+  xf: { cx: 960, cy: 500, s: 1 }, lw: 13, grad: [800, 1120],
+  A: S(poly([[0, 70], [-34, 70], [-34, 22], [-150, -120], [150, -120], [34, 22], [34, 70], [0, 70]]), 1, 1),
+  B: S(circle(0, 140, 36, 90), 1, 0),
+  C: S(cat([[16, 126]], catmull([[16, 126], [-10, 124], [-12, 138], [10, 142], [8, 156], [-16, 154]], 8)), 1, 0),
+  D: S([[-92, -50], [92, -50]], 1, 0),
+};
+// SOCIAL — promotion / megaphone
 const K_MEGA = {
   xf: { cx: 945, cy: 520, s: 1 }, lw: 13, grad: [860, 1180],
-  A: S(arc(45, 0, 135, -42, 42, 60), 1, 1),
-  B: S(poly([[-95, 34], [-140, 34], [-140, -34], [-62, -34], [40, -104], [40, 104], [-62, 34], [-95, 34]]), 1, 0),
+  A: S(poly([[-95, 34], [-140, 34], [-140, -34], [-62, -34], [40, -104], [40, 104], [-62, 34], [-95, 34]]), 1, 1),
+  B: S(arc(45, 0, 135, -42, 42, 60), 1, 0),
   C: S([[-90, 38], [-66, 104]], 1, 0),
   D: S(arc(45, 0, 80, -38, 38, 40), 1, 0),
 };
@@ -170,10 +196,10 @@ const K_LOGO = {
 // Timeline: hold windows; the gaps between them are morphs.
 const KEYS = [
   { k: K_SEARCH, hold: [0.0, 1.1] },
-  { k: K_CHAT, hold: [1.6, 2.6] },
-  { k: K_TARGET, hold: [3.05, 3.45] },
-  { k: K_CHART, hold: [3.85, 4.25] },
-  { k: K_MEGA, hold: [4.65, 5.05] },
+  { k: K_CLICK, hold: [1.6, 2.6] },
+  { k: K_MAIL, hold: [3.05, 3.45] },
+  { k: K_MEGA, hold: [3.85, 4.25] },
+  { k: K_FUNNEL, hold: [4.65, 5.05] },
   { k: K_FLOW, hold: [5.65, 7.05] },
   { k: K_GROW, hold: [7.6, 8.3] },
   { k: K_LOGO, hold: [9.1, 10.0] },
