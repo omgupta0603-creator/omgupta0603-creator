@@ -1,0 +1,392 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HiddenMarketing360 Brand Story</title>
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+/*
+ * HiddenMarketing360 — 10s icon brand-story animation.
+ * Deterministic: renderFrame(t) draws the exact frame for time t (seconds).
+ * Journey: Search (need) → Chat (interaction) → Target → Analytics → Megaphone
+ *          (process) → flowing 360 gradient line (delivery) → growth (result) → logo.
+ * Every icon is 4 stroke "slots" (A–D) resampled to N points, so each icon
+ * morphs point-for-point into the next; the last set lands on the logo's own
+ * geometry (hood, text baseline, 3-6 path, 0-ring + arrow) and inflates into it.
+ */
+const W = 1920, H = 1080, N = 260, DUR = 10;
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+
+// Brand palette sampled from the logo ("360" spectrum + white wordmark)
+const STOPS = ['#12B4F6', '#0A7EF2', '#16BE16', '#9BD200', '#F7C500', '#F57C00', '#EC2D2D', '#B42CF0', '#E44DF4', '#F38CF6'];
+const WHITE = '#FFFFFF';
+
+// Logo placement: 2000x667 source scaled 0.85, content centered on screen
+const LS = 0.85, LX = 101, LY = 293;
+const L = (x, y) => [LX + LS * x, LY + LS * y];
+
+// ---------- math ----------
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, p) => a + (b - a) * p;
+const easeIO = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+const easeOut = p => 1 - Math.pow(1 - p, 3);
+const easeOutBack = p => { const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
+const sstep = (a, b, t) => { const p = clamp((t - a) / (b - a)); return p * p * (3 - 2 * p); };
+
+// ---------- path builders (dense polylines) ----------
+function arc(cx, cy, r, a0, a1, n = 120) {
+  const out = [];
+  for (let i = 0; i <= n; i++) { const a = (a0 + (a1 - a0) * i / n) * Math.PI / 180; out.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); }
+  return out;
+}
+const circle = (cx, cy, r, start = 45) => arc(cx, cy, r, start, start + 360, 160);
+function poly(pts, closed = false) { return closed ? [...pts, pts[0]] : pts.slice(); }
+function rrect(x, y, w, h, r) { // clockwise, starting bottom-centre
+  const p = [[x + w / 2, y + h]];
+  p.push(...arc(x + r, y + h - r, r, 90, 180, 12));
+  p.push(...arc(x + r, y + r, r, 180, 270, 12));
+  p.push(...arc(x + w - r, y + r, r, 270, 360, 12));
+  p.push(...arc(x + w - r, y + h - r, r, 0, 90, 12));
+  p.push([x + w / 2, y + h]);
+  return p;
+}
+function catmull(pts, seg = 16) { // smooth curve through points
+  const out = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    for (let j = 0; j < seg; j++) {
+      const t = j / seg, t2 = t * t, t3 = t2 * t;
+      out.push([0, 1].map(k => .5 * ((2 * p1[k]) + (-p0[k] + p2[k]) * t + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2 + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * t3)));
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+const cat = (...parts) => [].concat(...parts);
+function resample(pts) {
+  const d = [0];
+  for (let i = 1; i < pts.length; i++) d.push(d[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  const total = d[d.length - 1], out = [];
+  if (total < 1e-6) { for (let i = 0; i < N; i++) out.push([pts[0][0], pts[0][1]]); return out; }
+  let k = 1;
+  for (let i = 0; i < N; i++) {
+    const s = total * i / (N - 1);
+    while (k < d.length - 1 && d[k] < s) k++;
+    const p = (s - d[k - 1]) / Math.max(1e-9, d[k] - d[k - 1]);
+    out.push([lerp(pts[k - 1][0], pts[k][0], p), lerp(pts[k - 1][1], pts[k][1], p)]);
+  }
+  return out;
+}
+const dot = (x, y) => [[x, y], [x, y]];
+
+// slot: {pts (local), w: width mult, g: gradient amount}
+const S = (pts, w = 1, g = 0) => ({ pts: resample(pts), w, g });
+
+// ---------- ICON SYSTEM (local coords, ~320px box, 13px stroke, round caps) ----------
+// 1. CUSTOMER NEED — being found: search lens with question
+const K_SEARCH = {
+  xf: { cx: 960, cy: 520, s: 1 }, lw: 13, grad: [800, 1120],
+  A: S(circle(-30, -30, 100, 45), 1, 1),
+  B: S([[42, 42], [130, 130]], 1, 0),
+  C: S(cat(arc(-30, -52, 30, 195, 400, 60), catmull([[-7, -33], [-30, -16], [-30, 4]], 8)), 1, 0),
+  D: S(dot(-30, 32), 1, 0),
+};
+// 2. BRAND INTERACTION — conversation bubble
+const bubble = cat([[150, 70]], [[-60, 70], [-110, 128], [-100, 70]], arc(-110, 30, 40, 90, 180, 16), arc(-110, -70, 40, 180, 270, 16), arc(110, -70, 40, 270, 360, 16), arc(110, 30, 40, 0, 90, 16), [[150, 70]]);
+const K_CHAT = {
+  xf: { cx: 960, cy: 520, s: 1 }, lw: 13, grad: [790, 1130],
+  A: S(bubble.map(([x, y]) => [x - 4, y]), 1, 1),
+  B: S([[-80, -42], [80, -42]], 1, 0),
+  C: S([[-80, 4], [24, 4]], 1, 0),
+  D: S(dot(68, 4), 1, 0),
+};
+// 3a. PROCESS — strategy target
+const K_TARGET = {
+  xf: { cx: 960, cy: 520, s: 1 }, lw: 13, grad: [800, 1120],
+  A: S(circle(0, 0, 135, 45), 1, 1),
+  B: S(circle(0, 0, 82, 45), 1, 0),
+  C: S(circle(0, 0, 30, 45), 1, 0),
+  D: S([[0, 0], [150, -150], [150, -195], [150, -150], [195, -150]], 1, 0),
+};
+// 3b. PROCESS — campaign analytics
+const K_CHART = {
+  xf: { cx: 960, cy: 520, s: 1 }, lw: 13, grad: [800, 1120],
+  A: S(catmull([[-150, -10], [-80, -70], [0, -30], [140, -150]], 18), 1, 1),
+  B: S(rrect(-140, 30, 60, 110, 14), 1, 0),
+  C: S(rrect(-30, -10, 60, 150, 14), 1, 0),
+  D: S(rrect(80, -70, 60, 210, 14), 1, 0),
+};
+// 3c. PROCESS — promotion / megaphone
+const K_MEGA = {
+  xf: { cx: 945, cy: 520, s: 1 }, lw: 13, grad: [860, 1180],
+  A: S(arc(45, 0, 135, -42, 42, 60), 1, 1),
+  B: S(poly([[-95, 34], [-140, 34], [-140, -34], [-62, -34], [40, -104], [40, 104], [-62, 34], [-95, 34]]), 1, 0),
+  C: S([[-90, 38], [-66, 104]], 1, 0),
+  D: S(arc(45, 0, 80, -38, 38, 40), 1, 0),
+};
+// 4. DELIVERY — flowing 360 line reaching audiences (screen coords)
+const waveY = x => 540 + 120 * Math.sin((x - 140) / 1640 * Math.PI * 2.5);
+const wave = []; for (let x = 140; x <= 1780; x += 10) wave.push([x, waveY(x)]);
+const NODES = [520, 960, 1400];
+const K_FLOW = {
+  xf: { cx: 0, cy: 0, s: 1 }, lw: 12, grad: [140, 1780],
+  A: S(wave, 1, 1),
+  B: S(circle(NODES[0], waveY(NODES[0]), 30, 90), 1, 0),
+  C: S(circle(NODES[1], waveY(NODES[1]), 30, 90), 1, 0),
+  D: S(circle(NODES[2], waveY(NODES[2]), 30, 90), 1, 0),
+};
+// 5. RESULT — growth
+const K_GROW = {
+  xf: { cx: 960, cy: 520, s: 1.12 }, lw: 13, grad: [760, 1160],
+  A: S(poly([[-200, 85], [-95, -15], [-15, 40], [170, -135], [105, -135], [170, -135], [170, -70]]), 1, 1),
+  B: S(rrect(-160, 95, 64, 80, 14), 1, 0),
+  C: S(rrect(-40, 70, 64, 105, 14), 1, 0),
+  D: S(rrect(80, 15, 64, 160, 14), 1, 0),
+};
+// 6. LOGO — strokes land on the logo's own geometry (screen coords)
+const ringC = [1790, 340], ringR = 76;
+const ringPath = cat(arc(ringC[0], ringC[1], ringR, -40, -330, 140), [[1870, 316], [1822, 330], [1898, 270], [1910, 355], [1870, 316]]);
+const hoodPath = catmull([[232, 440], [112, 326], [190, 215], [282, 137], [345, 178], [406, 300], [340, 246], [276, 222], [205, 250], [150, 318], [232, 440]], 10);
+const digitsPath = cat(
+  catmull([[1468, 300], [1515, 262], [1556, 300], [1512, 343], [1560, 388], [1512, 432], [1462, 405]], 10),
+  catmull([[1462, 405], [1560, 330], [1654, 258]], 8),
+  catmull([[1654, 258], [1602, 330], [1606, 405], [1645, 436], [1686, 398], [1650, 352], [1608, 372]], 10));
+const Lmap = pts => pts.map(([x, y]) => L(x, y));
+const K_LOGO = {
+  xf: { cx: 0, cy: 0, s: 1 }, lw: 7, grad: [L(1452)[0], L(1912)[0]],
+  A: S(Lmap(ringPath), 1, 1),
+  B: S(Lmap(hoodPath), 1, 0),
+  C: S(Lmap([[505, 428], [1452, 428]]), 1, 0),
+  D: S(Lmap(digitsPath), 1, 1),
+};
+
+// Timeline: hold windows; the gaps between them are morphs.
+const KEYS = [
+  { k: K_SEARCH, hold: [0.0, 1.1] },
+  { k: K_CHAT, hold: [1.6, 2.6] },
+  { k: K_TARGET, hold: [3.05, 3.45] },
+  { k: K_CHART, hold: [3.85, 4.25] },
+  { k: K_MEGA, hold: [4.65, 5.05] },
+  { k: K_FLOW, hold: [5.65, 7.05] },
+  { k: K_GROW, hold: [7.6, 8.3] },
+  { k: K_LOGO, hold: [9.1, 10.0] },
+];
+const SLOTS = ['A', 'B', 'C', 'D'];
+
+function toScreen(key, slot, bob) {
+  const { cx, cy, s } = key.xf, sl = key[slot];
+  return sl.pts.map(([x, y]) => [cx + x * s * bob.s + bob.x, cy + y * s * bob.s + bob.y]);
+}
+function holdBob(t, key) {
+  if (key === K_FLOW || key === K_LOGO) return { x: 0, y: 0, s: 1 };
+  return { x: 0, y: 4 * Math.sin(t * Math.PI * 2 / 2.6), s: 1 + 0.008 * Math.sin(t * Math.PI * 2 / 3.1) };
+}
+
+// returns {slots:{A:{pts,w,g}}, lw, grad, phase info}
+function stateAt(t) {
+  for (let i = 0; i < KEYS.length; i++) {
+    const { k, hold } = KEYS[i];
+    if (t >= hold[0] && t <= hold[1]) {
+      const bob = holdBob(t, k), out = {};
+      SLOTS.forEach(s => out[s] = { pts: toScreen(k, s, bob), w: k[s].w, g: k[s].g });
+      return { slots: out, lw: k.lw * (k.xf.s || 1), grad: k.grad, from: i, to: i, p: 0 };
+    }
+    const next = KEYS[i + 1];
+    if (next && t > hold[1] && t < next.hold[0]) {
+      const raw = (t - hold[1]) / (next.hold[0] - hold[1]);
+      const p = easeIO(raw);
+      const b0 = holdBob(hold[1], k), b1 = holdBob(next.hold[0], next.k);
+      const out = {};
+      // secondary motion: a soft breathing swell through each morph
+      const swell = 1 + 0.035 * Math.sin(Math.PI * raw) * (next.k === K_LOGO ? 0 : 1);
+      SLOTS.forEach((s, si) => {
+        // slight per-slot stagger keeps the motion organic, not mechanical
+        const st = clamp((raw - si * 0.04) / (1 - 0.12));
+        const ps = easeIO(st);
+        const a = toScreen(k, s, b0), b = toScreen(next.k, s, b1);
+        const ccx = lerp(k.xf.cx || 960, next.k.xf.cx || 960, p) || 960, ccy = 520;
+        out[s] = {
+          pts: a.map((pt, j) => {
+            const x = lerp(pt[0], b[j][0], ps), y = lerp(pt[1], b[j][1], ps);
+            return [ccx + (x - ccx) * swell, ccy + (y - ccy) * swell];
+          }),
+          w: lerp(k[s].w, next.k[s].w, ps), g: lerp(k[s].g, next.k[s].g, ps),
+        };
+      });
+      const lw = lerp(k.lw * k.xf.s, next.k.lw * next.k.xf.s, p);
+      return { slots: out, lw, grad: [lerp(k.grad[0], next.k.grad[0], p), lerp(k.grad[1], next.k.grad[1], p)], from: i, to: i + 1, p };
+    }
+  }
+  const k = KEYS[KEYS.length - 1].k, out = {};
+  SLOTS.forEach(s => out[s] = { pts: toScreen(k, s, { x: 0, y: 0, s: 1 }), w: k[s].w, g: k[s].g });
+  return { slots: out, lw: k.lw, grad: k.grad, from: 7, to: 7, p: 0 };
+}
+
+function brandGradient(c, x0, x1, y = 540) {
+  const g = c.createLinearGradient(x0, y, x1, y);
+  STOPS.forEach((col, i) => g.addColorStop(i / (STOPS.length - 1), col));
+  return g;
+}
+function strokePts(c, pts, from = 0, to = 1) {
+  const i0 = Math.floor(from * (pts.length - 1)), i1 = Math.ceil(to * (pts.length - 1));
+  if (i1 <= i0) return;
+  c.beginPath(); c.moveTo(pts[i0][0], pts[i0][1]);
+  for (let i = i0 + 1; i <= i1; i++) c.lineTo(pts[i][0], pts[i][1]);
+  c.stroke();
+}
+
+// ---------- background: soft parallax particle field ----------
+function rnd(i) { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+const PARTS = Array.from({ length: 70 }, (_, i) => ({ x: rnd(i) * W, y: rnd(i + 99) * H, r: 1 + rnd(i + 7) * 1.8, layer: i % 3, c: STOPS[Math.floor(rnd(i + 3) * STOPS.length)] }));
+function drawBackground(t) {
+  const fade = sstep(0, 0.8, t) * (1 - sstep(7.9, 8.7, t));
+  if (fade <= 0) return;
+  ctx.save();
+  // faint central glow anchoring composition
+  const gl = ctx.createRadialGradient(960, 520, 0, 960, 520, 620);
+  gl.addColorStop(0, 'rgba(40,60,110,0.20)'); gl.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.globalAlpha = fade; ctx.fillStyle = gl; ctx.fillRect(0, 0, W, H);
+  PARTS.forEach(p => {
+    const speed = [14, 26, 44][p.layer];
+    const x = ((p.x - t * speed) % W + W) % W, y = p.y + Math.sin(t * 0.7 + p.x) * 6;
+    ctx.globalAlpha = fade * [0.10, 0.16, 0.24][p.layer];
+    ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(x, y, p.r, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.restore();
+}
+
+// ---------- logo reveal via inflating stroke masks ----------
+const logo = new Image(); logo.src = 'logo.png';
+const mcv = document.createElement('canvas'); mcv.width = W; mcv.height = H; const mctx = mcv.getContext('2d');
+const lcv = document.createElement('canvas'); lcv.width = W; lcv.height = H; const lctx = lcv.getContext('2d');
+function drawLogoReveal(t, st) {
+  const full = sstep(9.55, 9.78, t);
+  const hp = easeOut(clamp((t - 8.95) / 0.6)), tp = easeOut(clamp((t - 9.05) / 0.6)), np = easeOut(clamp((t - 9.0) / 0.65));
+  if (hp <= 0 && tp <= 0 && np <= 0) return;
+  mctx.save(); mctx.clearRect(0, 0, W, H);
+  mctx.filter = 'blur(7px)';
+  mctx.strokeStyle = '#fff'; mctx.fillStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineJoin = 'round';
+  // hood + H: outline stroke inflates inward to fill the symbol
+  mctx.lineWidth = 230 * hp; strokePts(mctx, st.slots.B.pts);
+  mctx.globalAlpha = hp; mctx.beginPath();
+  Lmap([[232, 452], [100, 326], [282, 128], [418, 300], [360, 452]]).forEach(([x, y], i) => i ? mctx.lineTo(x, y) : mctx.moveTo(x, y));
+  mctx.closePath(); mctx.fill(); mctx.globalAlpha = 1;
+  // wordmark: the baseline line sweeps upward, lifting the letters out of it
+  const [bx0, by] = L(510, 436), [bx1] = L(1450, 436);
+  const sweep = (bx1 - bx0) * clamp(tp * 1.25);
+  mctx.fillRect(bx0, by - 190 * LS * tp, sweep, 190 * LS * tp + 16 * tp);
+  // 360: ring & digit strokes inflate into the solid gradient letterforms
+  mctx.save(); mctx.beginPath(); mctx.rect(L(1452, 0)[0], 0, W, H); mctx.clip();
+  mctx.lineWidth = 120 * np; strokePts(mctx, st.slots.A.pts); strokePts(mctx, st.slots.D.pts);
+  mctx.restore();
+  mctx.filter = 'none';
+  if (full > 0) { mctx.globalAlpha = full; mctx.fillRect(0, 0, W, H); }
+  mctx.restore();
+  lctx.save(); lctx.clearRect(0, 0, W, H);
+  lctx.globalCompositeOperation = 'source-over';
+  lctx.drawImage(logo, LX, LY, 2000 * LS, 667 * LS);
+  lctx.globalCompositeOperation = 'destination-in';
+  lctx.drawImage(mcv, 0, 0);
+  lctx.restore();
+  ctx.drawImage(lcv, 0, 0);
+}
+
+// ---------- main frame ----------
+function renderFrame(t) {
+  t = clamp(t, 0, DUR);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  drawBackground(t);
+
+  // camera: gentle settle into the final logo (ends exactly 1.0)
+  const cam = 1 + 0.025 * (1 - easeOut(clamp((t - 8.6) / 1.25)));
+  const panX = 14 * Math.sin(Math.PI * clamp((t - 5.1) / 2.4));
+  ctx.setTransform(cam, 0, 0, cam, 960 * (1 - cam) + panX * (1 - sstep(7.2, 8.0, t)), 540 * (1 - cam));
+
+  const st = stateAt(t);
+  drawLogoReveal(t, st);
+
+  // icon strokes
+  const strokeAlpha = 1 - sstep(9.3, 9.72, t);
+  const intro = t < 1.0;
+  if (strokeAlpha > 0) {
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const grad = brandGradient(ctx, st.grad[0], st.grad[1]);
+    SLOTS.forEach((s, si) => {
+      const sl = st.slots[s];
+      if (sl.w <= 0.001) return;
+      let a = 0, b = 1;
+      if (intro) { // draw-on reveal, staggered per stroke
+        const p = easeIO(clamp((t - 0.08 - si * 0.14) / 0.62));
+        b = p; if (p <= 0) return;
+      }
+      // the baseline is consumed left→right as the wordmark rises out of it
+      if (s === 'C') a = clamp(easeOut(clamp((t - 9.05) / 0.6)) * 1.25);
+      if (a >= b) return;
+      ctx.lineWidth = st.lw * sl.w;
+      // soft brand glow on gradient strokes
+      if (sl.g > 0.01) {
+        ctx.save(); ctx.globalAlpha = strokeAlpha * sl.g;
+        ctx.shadowColor = 'rgba(160,90,255,0.55)'; ctx.shadowBlur = 22;
+        ctx.strokeStyle = grad; strokePts(ctx, sl.pts, a, b); ctx.restore();
+      }
+      if (sl.g < 0.99) {
+        ctx.save(); ctx.globalAlpha = strokeAlpha * (1 - sl.g); ctx.strokeStyle = WHITE;
+        strokePts(ctx, sl.pts, a, b); ctx.restore();
+      }
+    });
+    // intro: icon scales in softly
+  }
+
+  // DELIVERY: luminous pulse travels the 360 line, lighting each audience node
+  const flowW = sstep(5.45, 5.75, t) * (1 - sstep(7.0, 7.3, t));
+  if (flowW > 0) {
+    const pp = easeIO(clamp((t - 5.7) / 1.3));
+    const A = st.slots.A.pts;
+    const head = pp, tail = Math.max(0, pp - 0.16);
+    ctx.save(); ctx.lineCap = 'round'; ctx.globalAlpha = flowW;
+    ctx.shadowColor = 'rgba(255,255,255,0.9)'; ctx.shadowBlur = 30;
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)'; ctx.lineWidth = 7;
+    strokePts(ctx, A, tail, head);
+    ctx.restore();
+    ['B', 'C', 'D'].forEach((s, i) => {
+      const nx = NODES[i], along = (nx - 140) / 1640;
+      const lit = sstep(along - 0.02, along + 0.06, pp);
+      const pop = 1 + 0.18 * Math.sin(Math.PI * clamp((pp - along) / 0.12)) * (pp > along ? 1 : 0);
+      const pts = st.slots[s].pts; let cx = 0, cy = 0; pts.forEach(p => { cx += p[0]; cy += p[1]; }); cx /= pts.length; cy /= pts.length;
+      ctx.save(); ctx.globalAlpha = flowW * lit;
+      const g = brandGradient(ctx, 140, 1780, cy);
+      ctx.fillStyle = g; ctx.shadowColor = 'rgba(255,255,255,0.6)'; ctx.shadowBlur = 24;
+      ctx.beginPath(); ctx.arc(cx, cy, 15 * pop, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  // RESULT: completion ripple from the growth arrow tip
+  const rip = clamp((t - 7.55) / 0.6);
+  if (rip > 0 && rip < 1) {
+    const tip = [960 + 170 * 1.12, 520 - 135 * 1.12];
+    ctx.save(); ctx.globalAlpha = (1 - rip) * 0.9;
+    ctx.strokeStyle = brandGradient(ctx, tip[0] - 80, tip[0] + 80); ctx.lineWidth = 6 * (1 - rip) + 1;
+    ctx.beginPath(); ctx.arc(tip[0], tip[1], 12 + 70 * easeOut(rip), 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+  }
+}
+
+window.renderFrame = renderFrame;
+window.ready = new Promise(r => { if (logo.complete && logo.naturalWidth) r(); else logo.onload = r; });
+
+// Live preview when opened directly in a browser
+if (!location.search.includes('capture')) {
+  ready.then(() => { const t0 = performance.now(); (function loop() { renderFrame(((performance.now() - t0) / 1000) % (DUR + 1)); requestAnimationFrame(loop); })(); });
+}
+</script>
+</body>
+</html>
