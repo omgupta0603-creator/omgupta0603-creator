@@ -52,6 +52,11 @@ import {
   aeoExplainerSchema,
   getAeoTiming,
 } from "./compositions/AeoExplainer";
+import {
+  GeoExplainer,
+  geoExplainerSchema,
+  getGeoTiming,
+} from "./compositions/GeoExplainer";
 // @new-composition-imports (used by `npm run new`, keep this line)
 
 /**
@@ -405,6 +410,36 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={1}
           calculateMetadata={({ props }) => ({
             durationInFrames: getAeoTiming(props, VIDEO.fps).total,
+          })}
+        />
+        <Composition
+          id="GeoExplainer"
+          component={GeoExplainer}
+          schema={geoExplainerSchema}
+          defaultProps={{
+            sceneSeconds: {
+              title: 7,
+              definition: 14.5,
+              example: 16.5,
+              quality: 7,
+              topical: 9.5,
+              readable: 9,
+              brand: 9,
+              fresh: 9,
+              summary: 11.5,
+              future: 8,
+              thanks: 4.5,
+            },
+            transitionSeconds: 0.6,
+            voiceoverSrc: "",
+            musicVolume: 0.35,
+          }}
+          width={VIDEO.width}
+          height={VIDEO.height}
+          fps={VIDEO.fps}
+          durationInFrames={1}
+          calculateMetadata={({ props }) => ({
+            durationInFrames: getGeoTiming(props, VIDEO.fps).total,
           })}
         />
       </Folder>

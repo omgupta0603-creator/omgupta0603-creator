@@ -184,6 +184,24 @@ npx remotion render AeoExplainer out/AeoExplainer.mp4
 Text: `src/compositions/AeoExplainer/content.ts`. Timing and voiceover: the
 `sceneSeconds` and `voiceoverSrc` props.
 
+## `GeoExplainer`: What is GEO?
+
+Same look as the other explainers. 1920×1080 · 30 fps · about 99.5 s, timed for
+the script at about 3.3 words/s. It has 11 scenes: title, the G-E-O definition,
+an AI-answer example that mentions your brand, five steps (quality content,
+topical authority, easy for AI to understand, brand authority and mentions,
+accurate and up-to-date info), an SEO / AEO / GEO summary, the combined
+strategy and a thank-you outro. The script's last sentence was cut off, so
+`future.lead` / `future.result` in `content.ts` complete it. Brands, numbers
+and sources are illustrative.
+
+```bash
+npx remotion render GeoExplainer out/GeoExplainer.mp4
+```
+
+Text: `src/compositions/GeoExplainer/content.ts`. Timing and voiceover: the
+`sceneSeconds` and `voiceoverSrc` props.
+
 ## Structure
 
 ```
@@ -205,6 +223,7 @@ src/
     EcommerceExplainer/ "What is E-commerce SEO?" explainer
     StrategyExplainer/ "SEO Strategy" 8-step explainer
     AeoExplainer/     "What is AEO?" explainer
+    GeoExplainer/     "What is GEO?" explainer
     _Template/        starter used by `npm run new`
 public/               audio/, images/, fonts/
 .claude/skills/       official Remotion agent skills
