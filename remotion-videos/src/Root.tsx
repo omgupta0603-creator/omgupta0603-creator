@@ -59,7 +59,8 @@ import {
 } from "./compositions/GeoExplainer";
 import {
   ClaudeMarketingReel,
-  CLIPS,
+  clipsFor,
+  LANG_PREFIX,
   reelSeconds,
 } from "./compositions/ClaudeMarketing";
 // @new-composition-imports (used by `npm run new`, keep this line)
@@ -448,29 +449,39 @@ export const RemotionRoot: React.FC = () => {
           })}
         />
       </Folder>
-      <Folder name="ClaudeMarketing">
-        {/* Graphics pack for "Why Use Claude for Digital Marketing": one
-            composition per clip (edit text in content.ts, lengths in clips.ts). */}
-        {CLIPS.map((clip) => (
+      {(["hi", "en"] as const).map((lang) => (
+        <Folder
+          key={lang}
+          name={
+            lang === "hi"
+              ? "ClaudeMarketing-Hinglish"
+              : "ClaudeMarketing-English"
+          }
+        >
+          {/* Graphics pack for "Why Use Claude for Digital Marketing": one
+              composition per clip (text in content.ts, lengths in clips.ts). */}
+          {clipsFor(lang).map((clip) => (
+            <Composition
+              key={clip.id}
+              id={clip.id}
+              component={clip.component}
+              width={VIDEO.width}
+              height={VIDEO.height}
+              fps={VIDEO.fps}
+              durationInFrames={secondsToFrames(clip.seconds, VIDEO.fps)}
+            />
+          ))}
           <Composition
-            key={clip.id}
-            id={clip.id}
-            component={clip.component}
+            id={`${LANG_PREFIX[lang]}00-Reel`}
+            component={ClaudeMarketingReel}
+            defaultProps={{ lang }}
             width={VIDEO.width}
             height={VIDEO.height}
             fps={VIDEO.fps}
-            durationInFrames={secondsToFrames(clip.seconds, VIDEO.fps)}
+            durationInFrames={secondsToFrames(reelSeconds, VIDEO.fps)}
           />
-        ))}
-        <Composition
-          id="CM00-Reel"
-          component={ClaudeMarketingReel}
-          width={VIDEO.width}
-          height={VIDEO.height}
-          fps={VIDEO.fps}
-          durationInFrames={secondsToFrames(reelSeconds, VIDEO.fps)}
-        />
-      </Folder>
+        </Folder>
+      ))}
       {/* @new-compositions (used by `npm run new`, keep this line) */}
     </>
   );

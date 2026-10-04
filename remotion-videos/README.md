@@ -207,13 +207,16 @@ Text: `src/compositions/GeoExplainer/content.ts`. Timing and voiceover: the
 The script is a talking-head video with screen demos, so this is not one video.
 It is a pack of 20 short clips, one for each `[TEXT]` and graphic moment in
 the script. You cut them in between your face cam and screen recordings.
-Each clip is its own composition, `CM01-Hook` … `CM20-EndScreen`.
+Each clip is its own composition. The Hinglish script's clips are
+`CM01-Hook` … `CM20-EndScreen`, and the English script's are `CME01-Hook` …
+`CME20-EndScreen`. Both sets share the same animations and lengths.
 `CM00-Reel` plays them all back to back so you can review the pack.
 
 ```bash
-npm run render:claude              # every clip → out/claude-marketing/<id>.mp4
-npm run render:claude -- CM08      # one clip
-npx remotion render CM00-Reel out/claude-marketing/CM00-Reel.mp4
+npm run render:claude              # Hinglish clips → out/claude-marketing/<id>.mp4
+npm run render:claude -- en        # English clips  → out/claude-marketing-en/<id>.mp4
+npm run render:claude -- CME08     # one clip
+npx remotion render CME00-Reel out/claude-marketing-en/CME00-Reel.mp4
 ```
 
 | Clip | Script cue | Length |
@@ -233,7 +236,8 @@ npx remotion render CM00-Reel out/claude-marketing/CM00-Reel.mp4
 | CM19-CommentCTA | Comment + "PROMPTS" | 8 s |
 | CM20-EndScreen | 20 s end screen with spaces for YouTube's video and subscribe elements | 20 s |
 
-To change the text, edit `src/compositions/ClaudeMarketing/content.ts`. To
+To change the text, edit `src/compositions/ClaudeMarketing/content.ts`. It has
+`hi` for Hinglish and `en` for English, and both must keep the same shape. To
 change a clip's length, edit `seconds` in `clips.ts`. Each clip's content
 animates out in its last 14 frames, so a hard cut back to camera is clean.
 

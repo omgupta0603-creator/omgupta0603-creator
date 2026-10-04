@@ -9,7 +9,7 @@ import {
   typeScale,
 } from "../../../theme/theme";
 import { mix, progress, springIn, springs } from "../../../utils/animation";
-import { content } from "../content";
+import { useContent } from "../content";
 import { ClipShell, Heading } from "../parts";
 
 const PostCard: React.FC<{
@@ -19,6 +19,7 @@ const PostCard: React.FC<{
   tilt: number;
 }> = ({ author, rest, delay, tilt }) => {
   const frame = useCurrentFrame();
+  const content = useContent();
   const { fps } = useVideoConfig();
   const t = springIn({ frame, fps, delay, config: springs.snappy });
   return (
@@ -88,7 +89,7 @@ const PostCard: React.FC<{
 /** Hook: three posts with the same opener, then the question. */
 export const Hook: React.FC = () => {
   const frame = useCurrentFrame();
-  const c = content.hook;
+  const c = useContent().hook;
   const shrink = progress(frame, 70, 95);
   return (
     <ClipShell>
@@ -127,6 +128,7 @@ export const Hook: React.FC = () => {
 /** 3-second channel sting. */
 export const Sting: React.FC = () => {
   const frame = useCurrentFrame();
+  const content = useContent();
   const ring = progress(frame, 0, 30);
   return (
     <ClipShell>
@@ -186,7 +188,7 @@ export const Sting: React.FC = () => {
 export const Agenda: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.agenda;
+  const c = useContent().agenda;
   const palette = [
     colors.accent,
     colors.warm,

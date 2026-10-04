@@ -3,14 +3,14 @@ import { interpolateColors, useCurrentFrame, useVideoConfig } from "remotion";
 import { FadeIn } from "../../../components";
 import { colors, fonts, radii, typeScale } from "../../../theme/theme";
 import { mix, progress, springIn, springs } from "../../../utils/animation";
-import { content } from "../content";
+import { useContent } from "../content";
 import { ClipShell, Heading, Icon } from "../parts";
 
 /** Problem 1: the usual AI words get struck out. */
 export const ProblemGeneric: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.problems[0];
+  const c = useContent().problems[0];
   return (
     <ClipShell>
       <Heading
@@ -83,7 +83,7 @@ export const ProblemGeneric: React.FC = () => {
 export const ProblemContext: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.problems[1];
+  const c = useContent().problems[1];
   return (
     <ClipShell>
       <Heading
@@ -202,7 +202,7 @@ export const ProblemContext: React.FC = () => {
 export const ProblemFiles: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.problems[2];
+  const c = useContent().problems[2];
   const fill = mix(progress(frame, 70, 120), 0, 0.42);
   const stalled = progress(frame, 120, 132);
   const barColor = interpolateColors(

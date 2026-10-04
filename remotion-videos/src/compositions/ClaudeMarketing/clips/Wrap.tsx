@@ -9,7 +9,7 @@ import {
   typeScale,
 } from "../../../theme/theme";
 import { mix, progress, springIn, springs } from "../../../utils/animation";
-import { content } from "../content";
+import { useContent } from "../content";
 import {
   Caret,
   ClipShell,
@@ -24,7 +24,7 @@ import {
 export const Limitations: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.limitations;
+  const c = useContent().limitations;
   const icons: IconName[] = ["clock", "alert", "tools"];
   const palette = [colors.warm, colors.danger, colors.secondary];
   return (
@@ -93,7 +93,7 @@ export const Limitations: React.FC = () => {
 
 /** AI = Draft. Aap = Decision. */
 export const DraftDecision: React.FC = () => {
-  const c = content.draftDecision;
+  const c = useContent().draftDecision;
   return (
     <ClipShell>
       <AnimatedText
@@ -125,7 +125,7 @@ export const DraftDecision: React.FC = () => {
 export const Rctf: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.rctf;
+  const c = useContent().rctf;
   const palette = [
     colors.accent,
     colors.warm,
@@ -359,7 +359,7 @@ const PromptPanel: React.FC<{
 
 /** Side by side: a vague prompt vs an R-C-T-F prompt and what each returns. */
 export const VagueVsRctf: React.FC = () => {
-  const c = content.vague;
+  const c = useContent().vague;
   return (
     <ClipShell>
       <div style={{ display: "flex", gap: 60 }}>
@@ -395,7 +395,7 @@ export const VagueVsRctf: React.FC = () => {
 export const Recap: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.recap;
+  const c = useContent().recap;
   const palette = [
     colors.secondary,
     colors.accent,
@@ -468,7 +468,7 @@ export const Recap: React.FC = () => {
 export const CommentCta: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.comment;
+  const c = useContent().comment;
   const typeStart = 76;
   const n = typedCount(frame, c.reply, typeStart, 0.5);
   const doneAt = typeStart + c.reply.length / 0.5;
@@ -592,7 +592,7 @@ export const CommentCta: React.FC = () => {
 export const EndScreen: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.endScreen;
+  const c = useContent().endScreen;
   const boxes = springIn({ frame, fps, delay: 30, config: springs.smooth });
   const dash = {
     border: `3px dashed ${colors.border}`,

@@ -9,7 +9,7 @@ import {
   typeScale,
 } from "../../../theme/theme";
 import { mix, springIn, springs } from "../../../utils/animation";
-import { content } from "../content";
+import { useContent } from "../content";
 import {
   ChatComposer,
   ClipShell,
@@ -22,7 +22,7 @@ import {
 export const Strengths: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.strengths;
+  const c = useContent().strengths;
   const icons: IconName[] = ["pen", "doc", "table", "folder"];
   const palette = [
     colors.warm,
@@ -121,7 +121,7 @@ const UC_COLORS = [
 /** "Use Case N" title card with the prompt typing into a chat box. */
 export const UseCase: React.FC<{ index: number }> = ({ index }) => {
   const frame = useCurrentFrame();
-  const c = content.useCases[index];
+  const c = useContent().useCases[index];
   const color = UC_COLORS[index];
   const hasProject = "project" in c;
   const promptStart = hasProject ? 90 : 46;
@@ -190,7 +190,7 @@ export const makeUseCase = (index: number): React.FC => {
 export const ProTip: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const c = content.proTip;
+  const c = useContent().proTip;
   const pop = springIn({ frame, fps, delay: 0, config: springs.bouncy });
   return (
     <ClipShell>
@@ -212,6 +212,7 @@ export const ProTip: React.FC = () => {
             color: colors.text,
           }}
         >
+          {c.subBefore}
           <Highlight start={60}>{c.subHighlight}</Highlight>
           {c.subRest}
         </div>

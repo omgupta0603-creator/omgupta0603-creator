@@ -100,7 +100,10 @@ the clips (`id`, `cue`, `seconds`, `component`). `Root.tsx` registers each clip
 by mapping over that list, along with a `CM00-Reel` that plays them all.
 `ClipShell` in `parts.tsx` adds the background and exits the content in the
 last 14 frames. `ChatComposer` is a generic AI prompt box that types a prompt.
-Render the pack with `npm run render:claude`.
+Text comes from `useContent()`, which reads `hi` or `en` in `content.ts`
+through a `ContentProvider`. `clipsFor(lang)` registers each language
+(`CM…` is Hinglish, `CME…` is English). Render with `npm run render:claude`,
+or `npm run render:claude -- en` for English.
 
 ## Creating a new composition
 

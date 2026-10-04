@@ -1,4 +1,5 @@
-import type React from "react";
+import React from "react";
+import { ContentProvider, type Lang } from "./content";
 import { Agenda, Hook, Sting } from "./clips/Intro";
 import { ProblemContext, ProblemFiles, ProblemGeneric } from "./clips/Problems";
 import { makeUseCase, ProTip, Strengths } from "./clips/UseCases";
@@ -148,3 +149,24 @@ export const CLIPS: Clip[] = [
     component: EndScreen,
   },
 ];
+
+/** Id prefix per language: CM01-Hook (Hinglish), CME01-Hook (English). */
+export const LANG_PREFIX: Record<Lang, string> = { hi: "CM", en: "CME" };
+
+/** The clip list for one language: ids re-prefixed, text from that language. */
+export const clipsFor = (lang: Lang): Clip[] =>
+  CLIPS.map((clip) => {
+    const Inner = clip.component;
+    const Localized: React.FC = () =>
+      React.createElement(
+        ContentProvider,
+        { lang },
+        React.createElement(Inner),
+      );
+    Localized.displayName = `${clip.id}-${lang}`;
+    return {
+      ...clip,
+      id: clip.id.replace(/^CM/, LANG_PREFIX[lang]),
+      component: Localized,
+    };
+  });
