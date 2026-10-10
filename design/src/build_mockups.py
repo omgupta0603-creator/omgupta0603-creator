@@ -11,6 +11,8 @@ I = {
  "pin": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
  "doc": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>',
  "check": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+ "share": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>',
+ "mega": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1Z"/><path d="M16 9a3 3 0 0 1 0 6M19 6a7 7 0 0 1 0 12"/></svg>',
  "github": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5Z"/></svg>',
  "in": '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4v11H3v-11Zm7 0h3.8v1.6h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6v5.4h-4v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-4v-11Z"/></svg>',
  "mail": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
@@ -20,6 +22,15 @@ PERSON = '''<svg class="person" viewBox="0 0 400 460" aria-hidden="true"><defs>
 <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#818CF8"/></linearGradient></defs>
 <path d="M30 460c6-96 70-150 170-150s164 54 170 150Z" fill="url(#pg)" stroke="url(#rim)" stroke-width="2"/>
 <circle cx="200" cy="170" r="92" fill="url(#pg)" stroke="url(#rim)" stroke-width="2"/></svg>'''
+
+TOOLS = [("GA","GA4","analytics"),("GSC","Search Console","search data"),("Se","Semrush","research"),("Ah","Ahrefs","backlinks"),
+         ("SF","Screaming Frog","crawling"),("Mz","Moz","authority"),("Ub","Ubersuggest","keywords"),("Hj","Hotjar","behaviour"),
+         ("Cl","Clarity","behaviour"),("Bi","Bing Webmaster","search data"),("Xl","Excel","reporting"),("PP","PowerPoint","decks")]
+INDUSTRIES = [("B2B SaaS","Software"),("Logistics","Supply chain"),("Finance","Financial services"),("Healthcare-education","Health &amp; learning"),("D2C","Direct to consumer")]
+CORE_SKILLS = ["SEO","Local SEO","SMO","Social Media Marketing","Technical SEO","On-page SEO","Keyword Research","GEO / AEO","Content Strategy","Google Business Profile","Meta Ads","Google Ads","GA4 Reporting"]
+
+def tool_grid():
+    return "".join(f'<div class="card" style="padding:28px 12px;text-align:center"><div style="width:52px;height:52px;margin:0 auto 14px;border-radius:14px;background:var(--surface-2);display:grid;place-items:center;font:600 13px var(--mono);color:var(--primary)">{m}</div><b style="font:600 14px var(--head)">{n}</b><div style="font:11px var(--mono);color:var(--faint);margin-top:4px">{k}</div></div>' for m,n,k in TOOLS)
 
 def nav(active):
     lis = "".join(f'<li class="{"on" if n == active else ""}">{n}</li>' for n in ["Home", "About", "Skills", "Contact"])
@@ -86,9 +97,20 @@ home = f'''
   <div class="row" style="gap:40px;font:600 15px var(--mono);color:var(--muted)">{"".join(f"<span>{n}</span>" for n in ["Google","AI Overviews","ChatGPT","Gemini","Perplexity"])}</div></div></div></section>
 
 <section><div class="wrap">
-  <div class="row between" style="align-items:flex-end"><div><span class="label"><b>/</b> What I do</span><h2>How I grow organic visibility</h2></div><p style="max-width:400px;margin:0">Four kinds of work, usually combined into one plan for your site.</p></div>
-  <div class="g g4" style="margin-top:56px">{"".join(f'<div class="card"><div class="ico">{I[i]}</div><h3>{t}</h3><p style="margin:12px 0 28px;font-size:15px">{d}</p><span class="more">Explore &rarr;</span></div>' for i,t,d in [("spark","AI visibility","Citation tracking across LLMs, prompt sets and content tuned to get cited."),("gear","Technical SEO","GSC coverage audits, canonicals, robots.txt and Core Web Vitals."),("pen","Content strategy","Blog and product-page optimization, FAQ sets and topic clusters."),("chart","Reporting","GA4, GSC and Semrush data turned into decks and KPI dashboards.")])}</div></div></section>
+  <div class="row between" style="align-items:flex-end"><div><span class="label"><b>/</b> What I do</span><h2>How I grow organic visibility</h2></div><p style="max-width:400px;margin:0">Search, local and social, usually combined into one plan for your brand.</p></div>
+  <div class="g g4" style="margin-top:56px">{"".join(f'<div class="card"><div class="ico">{I[i]}</div><h3>{t}</h3><p style="margin:12px 0 28px;font-size:15px">{d}</p><span class="more">Explore &rarr;</span></div>' for i,t,d in [("search","SEO","Keyword research, on-page and technical SEO, from GSC audits to Core Web Vitals."),("pin","Local SEO","Google Business Profile, local keywords and consistent business details across the web."),("share","SMO &amp; social media","Profile optimization, content calendars and Meta Ads campaigns."),("spark","AI visibility","Citation tracking across LLMs, prompt sets and content tuned to get cited.")])}</div></div></section>
 
+
+<section class="line-top"><div class="wrap">
+  <div class="row between" style="align-items:flex-end"><div><span class="label"><b>/</b> Skills &amp; tools</span><h2>What I bring to the work</h2></div><span class="btn sm">All skills &rarr;</span></div>
+  <div class="g" style="grid-template-columns:5fr 7fr;gap:48px;margin-top:56px;align-items:start">
+    <div class="card" style="padding:36px"><h3 style="margin-bottom:22px">Core skills</h3><div class="row" style="flex-wrap:wrap;gap:10px">{"".join(f'<span class="chip{" blue" if k < 4 else ""}" style="font:600 14px var(--head);padding:10px 18px;{"" if k < 4 else "color:var(--text)"}">{n}</span>' for k,n in enumerate(CORE_SKILLS))}</div></div>
+    <div><h3 style="margin-bottom:22px">Tools I use</h3><div class="g" style="grid-template-columns:repeat(4,1fr);gap:14px">{tool_grid()}</div></div>
+  </div></div></section>
+
+<section class="line-top" style="padding:88px 0"><div class="wrap">
+  <span class="label"><b>/</b> Industries</span><h2>Industries I&rsquo;ve worked in</h2>
+  <div class="g" style="grid-template-columns:repeat(5,1fr);margin-top:48px;gap:16px">{"".join(f'<div class="card" style="padding:28px 24px"><span class="label" style="margin-bottom:10px">{d}</span><b style="font:700 20px var(--head);letter-spacing:-.01em">{n}</b></div>' for n,d in INDUSTRIES)}</div></div></section>
 <section class="line-top"><div class="wrap g g2" style="align-items:center;gap:80px">
   <div class="portrait" style="height:520px">{PERSON}<span class="chip tag">Working photo</span></div>
   <div><span class="label"><b>/</b> Meet Om</span><h2>Three-plus years of making brands easier to find.</h2>
@@ -145,26 +167,26 @@ about = page_head("About", 'About <span class="grad-text">Me</span>', "The perso
 {cta()}'''
 
 # ---------- SKILLS ----------
-cats = [("spark","AI Visibility (GEO / AEO)",[("LLM citation tracking",3),("Prompt set design",3),("Source-priority analysis",2),("AI Overview optimization",2)]),
-        ("gear","Technical SEO",[("GSC coverage audits",3),("Canonicals &amp; robots.txt",3),("Core Web Vitals",2),("Traffic-drop diagnosis",3)]),
-        ("pen","Content Strategy",[("Blog &amp; product pages",3),("FAQ sets",3),("Content gap analysis",3),("Topic clusters",2)]),
-        ("chart","Reporting &amp; Analytics",[("GA4",3),("KPI dashboards",2),("Client decks",3),("Excel trackers",3)]),
-        ("pin","Local &amp; Paid",[("Google Business Profile",2),("SMO",2),("Google Ads",1),("Meta Ads",1)]),
-        ("search","Research",[("Keyword research",3),("Competitor analysis",3),("SERP analysis",3),("Search intent mapping",2)])]
+cats = [("search","SEO",[("Keyword research",3),("On-page SEO",3),("Technical SEO audits",3),("Core Web Vitals",2)]),
+        ("pin","Local SEO",[("Google Business Profile",2),("Local keyword targeting",2),("NAP consistency",2),("Location pages",2)]),
+        ("share","SMO",[("Profile optimization",2),("Post &amp; hashtag optimization",2),("Content calendars",2),("Engagement tracking",2)]),
+        ("mega","Social Media Marketing",[("Campaign planning",2),("Audience targeting",2),("Meta Ads",1),("Google Ads",1)]),
+        ("spark","AI Visibility (GEO / AEO)",[("LLM citation tracking",3),("Prompt set design",3),("Source-priority analysis",2),("AI Overview optimization",2)]),
+        ("pen","Content &amp; Reporting",[("Content strategy",3),("FAQ sets",3),("GA4 &amp; GSC reporting",3),("KPI dashboards",2)])]
 LN = {3:"Advanced",2:"Proficient",1:"Familiar"}
-skills = page_head("Skills", 'Skills &amp; <span class="grad-text">Expertise</span>', "From crawl budgets to LLM citations: the work I do day to day, and how deep I go in each.") + f'''
+skills = page_head("Skills", 'Skills &amp; <span class="grad-text">Expertise</span>', "SEO, local SEO, SMO, social media marketing and AI search: the work I do day to day, and how deep I go in each.") + f'''
 <section style="padding-top:0"><div class="wrap">
   <div class="row" style="gap:28px;margin-bottom:28px">{lvl(3,"Advanced")}{lvl(2,"Proficient")}{lvl(1,"Familiar")}</div>
   <div class="g g3">{"".join(f'<div class="card"><div class="ico">{I[i]}</div><h3>{t}</h3><div style="margin-top:20px">' + "".join(f'<div class="row between" style="padding:12px 0;border-top:1px solid var(--line);font-size:15px"><span>{n}</span>{lvl(l,LN[l])}</div>' for n,l in items) + '</div></div>' for i,t,items in cats)}</div></div></section>
 
-<section class="line-top"><div class="wrap"><span class="label"><b>/</b> Core strengths</span><h2>Classic search and AI search</h2>
-  <div class="g g2" style="margin-top:56px;gap:80px">{"".join(f'<div><h3 style="margin-bottom:24px">{t}</h3>' + "".join(f'<div class="row between" style="font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase"><span>{s}</span><span style="color:var(--primary)">{lv}</span></div><div class="bar"><span style="width:{w}%"></span></div>' for s,lv,w in items) + '</div>' for t,items in [("Classic search",[("Technical SEO","Advanced",90),("On-page &amp; content","Advanced",90),("Local SEO","Proficient",65),("Paid (Ads)","Familiar",35)]),("AI search",[("LLM citation tracking","Advanced",90),("Prompt set design","Advanced",88),("Source-priority analysis","Proficient",66),("AI Overview optimization","Proficient",64)])])}</div></div></section>
+<section class="line-top"><div class="wrap"><span class="label"><b>/</b> Core strengths</span><h2>Search and social</h2>
+  <div class="g g2" style="margin-top:56px;gap:80px">{"".join(f'<div><h3 style="margin-bottom:24px">{t}</h3>' + "".join(f'<div class="row between" style="font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase"><span>{s}</span><span style="color:var(--primary)">{lv}</span></div><div class="bar"><span style="width:{w}%"></span></div>' for s,lv,w in items) + '</div>' for t,items in [("Search",[("SEO","Advanced",90),("Technical SEO","Advanced",88),("AI search (GEO / AEO)","Advanced",86),("Local SEO","Proficient",68)]),("Social",[("SMO","Proficient",68),("Social media marketing","Proficient",64),("Meta Ads","Familiar",38),("Google Ads","Familiar",34)])])}</div></div></section>
 
 <section class="line-top"><div class="wrap"><div class="row between" style="align-items:flex-end"><div><span class="label"><b>/</b> Toolkit</span><h2>Tools of the Trade</h2></div><p style="max-width:380px;margin:0">What I use for audits, research, tracking and reporting.</p></div>
-  <div class="g g6" style="margin-top:56px;gap:16px">{"".join(f'<div class="card" style="padding:28px 12px;text-align:center"><div style="width:52px;height:52px;margin:0 auto 14px;border-radius:14px;background:var(--surface-2);display:grid;place-items:center;font:600 13px var(--mono);color:var(--primary)">{m}</div><b style="font:600 14px var(--head)">{n}</b><div style="font:11px var(--mono);color:var(--faint);margin-top:4px">{k}</div></div>' for m,n,k in [("GA","GA4","analytics"),("GSC","Search Console","search data"),("Se","Semrush","research"),("Ah","Ahrefs","backlinks"),("SF","Screaming Frog","crawling"),("Mz","Moz","authority"),("Ub","Ubersuggest","keywords"),("Hj","Hotjar","behaviour"),("Cl","Clarity","behaviour"),("Bi","Bing Webmaster","search data"),("Xl","Excel","reporting"),("PP","PowerPoint","decks")])}</div></div></section>
+  <div class="g g6" style="margin-top:56px;gap:16px">{tool_grid()}</div></div></section>
 
-<section class="line-top" style="padding:80px 0"><div class="wrap row between"><div><span class="label"><b>/</b> Industries</span><h2 style="font-size:36px">Where I&rsquo;ve done this work</h2></div>
-  <div class="row" style="gap:12px;flex-wrap:wrap;max-width:640px;justify-content:flex-end">{"".join(f'<span class="chip" style="font:600 16px var(--head);padding:12px 22px;color:var(--text)">{n}</span>' for n in ["B2B SaaS","Logistics","Finance","Healthcare-education","D2C"])}</div></div></section>
+<section class="line-top" style="padding:80px 0"><div class="wrap row between"><div><span class="label"><b>/</b> Industries</span><h2 style="font-size:36px">Industries I&rsquo;ve worked in</h2></div>
+  <div class="row" style="gap:12px;flex-wrap:wrap;max-width:640px;justify-content:flex-end">{"".join(f'<span class="chip" style="font:600 16px var(--head);padding:12px 22px;color:var(--text)">{n}</span>' for n,_ in INDUSTRIES)}</div></div></section>
 {cta()}'''
 
 # ---------- CONTACT ----------
@@ -177,7 +199,7 @@ contact = page_head("Contact", 'Get in <span class="grad-text">Touch</span>', "H
   <div class="card" style="padding:44px;background:var(--surface);border-color:var(--line-2)"><h3 style="font-size:26px;margin-bottom:28px">Send a message</h3>
     <div class="g g2" style="gap:16px"><div><div class="label" style="margin-bottom:8px">Name</div><div class="field focus">Your name<span class="caret" style="margin-left:2px"></span></div></div><div><div class="label" style="margin-bottom:8px">Email</div><div class="field">you@company.com</div></div></div>
     <div class="label" style="margin-bottom:8px">I need help with</div>
-    <div class="row" style="gap:10px;margin-bottom:20px">{"".join(f'<span class="chip{" blue" if k==1 else ""}">{n}</span>' for k,n in enumerate(["SEO audit","AI visibility","Content strategy","Reporting"]))}</div>
+    <div class="row" style="gap:10px;margin-bottom:20px">{"".join(f'<span class="chip{" blue" if k==1 else ""}">{n}</span>' for k,n in enumerate(["SEO","Local SEO","SMO / social media","AI visibility"]))}</div>
     <div class="label" style="margin-bottom:8px">Subject</div><div class="field">SEO audit, AI visibility, content strategy</div>
     <div class="label" style="margin-bottom:8px">Message</div><div class="field area">Your site, your goals, and what&rsquo;s not working yet</div>
     <div class="btn solid" style="width:100%;justify-content:center;margin-top:8px">Send Message &rarr;</div></div></div></section>
@@ -186,7 +208,7 @@ contact = page_head("Contact", 'Get in <span class="grad-text">Touch</span>', "H
   <div class="g g3" style="margin-top:56px">{"".join(f'<div class="card"><div class="num">0{k+1}</div><h3 style="margin:14px 0 10px">{t}</h3><p style="margin:0;font-size:15px">{d}</p></div>' for k,(t,d) in enumerate([("You send a message","Tell me about your site, your goals and what isn&rsquo;t working."),("I reply by email","With questions, first thoughts and a time to talk."),("We plan the first step","Usually an audit or a baseline of your AI citations.")]))}</div></div></section>
 
 <section class="line-top"><div class="wrap g" style="grid-template-columns:4fr 8fr;gap:64px"><div><span class="label"><b>/</b> FAQ</span><h2>Before you write</h2></div>
-  <div><div class="faq" style="flex-direction:column;align-items:stretch"><div class="row between"><span>Which industries do you work with?</span><span class="pm">&minus;</span></div><p style="font:400 16px var(--body);margin:14px 0 0">B2B SaaS, logistics, finance, healthcare-education and D2C so far, and the methods carry over to most sites.</p></div>
+  <div><div class="faq" style="flex-direction:column;align-items:stretch"><div class="row between"><span>Which industries do you work with?</span><span class="pm">&minus;</span></div><p style="font:400 16px var(--body);margin:14px 0 0">B2B SaaS, logistics, finance, healthcare-education and D2C so far, across SEO, local SEO and social media.</p></div>
   {"".join(f'<div class="faq"><span>{q}</span><span class="pm">+</span></div>' for q in ["Do you take one-off SEO audits?","Can you track how AI tools cite my brand?","Do you work with clients outside India?"])}</div></div></section>'''
 
 for name, active, body in [("home","Home",home),("about","About",about),("skills","Skills",skills),("contact","Contact",contact)]:

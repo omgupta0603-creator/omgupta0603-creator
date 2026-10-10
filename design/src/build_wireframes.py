@@ -76,8 +76,19 @@ home = f'''
 
 <section class="wf">{anno("03 Services", "ref: Kevin Indig 2-up cards · Dribbble &lsquo;What I can do&rsquo;")}
   <div class="wrap"><div class="row between"><div><div class="eyebrow">What I do</div><h2>How I grow organic visibility</h2></div><div style="width:380px">{lines("l","m")}</div></div>
-  <div class="g g4 mt32">{"".join(f'<div class="box"><div class="ico"></div><h3>{t}</h3>{lines("l","l","m")}<div class="mt16" style="font-size:12px;font-weight:700;letter-spacing:.1em">EXPLORE &rarr;</div></div>' for t in ["AI visibility (GEO/AEO)","Technical SEO","Content strategy","Reporting"])}</div></div></section>
+  <div class="g g4 mt32">{"".join(f'<div class="box"><div class="ico"></div><h3>{t}</h3>{lines("l","l","m")}<div class="mt16" style="font-size:12px;font-weight:700;letter-spacing:.1em">EXPLORE &rarr;</div></div>' for t in ["SEO","Local SEO","SMO &amp; social media","AI visibility (GEO/AEO)"])}</div></div></section>
 
+
+<section class="wf">{anno("03b Skills &amp; tools", "ref: Kevin Indig logo wall · Reeni skill list")}
+  <div class="wrap"><div class="row between"><div><div class="eyebrow">Skills &amp; tools</div><h2>What I bring to the work</h2></div><span class="btn sm">All skills &rarr;</span></div>
+  <div class="g mt32" style="grid-template-columns:5fr 7fr;align-items:start">
+    <div class="box"><h3>Core skills</h3>{"".join(f'<span class="chip" style="font-size:13px;padding:7px 14px">{n}</span>' for n in ["SEO","Local SEO","SMO","Social Media Marketing","Technical SEO","On-page SEO","Keyword Research","GEO / AEO","Content Strategy","Google Business Profile","Meta Ads","Google Ads","GA4 Reporting"])}</div>
+    <div><h3>Tools I use</h3><div class="g g4" style="gap:12px">{"".join(f'<div class="box center" style="padding:16px 8px">{ph("",40,"round",style="width:40px;margin:0 auto 8px")}<h4 style="margin:0;font-size:12.5px">{n}</h4></div>' for n in ["GA4","Search Console","Semrush","Ahrefs","Screaming Frog","Moz","Ubersuggest","Hotjar","Clarity","Bing Webmaster","Excel","PowerPoint"])}</div></div>
+  </div></div></section>
+
+<section class="wf dark">{anno("03c Industries", "ref: Aleyda &lsquo;brands that trust&rsquo; strip")}
+  <div class="wrap"><div class="eyebrow">Industries</div><h2>Industries I&rsquo;ve worked in</h2>
+  <div class="g mt24" style="grid-template-columns:repeat(5,1fr)">{"".join(f'<div class="box"><div class="eyebrow" style="margin:0 0 6px">Industry</div><h3 style="margin:0">{n}</h3></div>' for n in ["B2B SaaS","Logistics","Finance","Healthcare-education","D2C"])}</div></div></section>
 <section class="wf dark">{anno("04 Meet Om", "ref: Kevin Indig &lsquo;Meet Kevin&rsquo; · Aleyda intro card")}
   <div class="wrap g g2" style="align-items:center">{ph("Working photo / speaking photo", 420)}
   <div><div class="eyebrow">Meet Om</div><h2>SEO &amp; Content Strategist, 3+ years, Delhi</h2>{lines("l","l","l","m")}<div class="row mt24"><span class="btn">More about me &rarr;</span></div></div></div></section>
@@ -137,17 +148,17 @@ about = page_header("About Me", "The person behind the rankings and the citation
 skills = page_header("Skills &amp; Expertise", "From crawl budgets to LLM citations: what I do and how deep I go.", "ref: Dribbble headers") + f'''
 <section class="wf">{anno("Skill category grid 3×2", "ref: Dribbble &lsquo;What I can do&rsquo; cards + level chips")}
   <div class="wrap"><div class="row" style="gap:16px"><span class="chip">&#9632;&#9632;&#9632; Advanced</span><span class="chip">&#9632;&#9632;&#9633; Proficient</span><span class="chip">&#9632;&#9633;&#9633; Familiar</span></div>
-  <div class="g g3 mt16">{"".join(f'<div class="box"><div class="ico"></div><h3>{t}</h3>' + "".join(f'<div class="row between" style="border-top:1px solid #E5E7EB;padding:10px 0"><span style="font-size:13px">Skill item</span><span class="chip" style="margin:0">Level</span></div>' for _ in range(4)) + '</div>' for t in ["AI Visibility (GEO/AEO)","Technical SEO","Content Strategy","Reporting &amp; Analytics","Local &amp; Paid","Research"])}</div></div></section>
+  <div class="g g3 mt16">{"".join(f'<div class="box"><div class="ico"></div><h3>{t}</h3>' + "".join(f'<div class="row between" style="border-top:1px solid #E5E7EB;padding:10px 0"><span style="font-size:13px">Skill item</span><span class="chip" style="margin:0">Level</span></div>' for _ in range(4)) + '</div>' for t in ["SEO","Local SEO","SMO","Social Media Marketing","AI Visibility (GEO/AEO)","Content &amp; Reporting"])}</div></div></section>
 
 <section class="wf dark">{anno("Core strengths bars", "ref: Reeni Design Skill / Development Skill bars")}
-  <div class="wrap g g2">{"".join(f'<div><h3>{t}</h3>' + "".join(f'<div class="row between" style="font-size:12px;font-weight:600;letter-spacing:.06em"><span>{s}</span><span>{lv}</span></div><div class="bar"><span style="width:{w}%"></span></div>' for s,lv,w in items) + '</div>' for t,items in [("Search (classic)",[("TECHNICAL SEO","Advanced",90),("ON-PAGE &amp; CONTENT","Advanced",90),("LOCAL SEO","Proficient",65),("PAID (ADS)","Familiar",35)]),("AI search",[("LLM CITATION TRACKING","Advanced",90),("PROMPT SET DESIGN","Advanced",85),("SOURCE-PRIORITY ANALYSIS","Proficient",65),("AI OVERVIEW OPTIMIZATION","Proficient",65)])])}</div></section>
+  <div class="wrap g g2">{"".join(f'<div><h3>{t}</h3>' + "".join(f'<div class="row between" style="font-size:12px;font-weight:600;letter-spacing:.06em"><span>{s}</span><span>{lv}</span></div><div class="bar"><span style="width:{w}%"></span></div>' for s,lv,w in items) + '</div>' for t,items in [("Search",[("SEO","Advanced",90),("TECHNICAL SEO","Advanced",88),("AI SEARCH (GEO / AEO)","Advanced",86),("LOCAL SEO","Proficient",68)]),("Social",[("SMO","Proficient",68),("SOCIAL MEDIA MARKETING","Proficient",64),("META ADS","Familiar",38),("GOOGLE ADS","Familiar",34)])])}</div></section>
 
 <section class="wf">{anno("Tools of the trade 6×2", "ref: Kevin Indig logo wall · hover cards")}
   <div class="wrap"><div class="eyebrow">Toolkit</div><h2>Tools of the Trade</h2>
   <div class="g g6 mt32">{"".join(f'<div class="box center" style="padding:20px 8px">{ph("",48,"round",style="width:48px;margin:0 auto 10px")}<h4 style="margin:0;font-size:13px">{n}</h4></div>' for n in ["GA4","Search Console","Semrush","Ahrefs","Screaming Frog","Moz","Ubersuggest","Hotjar","Clarity","Bing Webmaster","Excel","PowerPoint"])}</div></div></section>
 
 <section class="wf dark">{anno("Industries served", "ref: Aleyda &lsquo;brands that trust&rsquo; strip")}
-  <div class="wrap row between"><div><div class="eyebrow">Industries</div><h2>Where I&rsquo;ve done this work</h2></div>
+  <div class="wrap row between"><div><div class="eyebrow">Industries</div><h2>Industries I&rsquo;ve worked in</h2></div>
   <div style="max-width:600px">{"".join(f'<span class="chip" style="font-size:15px;padding:8px 18px">{n}</span>' for n in ["B2B SaaS","Logistics","Finance","Healthcare-education","D2C"])}</div></div></section>
 {cta()}'''
 
@@ -162,7 +173,7 @@ contact = page_header("Get in Touch", "Have a project in mind or want to chat? D
     <div class="box fill" style="padding:32px"><h3>Send a message</h3>
       <div class="g g2" style="gap:14px"><div class="field">Name</div><div class="field">Email</div></div>
       <div class="field">Subject</div>
-      <div class="row" style="gap:8px;margin-bottom:14px"><span class="eyebrow" style="margin:0">I need help with:</span><span class="chip">SEO audit</span><span class="chip">AI visibility</span><span class="chip">Content</span><span class="chip">Reporting</span></div>
+      <div class="row" style="gap:8px;margin-bottom:14px"><span class="eyebrow" style="margin:0">I need help with:</span><span class="chip">SEO</span><span class="chip">Local SEO</span><span class="chip">SMO / social</span><span class="chip">AI visibility</span></div>
       <div class="field area">Message</div>
       <div class="btn solid" style="width:100%;justify-content:center">Send Message &rarr;</div></div>
   </div></section>
