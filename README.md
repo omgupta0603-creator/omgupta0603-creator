@@ -2,13 +2,22 @@
 
 Static four-page portfolio (Home, About, Skills, Contact) built from the dark-mode design system:
 slate `#0F172A` background, `#1E293B` surfaces, sky-blue `#38BDF8` and indigo `#818CF8` accents,
-Plus Jakarta Sans headings with Inter body text, a 1280px max-width 12-column grid and 8pt spacing.
+Plus Jakarta Sans headings, Inter body text and JetBrains Mono for labels and data,
+a 1280px max-width 12-column grid and 8pt spacing.
+
+The home page opens on an AI-answer card: a query types itself, the answer arrives word by word,
+and it cites the About and Skills pages. That is the site's one signature moment. Everything else stays quiet.
 
 No build step. Open `index.html` in a browser, or publish with GitHub Pages
 (Settings → Pages → Deploy from branch → `/docs`).
 
 - `styles.css`: design tokens (CSS variables) and all components
-- `main.js`: mobile menu, scroll reveal, stat counters, and the contact form (opens a pre-filled email)
+- `main.js`: mobile menu, GSAP motion (hero sequence, scroll reveals, timeline line drawing, skill bars),
+  and the contact form (opens a pre-filled email)
+- `vendor/`: GSAP 3.12.5 core and ScrollTrigger, served locally so the site has no CDN dependency
+
+Motion is skipped for visitors with "reduce motion" turned on, and if the scripts fail to load,
+all content shows without animation.
 
 ## To finish
 - Add `resume.pdf` to this folder so the "Download Resume" button works.

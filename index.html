@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Om Gupta | SEO & Content Strategist</title>
-  <meta name="description" content="Om Gupta is an SEO & Content Strategist in Delhi helping brands grow visibility in Google and AI search (GEO / AEO).">
+  <meta name="description" content="Om Gupta is an SEO & Content Strategist in Delhi helping brands get found on Google and cited by AI search (GEO / AEO).">
   <meta name="theme-color" content="#0F172A">
+  <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('anim');setTimeout(function(){if(!window.__animReady)document.documentElement.classList.remove('anim')},2500)}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="bg-glow" aria-hidden="true"></div>
   <header class="nav">
     <nav class="container nav-inner" aria-label="Main">
-      <a class="logo" href="index.html">Om Gupta<span>.</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+      <a class="logo" href="index.html">om<span class="accent">.</span>gupta</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">Menu</button>
       <ul class="nav-links">
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -30,52 +30,71 @@
   <main>
     <section class="hero">
       <div class="container grid-12">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">&#128075; Hello, World</span>
-          <h1>Crafting digital experiences <span class="gradient-text">that scale</span></h1>
-          <p class="lead muted">I&rsquo;m Om Gupta, an SEO &amp; Content Strategist in Delhi. I help B2B SaaS, logistics, finance, healthcare-education and D2C brands grow organic visibility in classic search and in AI search: Google, ChatGPT, Gemini, Perplexity and AI Overviews.</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="skills.html">Explore Work &rarr;</a>
+        <div class="hero-copy">
+          <span class="label" data-hero>&#128075; Hello, World &middot; SEO &amp; AI visibility</span>
+          <h1><span class="line" data-hero>Get found on Google.</span><span class="line" data-hero>Get <span class="cited">cited</span> by AI.</span></h1>
+          <p class="hero-lead" data-hero>I&rsquo;m Om Gupta, an SEO &amp; Content Strategist in Delhi. I help B2B SaaS, logistics, finance, healthcare-education and D2C brands rank in classic search and show up in the answers ChatGPT, Gemini, Perplexity and AI Overviews give.</p>
+          <div class="btn-row" data-hero>
+            <a class="btn btn-primary" href="skills.html">See what I do <span class="arrow">&rarr;</span></a>
             <a class="btn btn-outline" href="resume.pdf" download>Download Resume</a>
           </div>
         </div>
-        <div class="hero-visual reveal" aria-label="Profile card">
-          <div class="glass float-badge b1">&#128269; Technical SEO</div>
-          <div class="glass float-badge b2">&#129302; GEO / AEO</div>
-          <div class="glass float-badge b3">&#128200; Problem Solver</div>
-          <div class="glass profile-card">
-            <div class="avatar">OG</div>
-            <h3>Om Gupta</h3>
-            <p class="muted" style="margin:0">SEO &amp; Content Strategist @ AdLift</p>
-            <div class="chips">
-              <span class="chip chip-blue">GA4</span>
-              <span class="chip chip-blue">Search Console</span>
-              <span class="chip">Semrush</span>
-              <span class="chip">Ahrefs</span>
-              <span class="chip">Content Strategy</span>
+        <div class="hero-engine" data-hero>
+          <div class="engine" role="img" aria-label="An AI answer to the question &lsquo;who can get my brand cited in AI answers?&rsquo; that cites Om Gupta&rsquo;s About and Skills pages">
+            <div class="engine-bar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><span class="engine-query" data-query="who can get my brand cited in AI answers?">who can get my brand cited in AI answers?</span><span class="caret"></span></div>
+            <div class="engine-body" aria-hidden="true">
+              <span class="engine-tag">Answer</span>
+              <p class="engine-answer">For B2B SaaS, logistics and D2C brands, <strong>Om Gupta</strong> tracks how brands get cited across ChatGPT, Gemini, Perplexity and Google AI Overviews, then shapes content to earn those citations <span class="cite">1</span>. He pairs it with technical SEO, from GSC coverage audits to Core Web Vitals <span class="cite">2</span>.</p>
+            </div>
+            <div class="engine-sources">
+              <a class="source" href="about.html"><span class="cite">1</span><span><span class="source-title">About Om Gupta</span><span class="source-url">omgupta / about</span></span></a>
+              <a class="source" href="skills.html"><span class="cite">2</span><span><span class="source-title">Skills &amp; Expertise</span><span class="source-url">omgupta / skills</span></span></a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section style="padding-top:0">
+    <div class="engines">
+      <div class="container engines-inner" data-reveal>
+        <span class="label">Optimizing for</span>
+        <ul class="engine-list">
+          <li>Google Search</li><li>AI Overviews</li><li>ChatGPT</li><li>Gemini</li><li>Perplexity</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="section">
       <div class="container">
-        <div class="stats">
-          <div class="card stat reveal"><div class="stat-num gradient-text" data-count="3" data-suffix="+">3+</div><div class="stat-label">Years in SEO &amp; content</div></div>
-          <div class="card stat reveal"><div class="stat-num gradient-text" data-count="5">5</div><div class="stat-label">Industries served</div></div>
-          <div class="card stat reveal"><div class="stat-num gradient-text" data-count="5">5</div><div class="stat-label">Search &amp; AI engines optimized for</div></div>
+        <div class="section-head" data-reveal>
+          <div><span class="label">What I do</span><h2>How I grow organic visibility</h2></div>
+          <p class="muted">Four kinds of work, usually combined. Each one links to the detailed skills behind it.</p>
+        </div>
+        <div class="services" data-reveal data-stagger>
+          <a class="service" href="skills.html#ai"><h3>AI visibility</h3><p>Citation tracking across LLMs, prompt sets, source-priority analysis and content tuned to get cited.</p><span class="go">&rarr;</span></a>
+          <a class="service" href="skills.html#technical"><h3>Technical SEO</h3><p>GSC coverage audits, canonicals, robots.txt, Core Web Vitals and traffic-drop diagnosis.</p><span class="go">&rarr;</span></a>
+          <a class="service" href="skills.html#content"><h3>Content strategy</h3><p>Blog and product-page optimization, FAQ sets, content gap analysis and topic clusters.</p><span class="go">&rarr;</span></a>
+          <a class="service" href="skills.html#reporting"><h3>Reporting</h3><p>GA4, GSC and Semrush data turned into client decks, KPI dashboards and Excel trackers.</p><span class="go">&rarr;</span></a>
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="section">
       <div class="container">
-        <div class="card cta-band reveal">
-          <h2>Want to be found, and cited?</h2>
-          <p class="muted">From GSC coverage audits to LLM citation tracking, let&rsquo;s map out where your organic growth is hiding.</p>
-          <a class="btn btn-primary" href="contact.html">Let&rsquo;s Talk</a>
+        <div class="facts" data-reveal data-stagger>
+          <div class="fact"><div class="fact-value">3+ years</div><p class="fact-label">in SEO and content, since April 2023</p></div>
+          <div class="fact"><div class="fact-value">4 teams</div><p class="fact-label">agency and in-house, now at AdLift Marketing</p></div>
+          <div class="fact"><div class="fact-value">5 industries</div><p class="fact-label">B2B SaaS, logistics, finance, healthcare-education, D2C</p></div>
         </div>
+      </div>
+    </section>
+
+    <section class="section cta">
+      <div class="container" data-reveal data-stagger>
+        <span class="label">Next step</span>
+        <h2>Want your brand in the answer?</h2>
+        <p>Tell me about your site and goals, and we&rsquo;ll work out where your organic growth is hiding.</p>
+        <div><a class="btn btn-primary" href="contact.html">Let&rsquo;s Talk <span class="arrow">&rarr;</span></a></div>
       </div>
     </section>
   </main>
@@ -86,6 +105,8 @@
       <span><a href="mailto:omgupta0603@gmail.com">omgupta0603@gmail.com</a> &middot; Delhi, India</span>
     </div>
   </footer>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
