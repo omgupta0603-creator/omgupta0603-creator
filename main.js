@@ -24,6 +24,7 @@ function splitChars(el) {
   const text = el.textContent;
   el.setAttribute('aria-label', text);
   el.textContent = '';
+  el.classList.add('is-split');
   return [...text].map((c) => {
     const span = document.createElement('span');
     span.className = 'ch';
