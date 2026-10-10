@@ -1,8 +1,9 @@
 # Portfolio site
 
 Static four-page portfolio (Home, About, Skills, Contact), coded from the hi-fi mockups in
-`design/mockups/`. No build step to serve it: open `index.html`, or publish with GitHub Pages
-(Settings → Pages → Deploy from branch → `/docs`).
+`design/mockups/`. Live at https://omgupta0603-creator.github.io/omgupta0603-creator/. GitHub Pages serves the
+`gh-pages` branch, which `.github/workflows/publish-site.yml` refreshes from this folder whenever
+`docs/` changes on main. No build step is needed to serve it; you can also just open `index.html`.
 
 ## What's in here
 - `styles.css`: design tokens (navy `#0F172A`, surface `#1E293B`, sky `#38BDF8`, indigo `#818CF8`;

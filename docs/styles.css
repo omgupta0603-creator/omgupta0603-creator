@@ -149,7 +149,13 @@ a.card:hover, .card.lift:hover { transform: translateY(-4px); }
   background: linear-gradient(180deg, rgba(56, 189, 248, .16), rgba(129, 140, 248, 0)); -webkit-background-clip: text; background-clip: text;
   user-select: none; pointer-events: none;
 }
-.wordmark .ch { display: inline-block; }
+/* Once split into letters, each letter carries its own gradient fill: a gradient
+   clipped to the parent's text can paint unclipped while children are transformed. */
+.wordmark.is-split { background: none; }
+.wordmark .ch {
+  display: inline-block;
+  background: linear-gradient(180deg, rgba(56, 189, 248, .16), rgba(129, 140, 248, 0)); -webkit-background-clip: text; background-clip: text;
+}
 
 /* ===== Hero ===== */
 .hero { position: relative; padding: var(--s3) 0 var(--s12); overflow-x: clip; }
