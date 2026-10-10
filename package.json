@@ -1,0 +1,24 @@
+{
+  "name": "omgupta0603-creator",
+  "version": "1.0.0",
+  "description": "**SEO & Content Strategist** · Digital Marketing · AI Visibility (GEO / AEO) 📍 Delhi, India",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omgupta0603-creator/omgupta0603-creator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omgupta0603-creator/omgupta0603-creator/issues"
+  },
+  "homepage": "https://github.com/omgupta0603-creator/omgupta0603-creator#readme",
+  "dependencies": {
+    "p5": "^2.3.4",
+    "p5.brush": "^2.2.3"
+  }
+}
