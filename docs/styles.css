@@ -232,7 +232,16 @@ a.card:hover, .card.lift:hover { transform: translateY(-4px); }
 .skill-pill.key { color: var(--primary); border-color: rgba(56, 189, 248, .4); background: rgba(56, 189, 248, .08); }
 .block-title { font-size: 1.25rem; margin-bottom: 22px; }
 .tool-card { text-align: center; padding: var(--s3) 12px; }
-.tool-mark { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 14px; display: grid; place-items: center; background: var(--surface-2); font: 600 13px var(--mono); color: var(--primary); }
+/* Tool logos sit in soft white and light up in their brand colour on hover */
+.tool-mark {
+  width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 14px; display: grid; place-items: center;
+  background: var(--surface-2); color: #CBD5E1; font: 600 13px var(--mono);
+  transition: color .25s, background .25s, transform .3s var(--ease);
+}
+.tool-mark svg { width: 26px; height: 26px; }
+.tool-mark svg.wide { width: 40px; height: 12px; }
+.tool-mark.letters { color: color-mix(in srgb, var(--brand) 72%, white); background: color-mix(in srgb, var(--brand) 12%, var(--surface-2)); }
+.tool-card:hover .tool-mark { color: color-mix(in srgb, var(--brand) 78%, white); background: color-mix(in srgb, var(--brand) 16%, var(--surface-2)); transform: translateY(-2px) scale(1.06); }
 .tool-card b { display: block; font: 600 14px var(--head); }
 .tool-card small { display: block; margin-top: 4px; font: 11px var(--mono); color: var(--faint); }
 

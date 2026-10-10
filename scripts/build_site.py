@@ -10,6 +10,7 @@ import pathlib
 
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "docs")
 exec((pathlib.Path(__file__).parent / "icons.py").read_text())  # defines ICON
+exec((pathlib.Path(__file__).parent / "tool_icons.py").read_text())  # defines TOOL_ICONS
 
 ICON.update({
     "share": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>',
@@ -117,8 +118,16 @@ def marquee(items, cls, direction, speed):
             f'<div class="marquee-viewport"><div class="marquee-track"><ul class="marquee-group">{lis}</ul></div></div></div>')
 
 
+def tool_mark(letters, name):
+    """The tool's logo in soft white, lit in its brand colour on hover; letters if no open logo exists."""
+    vb, body, hex_ = TOOL_ICONS[name]
+    inner = (f'<svg viewBox="{vb}" class="{"wide" if vb != "0 0 24 24" else ""}" aria-hidden="true">{body}</svg>'
+             if body else f'<span>{letters}</span>')
+    return f'<div class="tool-mark{"" if body else " letters"}" style="--brand:{hex_}" aria-hidden="true">{inner}</div>'
+
+
 def tool_cards():
-    return "".join(f'<div class="card spot tool-card"><div class="tool-mark" aria-hidden="true">{m}</div><b>{n}</b><small>{k}</small></div>'
+    return "".join(f'<div class="card spot tool-card">{tool_mark(m, n)}<b>{n}</b><small>{k}</small></div>'
                    for m, n, k in TOOLS)
 
 
