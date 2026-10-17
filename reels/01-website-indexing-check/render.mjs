@@ -37,7 +37,7 @@ const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-fr
 
 for (let i = 0; i < total; i++) {
   await page.evaluate(t => window.seek(t), i / FPS);
-  const buf = await frame.screenshot({ type: "jpeg", quality: 95 });
+  const buf = await page.screenshot({ type: "jpeg", quality: 95, clip: { x: 0, y: 0, width: 1080, height: 1920 } });
   if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once("drain", r));
   if (i % 150 === 0) console.log(`frame ${i}/${total}`);
 }
