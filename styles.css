@@ -456,6 +456,50 @@ fieldset.field { border: 0; margin: 0 0 var(--s2); padding: 0; }
 .footer-base .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2); }
 .footer-base a:hover { color: var(--text); }
 
+/* ===== Motion graphics ===== */
+/* Hero citation network canvas sits behind the portrait and the AI card */
+.net { position: absolute; left: -80px; top: -80px; z-index: 2; pointer-events: none; }
+.hero-visual .portrait { z-index: 1; }
+
+/* Scroll progress line */
+.progress { position: fixed; left: 0; right: 0; top: 0; height: 2px; z-index: 60; pointer-events: none; }
+.progress span { display: block; height: 100%; background: var(--grad); transform-origin: left; transform: scaleX(0); }
+
+/* Page curtain for transitions between pages */
+.curtain {
+  position: fixed; inset: 0; z-index: 90; pointer-events: none; transform: scaleY(0); transform-origin: bottom;
+  background: radial-gradient(60% 60% at 50% 40%, rgba(56, 189, 248, .18), transparent 70%), var(--bg-deep);
+}
+
+/* Headings whose words rise out of a mask */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.w > span { display: inline-block; will-change: transform; }
+
+/* Images that wipe open and settle */
+[data-img-reveal] img { will-change: transform; }
+
+/* Industry visuals: icon draws itself, an orbit ring turns, photos slowly settle */
+.iv-icon svg > * { stroke-dasharray: 100; stroke-dashoffset: 0; }
+.iv.is-active .iv-icon svg > *, .ix-inline .iv .iv-icon svg > * { animation: iv-draw 1.6s var(--ease) both; }
+@keyframes iv-draw { from { stroke-dashoffset: 100; } }
+.iv-orbit {
+  position: absolute; left: 50%; top: 50%; width: 210px; height: 210px; margin: -105px 0 0 -105px; border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--ind) 35%, transparent); animation: iv-spin 18s linear infinite;
+}
+.iv-orbit i { position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: var(--ind); box-shadow: 0 0 12px var(--ind); }
+@keyframes iv-spin { to { transform: rotate(360deg); } }
+.iv-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 6s var(--ease); }
+.iv.is-active .iv-img, .ix-inline .iv-img { transform: scale(1); }
+.iv.has-img::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 20, 43, .1), rgba(8, 20, 43, .55)), linear-gradient(135deg, color-mix(in srgb, var(--ind) 22%, transparent), transparent 60%);
+}
+.iv.has-img .iv-chip, .iv.has-img .iv-name { z-index: 1; }
+.iv.has-img .iv-name { color: #CBD5E1; }
+
+@media (max-width: 640px) { .net { display: none; } }
+@media (prefers-reduced-motion: reduce) { .iv-orbit { animation: none; } .iv-img { transform: none; } }
+
 /* ===== Motion ===== */
 /* Elements start hidden only when GSAP loaded and motion is allowed (html.anim). */
 html.anim [data-reveal], html.anim [data-hero] { visibility: hidden; }

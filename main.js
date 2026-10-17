@@ -172,8 +172,110 @@ if (animate) {
       scrollTrigger: { trigger: '.footer', start: 'top 75%', once: true },
     });
   }
+
+  // Section headings: each word rises out of a mask as the heading scrolls in
+  gsap.utils.toArray('.section-head h2, .cta-card h2, .page-head h1, [data-split]').forEach((h) => {
+    const words = maskWords(h);
+    if (!words.length) return;
+    gsap.fromTo(words, { yPercent: 110 }, {
+      yPercent: 0, duration: 0.9, stagger: 0.045, ease: 'expo.out',
+      scrollTrigger: { trigger: h, start: 'top 90%', once: true },
+    });
+  });
+
+  // Images wipe open from the bottom and settle from a slight zoom
+  gsap.utils.toArray('[data-img-reveal]').forEach((fig) => {
+    const img = fig.querySelector('img, svg');
+    const tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 85%', once: true } });
+    tl.fromTo(fig, { clipPath: 'inset(100% 0% 0% 0% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 28px)', duration: 1.2, ease: 'expo.inOut' });
+    if (img) tl.fromTo(img, { scale: 1.25 }, { scale: 1, duration: 1.6, ease: 'expo.out' }, 0);
+  });
+
+  // Primary buttons lean toward the pointer
+  if (window.matchMedia('(pointer: fine)').matches) {
+    gsap.utils.toArray('.btn-solid').forEach((btn) => {
+      btn.addEventListener('pointermove', (e) => {
+        const r = btn.getBoundingClientRect();
+        gsap.to(btn, { x: (e.clientX - r.left - r.width / 2) * 0.22, y: (e.clientY - r.top - r.height / 2) * 0.32, duration: 0.4, ease: 'power3.out' });
+      });
+      btn.addEventListener('pointerleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.45)' }));
+    });
+  }
 }
 window.__animReady = true;
+
+// Wrap each word (or each gradient-text run, which must stay whole) in a mask for a rise-in
+function maskWords(el) {
+  const out = [];
+  const wrap = (node) => {
+    const mask = document.createElement('span');
+    mask.className = 'w';
+    const inner = document.createElement('span');
+    node.replaceWith(mask);
+    inner.appendChild(node);
+    mask.appendChild(inner);
+    out.push(inner);
+  };
+  [...el.childNodes].forEach((child) => {
+    if (child.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      child.textContent.split(/(\s+)/).forEach((part) => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        const mask = document.createElement('span');
+        mask.className = 'w';
+        const inner = document.createElement('span');
+        inner.textContent = part;
+        mask.appendChild(inner);
+        frag.appendChild(mask);
+        out.push(inner);
+      });
+      child.replaceWith(frag);
+    } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+      wrap(child);
+    }
+  });
+  return out;
+}
+
+// ===== Scroll progress line =====
+const progress = document.querySelector('.progress span');
+if (progress) {
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+// ===== Page curtain: wipes up when leaving a page, away when the next one opens =====
+const curtain = document.querySelector('.curtain');
+if (curtain && animate) {
+  const store = (v) => { try { v ? sessionStorage.setItem('curtain', '1') : sessionStorage.removeItem('curtain'); } catch (e) { /* storage off */ } };
+  let entering = false;
+  try { entering = sessionStorage.getItem('curtain') === '1'; } catch (e) { /* storage off */ }
+  if (entering) {
+    store(false);
+    gsap.fromTo(curtain, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 0.7, ease: 'expo.inOut', delay: 0.05 });
+  }
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    const url = new URL(a.href, window.location.href);
+    if (url.origin !== window.location.origin || !/\.html$|\/$/.test(url.pathname)) return;
+    if (url.pathname === window.location.pathname && url.hash) return;
+    e.preventDefault();
+    store(true);
+    gsap.fromTo(curtain, { scaleY: 0, transformOrigin: 'bottom' }, {
+      scaleY: 1, duration: 0.55, ease: 'expo.inOut', onComplete: () => { window.location.href = url.href; },
+    });
+  });
+  // Coming back with the browser's back button can restore a covered page
+  window.addEventListener('pageshow', (e) => { if (e.persisted) gsap.set(curtain, { scaleY: 0 }); });
+}
 
 // ===== Industry explorer: the name at the centre of the screen is active; hover or focus also selects =====
 const ix = document.querySelector('.ix');
