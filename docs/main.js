@@ -175,9 +175,43 @@ if (animate) {
 }
 window.__animReady = true;
 
+// ===== Industry explorer: the name at the centre of the screen is active; hover or focus also selects =====
+const ix = document.querySelector('.ix');
+if (ix) {
+  const items = [...ix.querySelectorAll('.ix-item')];
+  const visuals = [...ix.querySelectorAll('.ix-media .iv')];
+  const panels = [...ix.querySelectorAll('.ix-panel')];
+  let current = 0;
+  const setActive = (k) => {
+    if (k === current || k < 0) return;
+    current = k;
+    items.forEach((b, i) => { b.classList.toggle('is-active', i === k); b.setAttribute('aria-pressed', String(i === k)); });
+    visuals.forEach((v, i) => v.classList.toggle('is-active', i === k));
+    panels.forEach((p, i) => {
+      p.classList.toggle('is-active', i === k);
+      const a = p.querySelector('a');
+      if (a) a.tabIndex = i === k ? 0 : -1;
+    });
+  };
+  items.forEach((b, i) => {
+    b.addEventListener('mouseenter', () => setActive(i));
+    b.addEventListener('focus', () => setActive(i));
+    b.addEventListener('click', () => setActive(i));
+  });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(items.indexOf(e.target)); });
+    }, { rootMargin: '-48% 0px -48% 0px' });
+    items.forEach((b) => io.observe(b));
+  }
+}
+
 // ===== Contact form: opens the visitor's mail app with the message filled in =====
 const form = document.querySelector('#contact-form');
 if (form) {
+  // Pre-fill the subject when arriving from an industry's Know more link
+  const subject = new URLSearchParams(window.location.search).get('subject');
+  if (subject && form.subject) form.subject.value = subject.slice(0, 120);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const note = form.querySelector('.form-note');

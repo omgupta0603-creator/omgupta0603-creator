@@ -250,6 +250,77 @@ a.card:hover, .card.lift:hover { transform: translateY(-4px); }
 .industry .label { margin-bottom: 10px; }
 .industry b { font: 700 1.25rem/1.25 var(--head); letter-spacing: -0.01em; }
 
+/* ===== Industry explorer (scroll-driven; ref: user's reference video) ===== */
+.ix { display: grid; grid-template-columns: minmax(0, 4.3fr) minmax(0, 4fr) minmax(0, 3.7fr); gap: var(--s6); }
+.ix-sticky { position: sticky; top: calc(50vh - 165px); }
+.ix-media .ix-sticky { height: 330px; }
+.ix-detail .ix-sticky { min-height: 300px; }
+.ix-list { list-style: none; margin: 0; padding: 0 0 calc(50vh - 200px); }
+.ix-row + .ix-row { margin-top: 6px; }
+.ix-item {
+  position: relative; display: block; width: 100%; padding: 22px 0 22px 0; text-align: left; cursor: pointer;
+  background: none; border: 0; color: rgba(148, 163, 184, .32);
+  font: 600 clamp(2rem, 3.1vw, 2.75rem)/1.1 var(--head); letter-spacing: -0.025em;
+  transition: color .4s var(--ease), transform .4s var(--ease);
+}
+.ix-item::before {
+  content: ""; position: absolute; left: -40px; top: 50%; width: 24px; height: 2px; border-radius: 2px;
+  background: var(--grad); transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease);
+}
+.ix-item:hover { color: rgba(248, 250, 252, .6); }
+.ix-item.is-active { color: var(--text); transform: translateX(12px); }
+.ix-item.is-active::before { transform: scaleX(1); }
+.ix-item:focus-visible { outline-offset: 6px; }
+.ix-inline { display: none; }
+
+.ix-panel { position: absolute; inset: 0 0 auto; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .45s var(--ease), transform .45s var(--ease); }
+.ix-panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.ix-panel p { font-size: 1.12rem; line-height: 1.7; color: #CBD5E1; margin-bottom: var(--s4); }
+.ix-panel strong, .ix-inline strong { color: var(--text); font-weight: 600; }
+
+/* Industry visual: an illustrated panel per sector, tinted by its accent */
+.iv {
+  position: absolute; inset: 0; overflow: hidden; border-radius: 24px; border: 1px solid var(--line-2);
+  background:
+    radial-gradient(80% 70% at 78% 12%, color-mix(in srgb, var(--ind) 42%, transparent), transparent 62%),
+    radial-gradient(70% 60% at 8% 100%, color-mix(in srgb, var(--ind) 22%, transparent), transparent 60%),
+    var(--surface);
+  opacity: 0; transform: scale(.96); transition: opacity .5s var(--ease), transform .6s var(--ease);
+}
+.iv.is-active { opacity: 1; transform: none; }
+.iv-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(148, 163, 184, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, .08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  -webkit-mask: radial-gradient(70% 70% at 50% 50%, #000, transparent); mask: radial-gradient(70% 70% at 50% 50%, #000, transparent);
+}
+.iv-icon {
+  position: absolute; left: 50%; top: 50%; width: 112px; height: 112px; margin: -56px 0 0 -56px; border-radius: 30px;
+  display: grid; place-items: center; color: color-mix(in srgb, var(--ind) 75%, white);
+  background: rgba(15, 23, 42, .55); border: 1px solid color-mix(in srgb, var(--ind) 45%, transparent);
+  box-shadow: 0 0 60px -10px color-mix(in srgb, var(--ind) 55%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.iv-icon svg { width: 52px; height: 52px; }
+.iv-chip {
+  position: absolute; padding: 7px 14px; border-radius: 999px; white-space: nowrap;
+  font: 500 12px var(--mono); color: color-mix(in srgb, var(--ind) 65%, white);
+  background: rgba(15, 23, 42, .72); border: 1px solid color-mix(in srgb, var(--ind) 40%, transparent);
+  animation: iv-float 6s ease-in-out infinite;
+}
+.iv-chip.c0 { top: 13%; left: 7%; }
+.iv-chip.c1 { top: 27%; right: 6%; animation-delay: -2s; }
+.iv-chip.c2 { bottom: 15%; left: 11%; animation-delay: -4s; }
+@keyframes iv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.iv-name { position: absolute; right: 18px; bottom: 14px; font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+
+/* ===== Paid Ads card (Skills) ===== */
+.skill-card.paid { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s6); align-items: center; }
+.paid p { margin: 12px 0 0; font-size: 15px; max-width: 440px; }
+.paid .skill-list { margin: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--s5); }
+.paid-logos { display: flex; gap: 12px; margin-bottom: var(--s3); }
+.paid-logos .tool-mark { margin: 0; color: color-mix(in srgb, var(--brand) 78%, white); background: color-mix(in srgb, var(--brand) 14%, var(--surface-2)); }
+
 /* ===== Meet ===== */
 .meet { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s10); align-items: center; }
 .meet .portrait { aspect-ratio: 590 / 520; }
@@ -400,6 +471,17 @@ html.anim [data-reveal], html.anim [data-hero] { visibility: hidden; }
   .engine { left: -10px; width: 340px; }
 }
 @media (max-width: 1024px) {
+  .ix { grid-template-columns: 1fr; gap: 0; }
+  .ix-media, .ix-detail { display: none; }
+  .ix-list { padding: 0; }
+  .ix-row { border-top: 1px solid var(--line); padding: var(--s3) 0; }
+  .ix-row + .ix-row { margin-top: 0; }
+  .ix-item, .ix-item.is-active { color: var(--text); transform: none; padding: 0 0 var(--s2); font-size: 1.75rem; cursor: default; }
+  .ix-item::before { display: none; }
+  .ix-inline { display: block; }
+  .ix-inline .iv { position: relative; opacity: 1; transform: none; aspect-ratio: 16 / 9; margin-bottom: var(--s3); }
+  .ix-inline p { color: #CBD5E1; }
+  .skill-card.paid { grid-template-columns: 1fr; gap: var(--s3); }
   .cols-4, .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .step:nth-child(3) { border-left: 0; }
   .step:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -428,6 +510,8 @@ html.anim [data-reveal], html.anim [data-hero] { visibility: hidden; }
   .cta-card { padding: var(--s5) var(--s4); }
 }
 @media (max-width: 640px) {
+  .paid .skill-list { grid-template-columns: 1fr; }
+  .ix-inline .iv { aspect-ratio: 4 / 3; }
   .wrap { padding: 0 var(--s2); }
   .section { padding: var(--s10) 0; }
   .page-head { padding: var(--s10) 0 var(--s6); }

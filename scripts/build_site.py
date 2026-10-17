@@ -28,17 +28,43 @@ ENGINES = ["Google Search", "AI Overviews", "ChatGPT", "Gemini", "Perplexity", "
 SERVICES = [
     ("search", "SEO", "Keyword research, on-page and technical SEO, from GSC audits to Core Web Vitals.", "skills.html#seo"),
     ("pin", "Local SEO", "Google Business Profile, local keywords and consistent business details across the web.", "skills.html#local"),
-    ("share", "SMO &amp; social media", "Profile optimization, content calendars and social media marketing, including Meta Ads.", "skills.html#smo"),
+    ("share", "SMO &amp; paid social", "Profile optimization, content calendars, and Meta Ads and Google Ads campaigns.", "skills.html#ads"),
     ("spark", "AI visibility", "Citation tracking across LLMs, prompt sets and content tuned to get cited.", "skills.html#ai"),
 ]
-CORE_SKILLS = ["SEO", "Local SEO", "SMO", "Social Media Marketing", "Technical SEO", "On-page SEO", "Keyword Research",
-               "GEO / AEO", "Content Strategy", "Google Business Profile", "Meta Ads", "Google Ads", "GA4 Reporting"]
+CORE_SKILLS = ["SEO", "Local SEO", "SMO", "Social Media Marketing", "Meta Ads", "Google Ads", "Technical SEO",
+               "On-page SEO", "Keyword Research", "GEO / AEO", "Content Strategy", "Google Business Profile", "GA4 Reporting"]
+KEY_SKILLS = 6  # the first N core skills are highlighted
 TOOLS = [("GA", "GA4", "analytics"), ("GSC", "Search Console", "search data"), ("Se", "Semrush", "research"),
          ("Ah", "Ahrefs", "backlinks"), ("SF", "Screaming Frog", "crawling"), ("Mz", "Moz", "authority"),
          ("Ub", "Ubersuggest", "keywords"), ("Hj", "Hotjar", "behaviour"), ("Cl", "Clarity", "behaviour"),
          ("Bi", "Bing Webmaster", "search data"), ("Xl", "Excel", "reporting"), ("PP", "PowerPoint", "decks")]
 INDUSTRIES = [("B2B SaaS", "Software"), ("Logistics", "Supply chain"), ("Finance", "Financial services"),
-              ("Healthcare-education", "Health &amp; learning"), ("D2C", "Direct to consumer")]
+              ("Healthcare &amp; Education", "Health &amp; learning"), ("D2C", "Direct to consumer")]
+# Home-page industry explorer: name, icon, accent, what I do for that sector, chips on its visual
+INDUSTRY_DETAIL = [
+    ("B2B SaaS", "saas", "#38BDF8",
+     "For SaaS brands I build <strong>topic clusters</strong> around the problems buyers search, optimize product and feature pages, and track how ChatGPT, Gemini and Perplexity describe the product with <strong>AI citation tracking</strong>.",
+     ["Topic clusters", "AI citations", "Product pages"]),
+    ("Logistics", "truck", "#F59E0B",
+     "Logistics sites live on service and location pages. I fix the <strong>technical foundations</strong> (crawl, canonicals, Core Web Vitals), map <strong>service-area keywords</strong> and keep Google Business Profiles accurate for <strong>local search</strong>.",
+     ["Technical SEO", "Service areas", "Google Business Profile"]),
+    ("Finance", "coins", "#4ADE80",
+     "Finance is a trust category. I focus on <strong>clear, well-sourced answers</strong>, FAQ sets that match real questions, and <strong>technical SEO</strong> that keeps product and rate pages indexable, all measured in <strong>GA4 and Search Console</strong>.",
+     ["FAQ sets", "Core Web Vitals", "GA4"]),
+    ("Healthcare &amp; Education", "cap", "#F472B6",
+     "For healthcare and education brands I build <strong>FAQ and course content</strong> around what patients and students actually ask, strengthen <strong>local visibility</strong> for clinics and campuses, and make pages easy for <strong>AI Overviews</strong> to cite.",
+     ["Course pages", "Local SEO", "AI Overviews"]),
+    ("D2C", "bag", "#818CF8",
+     "D2C growth mixes search and social. I optimize <strong>product and category pages</strong>, run <strong>SMO, Meta Ads and Google Ads</strong> for discovery, and tie it together in <strong>GA4 reports</strong> that show what actually sells.",
+     ["Product pages", "Meta Ads", "Google Ads"]),
+]
+INDUSTRY_ICONS = {  # 24px stroke icons
+    "saas": '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9h4M7 12h7"/>',
+    "truck": '<path d="M3 6h11v10H3zM14 9h4l3 3v4h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
+    "coins": '<ellipse cx="9" cy="7" rx="6" ry="2.5"/><path d="M3 7v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7"/><path d="M9 14.5V17c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5c0-1.4-2.7-2.5-6-2.5"/>',
+    "cap": '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6"/>',
+    "bag": '<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+}
 STATS = [("4", "", "Teams, agency &amp; in-house"), ("5", "", "Industries served"),
          ("5", "", "Search &amp; AI engines"), ("12", "", "Tools in daily use")]
 PROCESS = [("Audit", "Crawl, GSC coverage and a baseline of how AI engines cite you."),
@@ -71,20 +97,22 @@ SKILL_CATS = [
     ("seo", "search", "SEO", [("Keyword research", 3), ("On-page SEO", 3), ("Technical SEO audits", 3), ("Core Web Vitals", 2)]),
     ("local", "pin", "Local SEO", [("Google Business Profile", 2), ("Local keyword targeting", 2), ("NAP consistency", 2), ("Location pages", 2)]),
     ("smo", "share", "SMO", [("Profile optimization", 2), ("Post &amp; hashtag optimization", 2), ("Content calendars", 2), ("Engagement tracking", 2)]),
-    ("smm", "mega", "Social Media Marketing", [("Campaign planning", 2), ("Audience targeting", 2), ("Meta Ads", 1), ("Google Ads", 1)]),
+    ("smm", "mega", "Social Media Marketing", [("Campaign planning", 2), ("Audience targeting", 2), ("Social analytics", 2), ("Content repurposing", 2)]),
     ("ai", "spark", "AI Visibility (GEO / AEO)", [("LLM citation tracking", 3), ("Prompt set design", 3), ("Source-priority analysis", 2), ("AI Overview optimization", 2)]),
     ("content", "pen", "Content &amp; Reporting", [("Content strategy", 3), ("FAQ sets", 3), ("GA4 &amp; GSC reporting", 3), ("KPI dashboards", 2)]),
 ]
+# Full-width Paid Ads card on the Skills page
+PAID_ADS = [("Google Ads", 2), ("Meta Ads", 2), ("Conversion tracking", 2), ("Campaign reporting", 2)]
 STRENGTHS = [("Search", [("SEO", 3, 90), ("Technical SEO", 3, 88), ("AI search (GEO / AEO)", 3, 86), ("Local SEO", 2, 68)]),
-             ("Social", [("SMO", 2, 68), ("Social media marketing", 2, 64), ("Meta Ads", 1, 38), ("Google Ads", 1, 34)])]
-HELP_TOPICS = ["SEO", "Local SEO", "SMO / social media", "AI visibility"]
+             ("Social &amp; paid", [("SMO", 2, 68), ("Social media marketing", 2, 64), ("Meta Ads", 2, 62), ("Google Ads", 2, 60)])]
+HELP_TOPICS = ["SEO", "Local SEO", "SMO / social media", "Paid ads", "AI visibility"]
 NEXT_STEPS = [("You send a message", "Tell me about your site, your goals and what isn&rsquo;t working yet."),
               ("I reply by email", "With questions, first thoughts and a time to talk."),
               ("We plan the first step", "Usually an audit, or a baseline of how AI engines cite you.")]
 FAQ = [("Which industries do you work with?", "B2B SaaS, logistics, finance, healthcare-education and D2C so far, across SEO, local SEO and social media."),
        ("What does an engagement usually start with?", "An audit: a crawl, a look at Google Search Console coverage, and a baseline of how ChatGPT, Gemini, Perplexity and AI Overviews mention your brand."),
        ("Can you track how AI tools cite my brand?", "Yes. I build prompt sets for your category, log which sources each engine cites, and track it over time alongside rankings."),
-       ("Do you also handle social media?", "Yes: SMO, content calendars and social media marketing, including Meta Ads campaigns.")]
+       ("Do you also handle social media and paid ads?", "Yes: SMO, content calendars and social media marketing, plus Google Ads and Meta Ads campaigns measured in GA4.")]
 
 # ---------------------------------------------------------------- helpers
 PERSON = '''<svg class="person" viewBox="0 0 400 460" aria-hidden="true"><defs>
@@ -129,6 +157,43 @@ def tool_mark(letters, name):
 def tool_cards():
     return "".join(f'<div class="card spot tool-card">{tool_mark(m, n)}<b>{n}</b><small>{k}</small></div>'
                    for m, n, k in TOOLS)
+
+
+def contact_link(subject):
+    return "contact.html?subject=" + subject.replace("&amp;", "and").replace(" ", "%20")
+
+
+def industry_visual(k, name, icon, color, chips, active=False):
+    chip_html = "".join(f'<span class="iv-chip c{j}">{c}</span>' for j, c in enumerate(chips))
+    return (f'<div class="iv{" is-active" if active else ""}" style="--ind:{color}" data-ix="{k}" aria-hidden="true">'
+            f'<div class="iv-grid"></div><div class="iv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">{INDUSTRY_ICONS[icon]}</svg></div>'
+            f'{chip_html}<span class="iv-name">{name}</span></div>')
+
+
+def industry_explorer():
+    """Scroll-driven industry list (ref: the user's reference video): the name at the centre of the
+    screen lights up, and the visual on the left and the description on the right follow it.
+    Hovering or focusing a name selects it too. Below 1025px each item shows its own panel inline."""
+    visuals = "".join(industry_visual(k, n, i, c, ch, k == 0) for k, (n, i, c, d, ch) in enumerate(INDUSTRY_DETAIL))
+    items = "".join(
+        f'<li class="ix-row"><button type="button" class="ix-item{" is-active" if k == 0 else ""}" data-ix="{k}" aria-controls="ix-detail-{k}" aria-pressed="{"true" if k == 0 else "false"}">{n}</button>'
+        f'<div class="ix-inline">{industry_visual(k, n, i, c, ch)}<p>{d}</p>'
+        f'<a class="btn btn-sm" href="{contact_link("SEO for " + n)}">Know more <span class="arrow">&#8599;</span></a></div></li>'
+        for k, (n, i, c, d, ch) in enumerate(INDUSTRY_DETAIL))
+    details = "".join(
+        f'<div class="ix-panel{" is-active" if k == 0 else ""}" id="ix-detail-{k}" data-ix="{k}"><p>{d}</p>'
+        f'<a class="btn" href="{contact_link("SEO for " + n)}"{"" if k == 0 else " tabindex=&quot;-1&quot;"}>Know more <span class="arrow">&#8599;</span></a></div>'.replace("&quot;", '"')
+        for k, (n, i, c, d, ch) in enumerate(INDUSTRY_DETAIL))
+    return f'''    <section class="section line-top ix-section">
+      <div class="wrap">
+        <div class="section-head" data-reveal><div>{label("Industries")}<h2>Search, social and AI visibility,<br>sector by sector</h2></div><a class="btn" href="contact.html">Discuss your industry <span class="arrow">&#8599;</span></a></div>
+        <div class="ix">
+          <div class="ix-media" aria-hidden="true"><div class="ix-sticky">{visuals}</div></div>
+          <ol class="ix-list">{items}</ol>
+          <div class="ix-detail" aria-live="polite"><div class="ix-sticky">{details}</div></div>
+        </div>
+      </div>
+    </section>'''
 
 
 NAV = [("index.html", "Home"), ("about.html", "About"), ("skills.html", "Skills"), ("contact.html", "Contact")]
@@ -260,18 +325,13 @@ home = f'''    <section class="hero" id="top">
       <div class="wrap">
         <div class="section-head" data-reveal><div>{label("Skills &amp; tools")}<h2>What I bring to the work</h2></div><a class="btn btn-sm" href="skills.html">All skills <span class="arrow">&rarr;</span></a></div>
         <div class="skills-tools">
-          <div class="card spot" data-reveal><h3 class="block-title">Core skills</h3><div class="skill-pills">{"".join(f'<span class="skill-pill{" key" if k < 4 else ""}">{n}</span>' for k, n in enumerate(CORE_SKILLS))}</div></div>
+          <div class="card spot" data-reveal><h3 class="block-title">Core skills</h3><div class="skill-pills">{"".join(f'<span class="skill-pill{" key" if k < KEY_SKILLS else ""}">{n}</span>' for k, n in enumerate(CORE_SKILLS))}</div></div>
           <div><h3 class="block-title" data-reveal>Tools I use</h3><div class="grid cols-4" style="gap:14px" data-reveal data-stagger>{tool_cards()}</div></div>
         </div>
       </div>
     </section>
 
-    <section class="section line-top">
-      <div class="wrap">
-        <div class="section-head" data-reveal><div>{label("Industries")}<h2>Industries I&rsquo;ve worked in</h2></div><p>Agency and in-house work across these sectors.</p></div>
-        <div class="grid cols-5" style="gap:16px" data-reveal data-stagger>{"".join(f'<div class="card spot industry"><span class="label">{d}</span><b>{n}</b></div>' for n, d in INDUSTRIES)}</div>
-      </div>
-    </section>
+{industry_explorer()}
 
     <section class="section line-top">
       <div class="wrap meet">
@@ -367,6 +427,15 @@ cards = "".join(f'''          <article class="card spot skill-card" id="{k}">
             <ul class="skill-list">{"".join(f"<li><span>{n}</span>{lvl(l)}</li>" for n, l in items)}</ul>
           </article>
 ''' for k, i, t, items in SKILL_CATS)
+paid_card = f'''          <article class="card spot skill-card paid" id="ads">
+            <div>
+              <div class="paid-logos">{tool_mark("GA", "Google Ads")}{tool_mark("Me", "Meta Ads")}</div>
+              <h3>Paid Ads</h3>
+              <p>Google Ads search campaigns and Meta Ads on Facebook and Instagram, planned with the same keyword and audience research as organic, with conversions tracked in GA4.</p>
+            </div>
+            <ul class="skill-list">{"".join(f"<li><span>{n}</span>{lvl(l)}</li>" for n, l in PAID_ADS)}</ul>
+          </article>
+'''
 bars = "".join(f'''          <div><h3 style="margin-bottom:24px">{t}</h3>{"".join(f'<div class="bar-row"><span>{s}</span><span>{LEVELS[l]}</span></div><div class="bar" role="img" aria-label="{s}: {LEVELS[l]}"><span style="width:{w}%"></span></div>' for s, l, w in items)}</div>
 ''' for t, items in STRENGTHS)
 
@@ -377,7 +446,7 @@ skills = page_head("Skills", 'Skills &amp; <span class="grad-text">Expertise</sp
       <div class="wrap">
         <div class="legend" data-reveal>{lvl(3)}{lvl(2)}{lvl(1)}</div>
         <div class="grid cols-3" data-reveal data-stagger>
-{cards}        </div>
+{cards}{paid_card}        </div>
       </div>
     </section>
 
