@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "android-reverse-engineering-skill": {
+      "source": {
+        "source": "github",
+        "repo": "SimoneAvogadro/android-reverse-engineering-skill"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "android-reverse-engineering@android-reverse-engineering-skill": true
+  }
+}
