@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>XML Sitemap Reel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F172A; --bg-deep: #08142B; --surface: #1E293B; --surface-2: #243247;
+  --line: rgba(148,163,184,.14); --line-2: rgba(148,163,184,.28);
+  --primary: #38BDF8; --secondary: #818CF8; --text: #F8FAFC; --muted: #94A3B8; --faint: #64748B;
+  --ok: #4ADE80; --bad: #F87171; --warn: #FBBF24;
+  --grad: linear-gradient(135deg, #38BDF8, #818CF8);
+  --head: "Plus Jakarta Sans", "Inter", sans-serif;
+  --body: "Inter", sans-serif;
+  --mono: "JetBrains Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #000; }
+body { font-family: var(--body); color: var(--text); -webkit-font-smoothing: antialiased; }
+#frame { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+.mono { font-family: var(--mono); }
+.grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- background ---------- */
+.bg { position: absolute; inset: 0; }
+.bg::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 0%, #13213f 0%, var(--bg) 55%, var(--bg-deep) 100%); }
+.grid { position: absolute; inset: -80px 0 0 0; height: 2100px;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 80px 80px; mask-image: radial-gradient(90% 60% at 50% 45%, #000 30%, transparent 85%); opacity: .55; }
+.orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: .45; }
+.o1 { width: 760px; height: 760px; background: #38BDF8; left: -300px; top: 160px; opacity: .28; }
+.o2 { width: 820px; height: 820px; background: #818CF8; right: -340px; top: 980px; opacity: .3; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%); }
+
+/* ---------- chrome ---------- */
+.top { position: absolute; top: 150px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: center; opacity: 0; }
+.brand { display: flex; align-items: center; gap: 14px; font: 700 28px var(--head); letter-spacing: .04em; }
+.brand .dot { width: 18px; height: 18px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 24px #38BDF8; }
+.ep { font: 600 24px var(--mono); color: var(--muted); padding: 10px 18px; border: 1px solid var(--line-2); border-radius: 999px; }
+.progress { position: absolute; top: 236px; left: 72px; right: 72px; display: flex; gap: 14px; opacity: 0; }
+.seg { flex: 1; }
+.seg .bar { height: 8px; border-radius: 8px; background: rgba(148,163,184,.18); overflow: hidden; }
+.seg .fill { height: 100%; width: 0; background: var(--grad); border-radius: 8px; }
+.seg .lbl { margin-top: 12px; font: 600 20px var(--mono); color: var(--faint); letter-spacing: .06em; }
+.seg.on .lbl { color: var(--primary); }
+
+/* ---------- scenes ---------- */
+.scene { position: absolute; left: 0; right: 0; top: 330px; height: 960px; padding: 0 72px; opacity: 0;
+  display: flex; flex-direction: column; align-items: center; }
+.step-tag { display: inline-flex; align-items: center; gap: 18px; padding: 10px 26px 10px 10px; border-radius: 999px;
+  background: rgba(30,41,59,.85); border: 1px solid var(--line-2); font: 700 30px var(--head); opacity: 0; transform: translateY(30px); }
+.step-tag .num { font: 700 24px var(--mono); color: #06111f; background: var(--grad); padding: 10px 18px; border-radius: 999px; letter-spacing: .06em; }
+.step-title { margin-top: 30px; font: 800 70px/1.08 var(--head); letter-spacing: -.03em; text-align: center; opacity: 0; transform: translateY(40px); }
+
+/* hook */
+#s0 { justify-content: center; top: 300px; }
+.kicker { font: 700 34px var(--mono); color: var(--primary); padding: 12px 26px; border: 2px solid rgba(56,189,248,.4); border-radius: 999px; opacity: 0; }
+.hook { margin-top: 40px; text-align: center; font-family: var(--head); font-weight: 800; letter-spacing: -.045em; line-height: .98; }
+.hook .ln { display: block; opacity: 0; }
+.hook .l1, .hook .l2 { font-size: 112px; }
+.hook .l3 { font-size: 196px; padding: 0 10px; filter: drop-shadow(0 0 40px rgba(56,189,248,.45)); }
+.hook .l4 { font-size: 112px; }
+.hook .q { display: inline-block; color: var(--warn); }
+.timer { margin-top: 56px; display: flex; align-items: center; gap: 28px; opacity: 0; }
+.timer svg { width: 150px; height: 150px; transform: rotate(-90deg); }
+.timer .num { position: absolute; width: 150px; text-align: center; font: 800 52px var(--head); }
+.timer .ring-wrap { position: relative; display: flex; align-items: center; }
+.timer .lbl { font: 700 44px var(--head); }
+.timer .lbl small { display: block; font: 500 28px var(--body); color: var(--muted); margin-top: 6px; }
+
+/* browser + search */
+.browser { margin-top: 50px; width: 936px; border-radius: 34px; background: linear-gradient(180deg, #1E293B, #172236);
+  border: 1px solid var(--line-2); box-shadow: 0 50px 120px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.03) inset; overflow: hidden; opacity: 0; transform: translateY(80px) scale(.94); }
+.chrome { height: 70px; display: flex; align-items: center; gap: 12px; padding: 0 26px; border-bottom: 1px solid var(--line); background: rgba(8,20,43,.5); }
+.chrome i { width: 16px; height: 16px; border-radius: 50%; background: #475569; }
+.chrome i:nth-child(1) { background: #F87171; } .chrome i:nth-child(2) { background: #FBBF24; } .chrome i:nth-child(3) { background: #4ADE80; }
+.addr { margin-left: 20px; flex: 1; height: 40px; border-radius: 20px; background: rgba(148,163,184,.12); font: 500 22px var(--mono); color: var(--muted); display: flex; align-items: center; padding: 0 20px; }
+.b-body { padding: 70px 48px 80px; display: flex; flex-direction: column; align-items: center; }
+.wordmark { font: 800 104px var(--head); letter-spacing: -.04em; }
+.wordmark span:nth-child(1) { color: #60A5FA; } .wordmark span:nth-child(2) { color: #F87171; } .wordmark span:nth-child(3) { color: #FBBF24; }
+.wordmark span:nth-child(4) { color: #60A5FA; } .wordmark span:nth-child(5) { color: #4ADE80; } .wordmark span:nth-child(6) { color: #F87171; }
+.searchbar { margin-top: 48px; width: 100%; height: 118px; border-radius: 60px; background: #0B1324; border: 2px solid var(--line-2);
+  display: flex; align-items: center; gap: 22px; padding: 0 36px; font: 700 44px var(--mono); }
+.searchbar.focus { border-color: var(--primary); box-shadow: 0 0 0 8px rgba(56,189,248,.15), 0 0 60px rgba(56,189,248,.25); }
+.searchbar svg { width: 44px; height: 44px; flex: none; }
+.searchbar .op { color: var(--primary); }
+.caret { display: inline-block; width: 4px; height: 52px; background: var(--primary); margin-left: 4px; vertical-align: middle; }
+.placeholder { color: var(--faint); font: 500 36px var(--body); }
+.callout { margin-top: 60px; display: flex; align-items: center; gap: 22px; padding: 26px 34px; border-radius: 26px;
+  background: rgba(56,189,248,.1); border: 2px dashed rgba(56,189,248,.5); font: 600 34px var(--body); opacity: 0; transform: translateY(30px); }
+.callout b { font-family: var(--mono); color: var(--primary); }
+
+/* results */
+.mini { margin-top: 44px; width: 936px; display: flex; gap: 22px; align-items: center; opacity: 0; transform: translateY(40px); }
+.mini .searchbar { margin: 0; height: 104px; flex: 1; font-size: 36px; }
+.key { flex: none; height: 104px; padding: 0 30px; border-radius: 22px; background: #E2E8F0; color: #0F172A; font: 800 34px var(--head);
+  display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 0 #94A3B8, 0 20px 40px rgba(0,0,0,.4); }
+.ripple { position: absolute; width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--primary); opacity: 0; pointer-events: none; }
+.count { margin-top: 34px; width: 936px; font: 500 28px var(--mono); color: var(--muted); opacity: 0; }
+.count b { color: var(--text); }
+.results { width: 936px; margin-top: 18px; display: flex; flex-direction: column; gap: 20px; }
+.res { position: relative; display: flex; gap: 24px; padding: 22px 30px; border-radius: 26px; background: rgba(30,41,59,.9); border: 1px solid var(--line-2); opacity: 0; transform: translateX(120px); }
+.fav { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--grad); display: grid; place-items: center; font: 800 30px var(--head); color: #06111f; }
+.res .url { font: 500 23px var(--mono); color: var(--muted); }
+.res .ttl { margin-top: 6px; font: 700 34px var(--head); color: #93C5FD; }
+.res .sk { margin-top: 14px; height: 14px; border-radius: 8px; background: rgba(148,163,184,.22); }
+.badge { position: absolute; right: 26px; top: 26px; display: flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 999px;
+  background: rgba(74,222,128,.15); border: 2px solid rgba(74,222,128,.6); color: var(--ok); font: 700 24px var(--head); opacity: 0; transform: scale(.4); }
+.verdict { margin-top: 30px; padding: 26px 40px; border-radius: 28px; font: 800 44px var(--head); text-align: center; opacity: 0; transform: scale(.7); }
+.verdict.ok { background: rgba(74,222,128,.12); border: 3px solid var(--ok); box-shadow: 0 0 80px rgba(74,222,128,.25); }
+.verdict.ok b { color: var(--ok); }
+
+/* empty state */
+.empty { margin-top: 60px; display: flex; flex-direction: column; align-items: center; }
+.zero { font: 800 150px/1 var(--head); color: var(--bad); letter-spacing: -.04em; opacity: 0; transform: scale(1.8); text-shadow: 0 0 60px rgba(248,113,113,.4); }
+.zero small { font-size: 60px; color: var(--text); letter-spacing: -.02em; }
+.nomatch { margin-top: 26px; font: 500 28px var(--mono); color: var(--muted); opacity: 0; }
+.maybe { margin-top: 40px; font: 700 46px var(--head); text-align: center; opacity: 0; transform: translateY(30px); }
+.maybe .hl { color: var(--warn); }
+.arrow-down { margin-top: 26px; opacity: 0; }
+.gsc-card { margin-top: 20px; width: 860px; display: flex; align-items: center; gap: 30px; padding: 34px 40px; border-radius: 32px;
+  background: linear-gradient(135deg, rgba(56,189,248,.18), rgba(129,140,248,.18)); border: 2px solid rgba(129,140,248,.6);
+  box-shadow: 0 30px 90px rgba(56,189,248,.25); opacity: 0; transform: translateY(80px); }
+.gsc-ico { width: 110px; height: 110px; flex: none; border-radius: 28px; background: #0B1324; display: grid; place-items: center; border: 1px solid var(--line-2); }
+.gsc-card h3 { font: 800 50px var(--head); letter-spacing: -.02em; }
+.gsc-card p { font: 500 28px var(--body); color: var(--muted); margin-top: 6px; }
+
+/* inspection panel */
+.panel { flex: none; margin-top: 46px; width: 936px; border-radius: 34px; background: linear-gradient(180deg, #1E293B, #162033); border: 1px solid var(--line-2);
+  box-shadow: 0 50px 120px rgba(0,0,0,.5); overflow: hidden; opacity: 0; transform: translateY(80px) scale(.94); }
+.panel-head { display: flex; align-items: center; gap: 18px; padding: 26px 34px; border-bottom: 1px solid var(--line); font: 700 28px var(--head); color: var(--muted); }
+.panel-head .pill { margin-left: auto; font: 600 22px var(--mono); color: var(--primary); padding: 6px 16px; border-radius: 999px; background: rgba(56,189,248,.12); }
+.panel-body { padding: 36px 34px 40px; min-height: 800px; position: relative; }
+.inspect-lbl { font: 700 30px var(--head); color: var(--muted); }
+.inspect { margin-top: 18px; height: 100px; border-radius: 22px; background: #0B1324; border: 2px solid var(--line-2); display: flex; align-items: center; gap: 18px; padding: 0 28px; font: 600 31px var(--mono); position: relative; }
+.inspect.focus { border-color: var(--primary); box-shadow: 0 0 0 8px rgba(56,189,248,.15); }
+.inspect .val { white-space: nowrap; padding: 4px 6px; border-radius: 8px; }
+.inspect .val.sel { background: rgba(56,189,248,.35); }
+.paste-chip { position: absolute; right: -10px; top: -58px; padding: 12px 22px; border-radius: 16px; background: #E2E8F0; color: #0F172A; font: 800 28px var(--head); box-shadow: 0 8px 0 #94A3B8; opacity: 0; transform: scale(.5); }
+.loader { position: absolute; left: 34px; right: 34px; top: 200px; display: flex; flex-direction: column; align-items: center; gap: 28px; opacity: 0; }
+.spinner { width: 110px; height: 110px; border-radius: 50%; border: 10px solid rgba(148,163,184,.2); border-top-color: var(--primary); border-right-color: var(--secondary); }
+.loader p { font: 600 30px var(--mono); color: var(--muted); }
+.result { position: absolute; left: 34px; right: 34px; top: 180px; opacity: 0; }
+.status { display: flex; align-items: center; gap: 28px; padding: 30px; border-radius: 26px; background: rgba(74,222,128,.1); border: 2px solid rgba(74,222,128,.55); position: relative; }
+.status svg { width: 110px; height: 110px; flex: none; }
+.status h3 { font: 800 50px var(--head); color: var(--ok); letter-spacing: -.02em; }
+.status p { font: 500 28px var(--body); color: var(--muted); margin-top: 4px; }
+.rows { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+.row { display: flex; align-items: center; justify-content: space-between; padding: 22px 28px; border-radius: 20px; background: rgba(148,163,184,.08); font: 600 30px var(--body); opacity: 0; transform: translateX(-60px); }
+.row span:first-child { color: var(--muted); }
+.row b { color: var(--ok); font-weight: 700; }
+.status-tag { position: absolute; right: 18px; bottom: -40px; padding: 10px 20px; border-radius: 14px; background: var(--warn); color: #1a1205; font: 800 26px var(--head); opacity: 0; transform: translateY(20px) rotate(-3deg); }
+.req { margin-top: 40px; display: inline-flex; align-items: center; gap: 16px; padding: 18px 28px; border-radius: 18px; border: 2px dashed var(--line-2); font: 600 28px var(--body); color: var(--muted); opacity: 0; }
+.req b { color: var(--primary); }
+
+/* outro */
+#s5 { justify-content: center; }
+.o-q { font: 800 64px var(--head); color: var(--muted); opacity: 0; transform: translateY(30px); }
+.o-big { margin-top: 30px; text-align: center; font-family: var(--head); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+.o-big .ln { display: block; opacity: 0; }
+.o-big .a { font-size: 100px; }
+.o-big .b { font-size: 150px; position: relative; display: inline-block; }
+.underline { display: block; height: 14px; margin: 14px auto 0; width: 720px; border-radius: 10px; background: var(--grad); transform: scaleX(0); transform-origin: left; }
+.recap { margin-top: 56px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.chip { padding: 16px 26px; border-radius: 999px; background: rgba(30,41,59,.9); border: 1px solid var(--line-2); font: 700 30px var(--head); opacity: 0; transform: translateY(30px); }
+.chip i { font-style: normal; color: var(--primary); font-family: var(--mono); margin-right: 10px; }
+.follow-wrap { margin-top: 64px; position: relative; display: flex; flex-direction: column; align-items: center; }
+.follow { position: relative; padding: 30px 90px; border-radius: 999px; background: var(--grad); color: #06111f; font: 800 54px var(--head); opacity: 0; transform: scale(.4);
+  box-shadow: 0 20px 80px rgba(56,189,248,.45); }
+.follow .done { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 999px; background: #F8FAFC; color: #0F172A; opacity: 0; }
+.burst { position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin: -100px 0 0 -100px; border-radius: 50%; border: 6px solid var(--primary); opacity: 0; }
+.hand { position: absolute; width: 120px; left: 60%; top: 120%; opacity: 0; filter: drop-shadow(0 12px 20px rgba(0,0,0,.5)); }
+.sign { margin-top: 40px; font: 600 30px var(--body); color: var(--muted); opacity: 0; }
+.sign b { color: var(--text); }
+
+/* captions */
+.captions { position: absolute; left: 60px; right: 60px; top: 1400px; height: 220px; }
+.cap { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: center; opacity: 0; }
+.cap .box { max-width: 960px; padding: 22px 34px; border-radius: 28px; background: rgba(8,20,43,.78); border: 1px solid var(--line-2);
+  text-align: center; font: 800 50px/1.25 var(--head); letter-spacing: -.01em; backdrop-filter: blur(12px); }
+.cap .w { display: inline-block; color: rgba(248,250,252,.42); padding: 0 3px; border-radius: 10px; }
+.cap .w.said { color: var(--text); }
+.cap .w.kw.said { color: var(--primary); }
+.cap .w.now { color: #06111f; background: var(--warn); }
+
+.wipe { position: absolute; top: -400px; left: -1600px; width: 900px; height: 2800px; background: var(--grad); transform: rotate(18deg); opacity: .9; filter: blur(2px); }
+
+/* ---------- reel 03: sitemap scenes ---------- */
+.hook .l1 { font-size: 100px; }
+.hook .l3 { font-size: 176px; }
+
+/* address bar */
+.addrbar { margin-top: 0; width: 100%; height: 108px; border-radius: 28px; background: #0B1324; border: 2px solid var(--line-2);
+  display: flex; align-items: center; gap: 20px; padding: 0 30px; font: 700 40px var(--mono); white-space: nowrap; overflow: hidden; }
+.addrbar.focus { border-color: var(--primary); box-shadow: 0 0 0 8px rgba(56,189,248,.15), 0 0 60px rgba(56,189,248,.25); }
+.addrbar svg { width: 38px; height: 38px; flex: none; }
+.addrbar .sfx { color: var(--primary); }
+.b-body.page { padding: 40px 40px 50px; }
+.skel { width: 100%; margin-top: 40px; }
+.skel div { height: 26px; border-radius: 13px; background: rgba(148,163,184,.14); margin-top: 22px; }
+.skel .hero { height: 200px; border-radius: 24px; background: linear-gradient(135deg, rgba(56,189,248,.12), rgba(129,140,248,.12)); margin-top: 0; }
+
+/* xml viewer */
+.xml { margin-top: 30px; width: 936px; border-radius: 30px; background: #0B1324; border: 1px solid var(--line-2); overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,.5); opacity: 0; transform: translateY(60px); }
+.xml-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; border-bottom: 1px solid var(--line); font: 600 24px var(--mono); color: var(--muted); }
+.xml-head .cnt { color: var(--ok); padding: 6px 16px; border-radius: 999px; background: rgba(74,222,128,.12); }
+.xml-body { padding: 24px 30px 28px; font: 500 27px/1.62 var(--mono); white-space: pre; }
+.xl { opacity: 0; transform: translateX(-30px); }
+.xl .tg { color: #C4B5FD; } .xl .at { color: var(--primary); } .xl .pi { color: var(--faint); } .xl .v { color: var(--text); }
+
+/* 404 + alternatives */
+.e404 { margin-top: 40px; display: flex; flex-direction: column; align-items: center; }
+.e404 .big { font: 800 200px/1 var(--head); color: var(--bad); letter-spacing: -.05em; opacity: 0; transform: scale(1.8); text-shadow: 0 0 70px rgba(248,113,113,.4); }
+.e404 .nf { margin-top: 10px; font: 600 30px var(--mono); color: var(--muted); opacity: 0; }
+.try-h { margin-top: 44px; font: 800 52px var(--head); text-align: center; opacity: 0; transform: translateY(30px); }
+.try-list { margin-top: 30px; width: 936px; display: flex; flex-direction: column; gap: 22px; }
+.try { position: relative; display: flex; align-items: center; gap: 26px; padding: 28px 34px; border-radius: 28px;
+  background: linear-gradient(135deg, rgba(56,189,248,.14), rgba(129,140,248,.14)); border: 2px solid rgba(129,140,248,.5); opacity: 0; transform: translateY(60px); }
+.try .path { font: 700 42px var(--mono); color: var(--primary); }
+.try .who { margin-top: 6px; font: 500 26px var(--body); color: var(--muted); }
+.try .ok200 { position: absolute; right: 26px; top: 50%; margin-top: -24px; padding: 8px 18px; border-radius: 999px; background: rgba(74,222,128,.15);
+  border: 2px solid rgba(74,222,128,.6); color: var(--ok); font: 700 24px var(--head); opacity: 0; transform: scale(.4); }
+.setup { margin-top: 30px; padding: 14px 26px; border-radius: 999px; border: 2px dashed var(--line-2); font: 600 28px var(--body); color: var(--muted); opacity: 0; }
+.setup b { color: var(--warn); }
+
+/* search console sitemaps */
+.tabs { display: flex; gap: 14px; }
+.tab { padding: 14px 26px; border-radius: 16px; font: 700 28px var(--head); color: var(--muted); background: rgba(148,163,184,.08); border: 2px solid transparent; }
+.add-lbl { margin-top: 34px; font: 700 28px var(--head); color: var(--muted); }
+.addrow { margin-top: 14px; display: flex; gap: 16px; }
+.addin { flex: 1; height: 92px; border-radius: 20px; background: #0B1324; border: 2px solid var(--line-2); display: flex; align-items: center; padding: 0 24px; font: 600 29px var(--mono); white-space: nowrap; overflow: hidden; }
+.addin.focus { border-color: var(--primary); box-shadow: 0 0 0 8px rgba(56,189,248,.15); }
+.addin .pre { color: var(--faint); }
+.addin .caret { height: 40px; }
+.submit { flex: none; height: 92px; padding: 0 30px; border-radius: 20px; background: var(--grad); color: #06111f; font: 800 30px var(--head); display: grid; place-items: center; }
+.tbl { margin-top: 36px; border-radius: 22px; border: 1px solid var(--line-2); overflow: hidden; opacity: 0; transform: translateY(40px); }
+.tbl .th, .tbl .tr { display: grid; grid-template-columns: 1.5fr 1.1fr 1fr .9fr; align-items: center; padding: 20px 24px; gap: 10px; }
+.tbl .th { font: 600 22px var(--mono); color: var(--faint); background: rgba(148,163,184,.06); text-transform: uppercase; letter-spacing: .04em; }
+.tbl .tr { font: 600 27px var(--body); border-top: 1px solid var(--line); }
+.tbl .tr .m { font-family: var(--mono); font-size: 25px; }
+.st { justify-self: start; padding: 8px 18px; border-radius: 999px; background: rgba(74,222,128,.15); border: 2px solid rgba(74,222,128,.6); color: var(--ok); font: 800 24px var(--head); transform: scale(0); }
+.disc { font: 800 34px var(--head); color: var(--ok); }
+.tbl-tag { margin-top: 18px; display: inline-block; padding: 10px 20px; border-radius: 14px; background: var(--warn); color: #1a1205; font: 800 26px var(--head); opacity: 0; transform: translateY(20px) rotate(-2deg); }
+.tip { margin-top: 26px; display: inline-flex; padding: 16px 24px; border-radius: 18px; border: 2px dashed var(--line-2); font: 600 26px var(--body); color: var(--muted); opacity: 0; }
+.tip b { color: var(--bad); }
+
+/* outro */
+.o-big .b { font-size: 156px; }
+.o-big .a { font-size: 92px; }
+.o-sub { margin-top: 20px; font: 700 44px var(--head); color: var(--muted); text-align: center; opacity: 0; transform: translateY(20px); }
+
+</style>
+</head>
+<body>
+<div id="frame">
+  <div class="bg">
+    <div class="grid" id="grid"></div>
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <header class="top">
+    <div class="brand"><span class="dot"></span>#SEOTips</div>
+  </header>
+
+  <div class="progress">
+    <div class="seg"><div class="bar"><div class="fill"></div></div><div class="lbl">01 BROWSER</div></div>
+    <div class="seg"><div class="bar"><div class="fill"></div></div><div class="lbl">02 XML FILE</div></div>
+    <div class="seg"><div class="bar"><div class="fill"></div></div><div class="lbl">03 NOT FOUND?</div></div>
+    <div class="seg"><div class="bar"><div class="fill"></div></div><div class="lbl">04 CONSOLE</div></div>
+  </div>
+
+  <!-- 0–5s hook -->
+  <section class="scene" id="s0">
+    <div class="kicker">Quick question 👇</div>
+    <h1 class="hook">
+      <span class="ln l1">Does your website</span>
+      <span class="ln l2">have an XML</span>
+      <span class="ln l3 grad">SITEMAP</span>
+      <span class="ln l4">or not<span class="q">?</span></span>
+    </h1>
+    <div class="timer">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="64" fill="none" stroke="rgba(148,163,184,.2)" stroke-width="12"/>
+          <circle id="ring" cx="75" cy="75" r="64" fill="none" stroke="url(#rg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="0"/>
+          <defs><linearGradient id="rg"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#818CF8"/></linearGradient></defs></svg>
+        <div class="num" id="timerNum">10</div>
+      </div>
+      <div class="lbl">In just seconds<small>here's how to find it</small></div>
+    </div>
+  </section>
+
+  <!-- 5–12s step 1 -->
+  <section class="scene" id="s1">
+    <div class="step-tag"><span class="num">STEP 01</span>Open your browser</div>
+    <h2 class="step-title">Add <span class="grad">/sitemap.xml</span><br>after your domain 👇</h2>
+    <div class="browser">
+      <div class="chrome"><i></i><i></i><i></i></div>
+      <div class="b-body page">
+        <div class="addrbar" id="addr1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <span id="addrTxt"></span><span class="caret" id="caret1"></span>
+        </div>
+        <div class="skel"><div class="hero"></div><div style="width:88%"></div><div style="width:70%"></div><div style="width:80%"></div></div>
+      </div>
+    </div>
+    <div class="callout"><b>/sitemap.xml</b> = the most common location</div>
+  </section>
+
+  <!-- 12–20s step 2 -->
+  <section class="scene" id="s2">
+    <div class="step-tag"><span class="num">STEP 02</span>Press Enter</div>
+    <div class="mini">
+      <div class="addrbar focus"><svg viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        <span style="font-size:33px">yourdomain.com<span class="sfx">/sitemap.xml</span></span></div>
+      <div class="key" id="enterKey">Enter ⏎</div>
+    </div>
+    <div class="ripple" id="ripple"></div>
+    <div class="xml">
+      <div class="xml-head"><span>sitemap.xml</span><span class="cnt"><b id="xcnt">0</b> URLs</span></div>
+      <div class="xml-body"><div class="xl"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></div><div class="xl"><span class="tg">&lt;urlset</span> <span class="at">xmlns="…/sitemap/0.9"</span><span class="tg">&gt;</span></div><div class="xl">  <span class="tg">&lt;url&gt;&lt;loc&gt;</span><span class="v">yourdomain.com/</span><span class="tg">&lt;/loc&gt;&lt;/url&gt;</span></div><div class="xl">  <span class="tg">&lt;url&gt;&lt;loc&gt;</span><span class="v">…/about/</span><span class="tg">&lt;/loc&gt;&lt;/url&gt;</span></div><div class="xl">  <span class="tg">&lt;url&gt;&lt;loc&gt;</span><span class="v">…/services/</span><span class="tg">&lt;/loc&gt;&lt;/url&gt;</span></div><div class="xl">  <span class="tg">&lt;url&gt;&lt;loc&gt;</span><span class="v">…/blog/seo-guide/</span><span class="tg">&lt;/loc&gt;&lt;/url&gt;</span></div><div class="xl">  <span class="tg">&lt;url&gt;&lt;loc&gt;</span><span class="v">…/contact/</span><span class="tg">&lt;/loc&gt;&lt;/url&gt;</span></div><div class="xl"><span class="tg">&lt;/urlset&gt;</span></div></div>
+    </div>
+    <div class="verdict ok">XML opens = sitemap <b>ACCESSIBLE ✓</b></div>
+  </section>
+
+  <!-- 20–28s step 3 -->
+  <section class="scene" id="s3">
+    <div class="step-tag"><span class="num">STEP 03</span>Didn't work?</div>
+    <div class="e404"><div class="big" id="e404">404</div><div class="nf">/sitemap.xml · Not Found</div></div>
+    <div class="try-h">Try these common URLs 👇</div>
+    <div class="try-list">
+      <div class="try"><div><div class="path">/sitemap_index.xml</div><div class="who">Yoast · Rank Math sites</div></div><div class="ok200">✓ Found</div></div>
+      <div class="try"><div><div class="path">/wp-sitemap.xml</div><div class="who">WordPress default</div></div></div>
+    </div>
+    <div class="setup">Depends on your website's <b>setup</b></div>
+  </section>
+
+  <!-- 28–38s step 4 -->
+  <section class="scene" id="s4">
+    <div class="step-tag"><span class="num">STEP 04</span>Google Search Console</div>
+    <div class="panel">
+      <div class="panel-head">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>
+        Search Console<span class="pill">Indexing</span>
+      </div>
+      <div class="panel-body">
+        <div class="tabs"><div class="tab">Pages</div><div class="tab" id="tabSm">Sitemaps</div><div class="tab">Removals</div></div>
+        <div class="add-lbl">Add a new sitemap</div>
+        <div class="addrow">
+          <div class="addin" id="addin"><span class="pre">yourdomain.com/</span><span id="smTxt"></span><span class="caret" id="caret2"></span></div>
+          <div class="submit" id="submit">SUBMIT</div>
+        </div>
+        <div class="tbl">
+          <div class="th"><span>Sitemap</span><span>Submitted</span><span>Status</span><span>URLs</span></div>
+          <div class="tr"><span class="m">/sitemap.xml</span><span>Today</span><span class="st">Success</span><span class="disc" id="disc">0</span></div>
+        </div>
+        <div class="tbl-tag">↑ Submission &amp; processing status</div><br>
+        <div class="tip">"Couldn't fetch"? → <b>&nbsp;check the URL &amp; robots.txt</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 38–45s outro -->
+  <section class="scene" id="s5">
+    <div class="o-q">Remember 👇</div>
+    <div class="o-big">
+      <span class="ln a">An XML sitemap helps</span>
+      <span class="ln b grad">DISCOVERY</span>
+      <span class="underline"></span>
+    </div>
+    <div class="o-sub">of your important URLs 🔍</div>
+    <div class="recap">
+      <div class="chip"><i>1</i>/sitemap.xml</div>
+      <div class="chip"><i>2</i>/sitemap_index.xml</div>
+      <div class="chip"><i>3</i>Search Console</div>
+    </div>
+    <div class="follow-wrap">
+      <div class="follow">+ Follow<div class="done">Following ✓</div><div class="burst"></div></div>
+      <svg class="hand" viewBox="0 0 64 64"><path d="M26 6c-3 0-5 2-5 5v24l-4-4c-2-2-5-2-7 0s-2 5 0 7l13 15c3 4 7 6 12 6h6c8 0 14-6 14-14V31c0-3-2-5-5-5s-5 2-5 5v-2c0-3-2-5-5-5s-5 2-5 5v-1c0-3-2-5-5-5-1 0-2 0-3 1V11c0-3-2-5-5-5z" fill="#F8FAFC" stroke="#0F172A" stroke-width="2.5" stroke-linejoin="round"/></svg>
+      <div class="sign">More practical <b>SEO tips</b></div>
+    </div>
+  </section>
+
+
+  <div class="captions" id="captions"></div>
+  <div class="wipe" id="wipe"></div>
+</div>
+
+<script src="../../docs/vendor/gsap.min.js"></script>
+<script>
+const DURATION = 45;
+
+// ---------- captions: [start, end, text]; *word* marks a keyword ----------
+const CAPS = [
+  [0.15, 2.6,  "Want to check whether your website has an *XML* *sitemap?*"],
+  [2.6,  5.0,  "Here's how you can find it in just a few *seconds!*"],
+  [5.2,  8.4,  "First, open your *browser* and enter your website *domain*"],
+  [8.4,  11.8, "followed by */sitemap.xml*"],
+  [12.1, 13.4, "Press *Enter.*"],
+  [13.4, 16.6, "If an *XML* file opens with a list of *URLs,*"],
+  [16.6, 19.8, "your sitemap is *accessible!*"],
+  [20.1, 22.6, "If it doesn't work, try common sitemap URLs"],
+  [22.6, 25.2, "like */sitemap_index.xml* or */wp-sitemap.xml,*"],
+  [25.2, 27.8, "depending on your website's *setup.*"],
+  [28.1, 30.6, "Next, open *Google* *Search* *Console,*"],
+  [30.6, 33.0, "go to the *Sitemaps* section,"],
+  [33.0, 35.4, "and enter your *sitemap* URL"],
+  [35.4, 37.8, "to check its *submission* and *processing* *status.*"],
+  [38.1, 42.0, "Remember, an *XML* *sitemap* helps search engines discover your important website *URLs.*"],
+  [42.0, 44.9, "*Follow* for more practical *SEO* tips!"],
+];
+
+const capRoot = document.getElementById("captions");
+const capEls = CAPS.map(([s, e, text]) => {
+  const cap = document.createElement("div"); cap.className = "cap";
+  const box = document.createElement("div"); box.className = "box";
+  const words = text.split(" ").map(raw => {
+    const kw = raw.startsWith("*");
+    const w = document.createElement("span");
+    w.className = "w" + (kw ? " kw" : "");
+    w.textContent = raw.replace(/\*/g, "");
+    box.appendChild(w); box.appendChild(document.createTextNode(" "));
+    return w;
+  });
+  // weight each word's speaking time by its length
+  const lens = words.map(w => w.textContent.length + 2);
+  const total = lens.reduce((a, b) => a + b, 0);
+  const span = (e - s) * 0.92;
+  let acc = s;
+  const times = lens.map(l => { const t0 = acc; acc += span * l / total; return [t0, acc]; });
+  cap.appendChild(box); capRoot.appendChild(cap);
+  return { cap, words, times, s, e };
+});
+
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+
+function renderCaptions(t) {
+  for (const c of capEls) {
+    const inP = easeOut(clamp((t - c.s) / 0.18));
+    const outP = clamp((t - (c.e - 0.12)) / 0.12);
+    const vis = t >= c.s - 0.01 && t < c.e + 0.01;
+    c.cap.style.opacity = vis ? inP * (1 - outP) : 0;
+    c.cap.style.transform = `translateY(${(1 - inP) * 40}px) scale(${0.96 + 0.04 * inP})`;
+    if (!vis) continue;
+    c.words.forEach((w, i) => {
+      const [a, b] = c.times[i];
+      w.classList.toggle("said", t >= a);
+      w.classList.toggle("now", t >= a && t < b);
+    });
+  }
+}
+
+// ---------- manual (frame-exact) text animations ----------
+const DOMAIN = "yourdomain.com", SUFFIX = "/sitemap.xml";
+const TYPE_START = 8.4, TYPE_STEP = 0.12;
+const SM = "sitemap.xml", SM_START = 33.0, SM_STEP = 0.08;
+const addrTxt = document.getElementById("addrTxt"), caret1 = document.getElementById("caret1");
+const smTxt = document.getElementById("smTxt"), caret2 = document.getElementById("caret2");
+const timerNum = document.getElementById("timerNum");
+const segs = [...document.querySelectorAll(".seg")];
+const SEG_T = [[5, 12], [12, 20], [20, 28], [28, 38]];
+const grid = document.getElementById("grid");
+const blink = t => (Math.floor(t * 2.4) % 2 ? 0 : 1);
+
+function renderManual(t) {
+  // domain appears, then /sitemap.xml types in
+  const n = clamp(Math.floor((t - TYPE_START) / TYPE_STEP) + 1, 0, SUFFIX.length);
+  addrTxt.innerHTML = (t >= 6.6 ? DOMAIN : "") + `<span class="sfx">${SUFFIX.slice(0, n)}</span>`;
+  const typing = t >= TYPE_START && t < TYPE_START + SUFFIX.length * TYPE_STEP;
+  caret1.style.opacity = typing ? 1 : blink(t);
+  document.getElementById("addr1").classList.toggle("focus", t >= 6.4);
+  // countdown
+  timerNum.textContent = Math.max(0, Math.ceil(10 - clamp((t - 3.0) / 2.0) * 10));
+  // URL counters
+  document.getElementById("xcnt").textContent = Math.round(easeOut(clamp((t - 13.4) / 2.2)) * 128);
+  document.getElementById("disc").textContent = Math.round(easeOut(clamp((t - 35.6) / 1.0)) * 128);
+  // GSC sitemap input
+  const m = clamp(Math.floor((t - SM_START) / SM_STEP) + 1, 0, SM.length);
+  smTxt.textContent = SM.slice(0, m);
+  caret2.style.opacity = t >= 32.6 && t < 34.4 ? (m < SM.length && t >= SM_START ? 1 : blink(t)) : 0;
+  document.getElementById("addin").classList.toggle("focus", t >= 32.6 && t < 34.4);
+  // progress
+  segs.forEach((sg, i) => {
+    const [a, b] = SEG_T[i];
+    sg.querySelector(".fill").style.width = clamp((t - a) / (b - a)) * 100 + "%";
+    sg.classList.toggle("on", t >= a);
+  });
+  grid.style.transform = `translateY(${(t * 22) % 80}px)`;
+}
+
+// ---------- GSAP timeline (scene motion) ----------
+const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+
+// ambient
+tl.to(".o1", { x: 260, y: 520, duration: 22, ease: "sine.inOut" }, 0)
+  .to(".o1", { x: 40, y: 140, duration: 23, ease: "sine.inOut" }, 22)
+  .to(".o2", { x: -220, y: -560, duration: 24, ease: "sine.inOut" }, 0)
+  .to(".o2", { x: 0, y: -100, duration: 21, ease: "sine.inOut" }, 24);
+
+// scene transitions: wipe sweep
+function wipe(at) {
+  tl.set("#wipe", { x: 0, opacity: .9 }, at - 0.32)
+    .to("#wipe", { x: 3400, duration: 0.62, ease: "power2.inOut" }, at - 0.32);
+}
+[5, 12, 20, 28, 38].forEach(wipe);
+function sceneIn(id, at) { tl.set(id, { opacity: 1 }, at); }
+function sceneOut(id, at, vars = {}) { tl.to(id, { opacity: 0, scale: 0.92, y: -60, duration: 0.35, ease: "power2.in", ...vars }, at); }
+
+// ===== S0 hook 0–5 =====
+sceneIn("#s0", 0);
+tl.to("#s0 .kicker", { opacity: 1, y: 0, duration: .4, startAt: { y: 30 } }, 0.05)
+  .to("#s0 .l1", { opacity: 1, duration: .45, startAt: { y: 80 }, y: 0 }, 0.3)
+  .to("#s0 .l2", { opacity: 1, duration: .45, startAt: { y: 80 }, y: 0 }, 0.6)
+  .to("#s0 .l3", { opacity: 1, scale: 1, filter: "blur(0px) drop-shadow(0 0 40px rgba(56,189,248,.45))", duration: .55, ease: "back.out(2.2)",
+                   startAt: { scale: 2.4, filter: "blur(18px) drop-shadow(0 0 40px rgba(56,189,248,.45))" } }, 0.95)
+  .to("#s0 .l4", { opacity: 1, duration: .45, startAt: { y: 80 }, y: 0 }, 1.35)
+  .to("#s0 .q", { rotation: 14, scale: 1.3, duration: .18, yoyo: true, repeat: 3, ease: "sine.inOut" }, 1.8)
+  .to("#s0 .hook", { scale: 0.86, y: -40, duration: .6, ease: "power2.inOut" }, 2.8)
+  .to("#s0 .timer", { opacity: 1, duration: .45, startAt: { y: 60, scale: .8 }, y: 0, scale: 1, ease: "back.out(1.8)" }, 2.9)
+  .to("#ring", { attr: { "stroke-dashoffset": 402 }, duration: 2.0, ease: "none" }, 3.0)
+  .to("#s0 .kicker", { opacity: 0, duration: .3 }, 2.8);
+sceneOut("#s0", 4.65);
+
+// ===== S1 step 1, 5–12 =====
+sceneIn("#s1", 5);
+tl.to("#s1 .step-tag", { opacity: 1, y: 0, duration: .45 }, 5.05)
+  .to("#s1 .step-title", { opacity: 1, y: 0, duration: .5 }, 5.2)
+  .to("#s1 .browser", { opacity: 1, y: 0, scale: 1, duration: .7, ease: "back.out(1.4)" }, 5.5)
+  .to("#s1 .browser", { scale: 1.05, duration: .5, ease: "power2.inOut" }, 8.0)
+  .to("#s1 .step-title", { opacity: .35, duration: .4 }, 8.0)
+  .to("#s1 .browser", { scale: 1, duration: .5, ease: "power2.inOut" }, 10.4)
+  .to("#s1 .callout", { opacity: 1, y: 0, duration: .5, ease: "back.out(1.8)" }, 10.5)
+  .to("#s1 .callout b", { scale: 1.12, duration: .2, yoyo: true, repeat: 1 }, 11.0);
+sceneOut("#s1", 11.65);
+
+// ===== S2 step 2, 12–20 =====
+sceneIn("#s2", 12);
+tl.to("#s2 .step-tag", { opacity: 1, y: 0, duration: .45 }, 12.05)
+  .to("#s2 .mini", { opacity: 1, y: 0, duration: .5 }, 12.15)
+  .to("#enterKey", { y: 10, boxShadow: "0 0px 0 #94A3B8, 0 6px 14px rgba(0,0,0,.4)", background: "#38BDF8", duration: .1, ease: "power1.in" }, 12.7)
+  .to("#enterKey", { y: 0, boxShadow: "0 10px 0 #94A3B8, 0 20px 40px rgba(0,0,0,.4)", background: "#E2E8F0", duration: .25 }, 12.85)
+  .set("#ripple", { left: 872, top: 130, scale: .3, opacity: 1 }, 12.72)
+  .to("#ripple", { scale: 2.4, opacity: 0, duration: .7, ease: "power2.out" }, 12.72)
+  .to("#s2 .xml", { opacity: 1, y: 0, duration: .55, ease: "back.out(1.3)" }, 13.0)
+  .to("#s2 .xl", { opacity: 1, x: 0, duration: .35, stagger: .28 }, 13.3)
+  .to("#s2 .xml", { scale: .97, duration: .4 }, 16.6)
+  .to("#s2 .verdict", { opacity: 1, scale: 1, duration: .55, ease: "back.out(2.4)" }, 16.75)
+  .to("#s2 .verdict", { scale: 1.05, duration: .35, yoyo: true, repeat: 3, ease: "sine.inOut" }, 17.4);
+sceneOut("#s2", 19.65);
+
+// ===== S3 step 3, 20–28 =====
+sceneIn("#s3", 20);
+tl.to("#s3 .step-tag", { opacity: 1, y: 0, duration: .45 }, 20.05)
+  .to("#e404", { opacity: 1, scale: 1, duration: .45, ease: "back.out(2)" }, 20.5)
+  .to("#e404", { keyframes: { x: [0, -26, 24, -18, 14, -8, 0] }, duration: .5, ease: "none" }, 21.0)
+  .to("#s3 .nf", { opacity: 1, duration: .4 }, 21.2)
+  .to("#s3 .e404", { scale: .7, y: -50, duration: .5, ease: "power2.inOut" }, 22.2)
+  .to("#s3 .try-h", { opacity: 1, y: -60, duration: .5 }, 22.3)
+  .to("#s3 .try-list", { y: -80, duration: .01 }, 22.3)
+  .to("#s3 .try:nth-child(1)", { opacity: 1, y: 0, duration: .55, ease: "back.out(1.6)" }, 22.8)
+  .to("#s3 .try:nth-child(2)", { opacity: 1, y: 0, duration: .55, ease: "back.out(1.6)" }, 24.0)
+  .to("#s3 .setup", { opacity: 1, y: -80, duration: .45, startAt: { y: -50 } }, 25.4)
+  .to("#s3 .ok200", { opacity: 1, scale: 1, duration: .4, ease: "back.out(3)" }, 26.2);
+sceneOut("#s3", 27.65);
+
+// ===== S4 step 4, 28–38 =====
+sceneIn("#s4", 28);
+tl.to("#s4 .step-tag", { opacity: 1, y: 0, duration: .45 }, 28.05)
+  .to("#s4 .panel", { opacity: 1, y: 0, scale: 1, duration: .7, ease: "back.out(1.4)" }, 28.2)
+  .to("#tabSm", { backgroundColor: "rgba(56,189,248,.18)", borderColor: "#38BDF8", color: "#F8FAFC", scale: 1.08, duration: .3, ease: "back.out(3)" }, 30.9)
+  .to("#tabSm", { scale: 1, duration: .25 }, 31.25)
+  .to("#submit", { scale: .9, duration: .08 }, 34.3)
+  .to("#submit", { scale: 1, duration: .3, ease: "back.out(3)" }, 34.38)
+  .to("#s4 .tbl", { opacity: 1, y: 0, duration: .5, ease: "back.out(1.4)" }, 34.8)
+  .to("#s4 .st", { scale: 1, duration: .4, ease: "back.out(3)" }, 35.6)
+  .to("#s4 .tbl", { boxShadow: "0 0 0 5px rgba(251,191,36,.55)", duration: .35 }, 36.0)
+  .to("#s4 .tbl-tag", { opacity: 1, y: 0, duration: .45, ease: "back.out(2.4)" }, 36.1)
+  .to("#s4 .tip", { opacity: 1, duration: .45, startAt: { y: 20 }, y: 0 }, 36.7);
+sceneOut("#s4", 37.65);
+
+// ===== S5 outro, 38–45 =====
+sceneIn("#s5", 38);
+tl.to("#s5 .o-q", { opacity: 1, y: 0, duration: .45 }, 38.15)
+  .to("#s5 .a", { opacity: 1, duration: .45, startAt: { y: 60 }, y: 0 }, 38.8)
+  .to("#s5 .b", { opacity: 1, scale: 1, duration: .5, startAt: { scale: 2.2 }, ease: "back.out(2)" }, 39.5)
+  .to("#s5 .underline", { scaleX: 1, duration: .5, ease: "power2.inOut" }, 40.0)
+  .to("#s5 .o-sub", { opacity: 1, y: 0, duration: .45 }, 40.6)
+  .to("#s5 .chip", { opacity: 1, y: 0, duration: .4, stagger: .18, ease: "back.out(2)" }, 41.1)
+  .to("#s5 .follow", { opacity: 1, scale: 1, duration: .5, ease: "back.out(2.6)" }, 42.1)
+  .to("#s5 .sign", { opacity: 1, duration: .4 }, 42.3)
+  .to("#s5 .hand", { opacity: 1, left: "60%", top: "40px", duration: .6, startAt: { left: "85%", top: "140%" }, ease: "power2.out" }, 42.6)
+  .to("#s5 .hand", { scale: .85, duration: .1 }, 43.25)
+  .to("#s5 .follow", { scale: .93, duration: .1 }, 43.25)
+  .to("#s5 .hand", { scale: 1, duration: .2 }, 43.35)
+  .to("#s5 .follow", { scale: 1, duration: .35, ease: "back.out(3)" }, 43.35)
+  .to("#s5 .follow .done", { opacity: 1, duration: .15 }, 43.32)
+  .to("#s5 .burst", { opacity: 1, scale: 1, duration: .01, startAt: { scale: .4 } }, 43.32)
+  .to("#s5 .burst", { opacity: 0, scale: 3.2, duration: .7, ease: "power2.out" }, 43.34)
+  .to("#s5 .hand", { opacity: 0, y: 60, duration: .4 }, 44.0);
+
+
+// header + progress visibility
+tl.to(".top", { opacity: 1, duration: .5 }, 0.2)
+  .to(".progress", { opacity: 1, duration: .4 }, 5.0)
+  .to(".progress", { opacity: 0, duration: .4 }, 37.7);
+
+tl.set({}, {}, DURATION);
+
+window.seek = t => { tl.seek(t, false); renderManual(t); renderCaptions(t); };
+window.DURATION = DURATION;
+window.seek(0);
+
+// live preview when opened directly in a browser
+if (!location.search.includes("render")) {
+  const t0 = performance.now();
+  const loop = now => { window.seek(((now - t0) / 1000) % DURATION); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
