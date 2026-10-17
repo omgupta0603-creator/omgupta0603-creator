@@ -134,11 +134,11 @@ def portrait(key, img, alt, attrs=""):
 
 def meet_media():
     if (OUT / "assets" / "working.jpg").exists():
-        return portrait("w", "working.jpg", "Om Gupta at work", ' data-img-reveal')
+        return portrait("w", "working.jpg", "Om Gupta at work")
     if (OUT / "assets" / "workspace.jpg").exists():
-        return ('<figure class="portrait" data-img-reveal><img src="assets/workspace.jpg" '
+        return ('<figure class="portrait"><img src="assets/workspace.jpg" '
                 'alt="A desk at night with search analytics dashboards on a laptop" loading="lazy" decoding="async"></figure>')
-    return portrait("w", "working.jpg", "Om Gupta at work", ' data-img-reveal')
+    return portrait("w", "working.jpg", "Om Gupta at work")
 
 
 def lvl(n):
@@ -164,8 +164,25 @@ def tool_mark(letters, name):
     return f'<div class="tool-mark{"" if body else " letters"}" style="--brand:{hex_}" aria-hidden="true">{inner}</div>'
 
 
+# Full-colour logos supplied by Om (docs/assets/logos); other tools show their brand-colour mark
+TOOL_LOGOS = {"GA4": "ga4.png", "Search Console": "search-console.png", "Semrush": "semrush.png",
+              "Ahrefs": "ahrefs.png", "Screaming Frog": "screaming-frog.png"}
+
+
+def tool_logo(letters, name):
+    """A light plate holding the tool's logo, so full-colour logos read on the dark page."""
+    logo = TOOL_LOGOS.get(name)
+    if logo and (OUT / "assets" / "logos" / logo).exists():
+        inner = f'<img src="assets/logos/{logo}" alt="" loading="lazy" decoding="async">'
+    else:
+        vb, body, hex_ = TOOL_ICONS[name]
+        inner = (f'<svg viewBox="{vb}" class="{"wide" if vb != "0 0 24 24" else ""}" style="color:{hex_}" aria-hidden="true">{body}</svg>'
+                 if body else f'<span style="color:{hex_}">{letters}</span>')
+    return f'<div class="logo-plate" aria-hidden="true">{inner}</div>'
+
+
 def tool_cards():
-    return "".join(f'<div class="card spot tool-card">{tool_mark(m, n)}<b>{n}</b><small>{k}</small></div>'
+    return "".join(f'<div class="card spot tool-card">{tool_logo(m, n)}<b>{n}</b><small>{k}</small></div>'
                    for m, n, k in TOOLS)
 
 
@@ -249,7 +266,6 @@ def page(fname, title, desc, body):
 </head>
 <body>
   <div class="progress" aria-hidden="true"><span></span></div>
-  <div class="curtain" aria-hidden="true"></div>
   <header class="nav">
     <nav class="wrap nav-inner" aria-label="Main">
       <a class="logo" href="index.html">om<b>.</b>gupta</a>
@@ -412,7 +428,7 @@ about = page_head("About", 'About <span class="grad-text">Me</span>', "The perso
     <section class="section" style="padding-top:0">
       <div class="wrap bio">
         <div class="bio-photo" data-reveal>
-          {portrait("a", "portrait.jpg", "Portrait of Om Gupta", ' data-img-reveal')}
+          {portrait("a", "portrait.jpg", "Portrait of Om Gupta")}
           <div class="photo-caption"><span>Om Gupta (OMG)</span><span>Delhi &middot; IST</span></div>
         </div>
         <div class="bio-text" data-reveal data-stagger>
