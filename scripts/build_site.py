@@ -5,6 +5,7 @@ Usage, from the repo root:  python3 scripts/build_site.py docs
 Content lives in the data lists below. Drop a photo at docs/assets/portrait.jpg
 (and optionally docs/assets/working.jpg) and re-run to replace the silhouettes.
 """
+import re
 import sys
 import pathlib
 
@@ -58,7 +59,7 @@ INDUSTRY_DETAIL = [
      "D2C growth mixes search and social. I optimize <strong>product and category pages</strong>, run <strong>SMO, Meta Ads and Google Ads</strong> for discovery, and tie it together in <strong>GA4 reports</strong> that show what actually sells.",
      ["Product pages", "Meta Ads", "Google Ads"]),
 ]
-INDUSTRY_ICONS = {  # 24px stroke icons
+INDUSTRY_ICONS = {  # 24px stroke icons; shapes get pathLength="100" below so they can draw in
     "saas": '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9h4M7 12h7"/>',
     "truck": '<path d="M3 6h11v10H3zM14 9h4l3 3v4h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
     "coins": '<ellipse cx="9" cy="7" rx="6" ry="2.5"/><path d="M3 7v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7"/><path d="M9 14.5V17c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5c0-1.4-2.7-2.5-6-2.5"/>',
@@ -131,6 +132,15 @@ def portrait(key, img, alt, attrs=""):
     return f'<figure class="portrait"{attrs}>{inner}</figure>'
 
 
+def meet_media():
+    if (OUT / "assets" / "working.jpg").exists():
+        return portrait("w", "working.jpg", "Om Gupta at work", ' data-img-reveal')
+    if (OUT / "assets" / "workspace.jpg").exists():
+        return ('<figure class="portrait" data-img-reveal><img src="assets/workspace.jpg" '
+                'alt="A desk at night with search analytics dashboards on a laptop" loading="lazy" decoding="async"></figure>')
+    return portrait("w", "working.jpg", "Om Gupta at work", ' data-img-reveal')
+
+
 def lvl(n):
     bars = "".join('<b class="on"></b>' if i < n else "<b></b>" for i in range(3))
     return f'<span class="lvl"><i aria-hidden="true">{bars}</i>{LEVELS[n]}</span>'
@@ -159,15 +169,33 @@ def tool_cards():
                    for m, n, k in TOOLS)
 
 
+INDUSTRY_ICONS = {k: re.sub(r"<(rect|path|circle|ellipse)\b", r'<\1 pathLength="100"', v) for k, v in INDUSTRY_ICONS.items()}
+# Optional photos per industry (docs/assets/industries/<file>); the illustration shows until one exists
+INDUSTRY_IMAGES = {"B2B SaaS": "saas.jpg", "Logistics": "logistics.jpg", "Finance": "finance.jpg",
+                   "Healthcare &amp; Education": "health-education.jpg", "D2C": "d2c.jpg"}
+INDUSTRY_ALTS = {"B2B SaaS": "Hands on a laptop showing a SaaS analytics dashboard",
+                 "Logistics": "A phone showing a shipment tracking map in a warehouse",
+                 "Finance": "A mobile banking app on a phone at a desk",
+                 "Healthcare &amp; Education": "A student using a tablet for an online course",
+                 "D2C": "Shopping on a phone with parcels and bags on a desk"}
+
+
 def contact_link(subject):
     return "contact.html?subject=" + subject.replace("&amp;", "and").replace(" ", "%20")
 
 
 def industry_visual(k, name, icon, color, chips, active=False):
     chip_html = "".join(f'<span class="iv-chip c{j}">{c}</span>' for j, c in enumerate(chips))
-    return (f'<div class="iv{" is-active" if active else ""}" style="--ind:{color}" data-ix="{k}" aria-hidden="true">'
-            f'<div class="iv-grid"></div><div class="iv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">{INDUSTRY_ICONS[icon]}</svg></div>'
-            f'{chip_html}<span class="iv-name">{name}</span></div>')
+    img = INDUSTRY_IMAGES.get(name)
+    if img and (OUT / "assets" / "industries" / img).exists():
+        art = f'<img class="iv-img" src="assets/industries/{img}" alt="" loading="lazy" decoding="async">'
+        cls = " has-img"
+    else:
+        art = (f'<div class="iv-grid"></div><div class="iv-orbit"><i></i></div><div class="iv-icon">'
+               f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">{INDUSTRY_ICONS[icon]}</svg></div>')
+        cls = ""
+    return (f'<div class="iv{cls}{" is-active" if active else ""}" style="--ind:{color}" data-ix="{k}" aria-hidden="true">'
+            f'{art}{chip_html}<span class="iv-name">{name}</span></div>')
 
 
 def industry_explorer():
@@ -220,6 +248,8 @@ def page(fname, title, desc, body):
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <div class="curtain" aria-hidden="true"></div>
   <header class="nav">
     <nav class="wrap nav-inner" aria-label="Main">
       <a class="logo" href="index.html">om<b>.</b>gupta</a>
@@ -247,6 +277,7 @@ def page(fname, title, desc, body):
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="js/spotlight.js"></script>
   <script src="js/marquee.js"></script>
+  <script src="js/network.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
@@ -292,8 +323,6 @@ home = f'''    <section class="hero" id="top">
         </div>
         <div class="hero-visual" data-hero>
           {portrait("h", "portrait.jpg", "Portrait of Om Gupta")}
-          <span class="chip chip-blue float-chip c1">Technical SEO</span>
-          <span class="chip chip-blue float-chip c2">GEO / AEO</span>
           <div class="engine" role="img" aria-label="An AI answer to &lsquo;{QUERY}&rsquo; that cites Om Gupta&rsquo;s About and Skills pages">
             <div class="engine-bar" aria-hidden="true">{ICON["search"]}<span class="engine-query" data-query="{QUERY}">{QUERY}</span><span class="caret"></span></div>
             <div class="engine-body" aria-hidden="true"><span class="engine-tag">Answer</span><p class="engine-answer"><strong>Om Gupta</strong> tracks how brands get cited across ChatGPT, Gemini, Perplexity and AI Overviews, then shapes content to earn those citations <span class="cite">1</span>. Backed by technical SEO <span class="cite">2</span>.</p></div>
@@ -335,7 +364,7 @@ home = f'''    <section class="hero" id="top">
 
     <section class="section line-top">
       <div class="wrap meet">
-        <div data-reveal>{portrait("w", "working.jpg", "Om Gupta at work")}</div>
+        <div data-reveal>{meet_media()}</div>
         <div data-reveal data-stagger>
           {label("Meet Om")}
           <h2>Three-plus years of making brands easier to find.</h2>
@@ -383,7 +412,7 @@ about = page_head("About", 'About <span class="grad-text">Me</span>', "The perso
     <section class="section" style="padding-top:0">
       <div class="wrap bio">
         <div class="bio-photo" data-reveal>
-          {portrait("a", "portrait.jpg", "Portrait of Om Gupta")}
+          {portrait("a", "portrait.jpg", "Portrait of Om Gupta", ' data-img-reveal')}
           <div class="photo-caption"><span>Om Gupta (OMG)</span><span>Delhi &middot; IST</span></div>
         </div>
         <div class="bio-text" data-reveal data-stagger>
