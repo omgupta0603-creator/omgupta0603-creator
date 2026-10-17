@@ -31,8 +31,9 @@
     const r = host.getBoundingClientRect();
     const c = card.getBoundingClientRect();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = r.width + PAD * 2;
-    h = r.height + PAD * 2;
+    // Cap the canvas: some headless renderers report runaway layout sizes
+    w = Math.min(r.width, 1600) + PAD * 2;
+    h = Math.min(r.height, 1200) + PAD * 2;
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     canvas.style.width = `${w}px`;
