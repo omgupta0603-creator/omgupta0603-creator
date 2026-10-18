@@ -102,6 +102,18 @@ SKILL_CATS = [
     ("ai", "spark", "AI Visibility (GEO / AEO)", [("LLM citation tracking", 3), ("Prompt set design", 3), ("Source-priority analysis", 2), ("AI Overview optimization", 2)]),
     ("content", "pen", "Content &amp; Reporting", [("Content strategy", 3), ("FAQ sets", 3), ("GA4 &amp; GSC reporting", 3), ("KPI dashboards", 2)]),
 ]
+# Picture icons for services and skill areas (keyed by card title); others keep their line icon
+ART_ICONS = {"SEO": "seo.png", "Local SEO": "local-seo.png", "SMO &amp; paid social": "smo.png", "SMO": "smo.png",
+             "AI visibility": "ai-visibility.webp", "AI Visibility (GEO / AEO)": "ai-visibility.webp"}
+
+
+def card_icon(icon, title):
+    art = ART_ICONS.get(title)
+    if art and (OUT / "assets" / "icons" / art).exists():
+        return f'<div class="ico-art{" fill" if art.endswith(".webp") else ""}" aria-hidden="true"><img src="assets/icons/{art}" alt="" loading="lazy" decoding="async"></div>'
+    return f'<div class="ico">{ICON[icon]}</div>'
+
+
 # Full-width Paid Ads card on the Skills page
 PAID_ADS = [("Google Ads", 2), ("Meta Ads", 2), ("Conversion tracking", 2), ("Campaign reporting", 2)]
 STRENGTHS = [("Search", [("SEO", 3, 90), ("Technical SEO", 3, 88), ("AI search (GEO / AEO)", 3, 86), ("Local SEO", 2, 68)]),
@@ -362,7 +374,7 @@ home = f'''    <section class="hero" id="top">
       <div class="wrap">
         <div class="section-head" data-reveal><div>{label("What I do")}<h2>How I grow organic visibility</h2></div><p>Search, local and social, usually combined into one plan for your brand.</p></div>
         <div class="grid cols-4" data-reveal data-stagger>
-{"".join(f'          <a class="card spot service" href="{h}"><div class="ico">{ICON[i]}</div><h3>{t}</h3><p>{d}</p><span class="more">Explore <span class="arrow">&rarr;</span></span></a>{chr(10)}' for i, t, d, h in SERVICES)}        </div>
+{"".join(f'          <a class="card spot service" href="{h}">{card_icon(i, t)}<h3>{t}</h3><p>{d}</p><span class="more">Explore <span class="arrow">&rarr;</span></span></a>{chr(10)}' for i, t, d, h in SERVICES)}        </div>
       </div>
     </section>
 
@@ -467,7 +479,7 @@ about = page_head("About", 'About <span class="grad-text">Me</span>', "The perso
 
 # ---------------------------------------------------------------- skills
 cards = "".join(f'''          <article class="card spot skill-card" id="{k}">
-            <div class="ico">{ICON[i]}</div>
+            {card_icon(i, t)}
             <h3>{t}</h3>
             <ul class="skill-list">{"".join(f"<li><span>{n}</span>{lvl(l)}</li>" for n, l in items)}</ul>
           </article>
