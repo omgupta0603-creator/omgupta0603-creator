@@ -23,24 +23,37 @@ ICON.update({
 # ---------------------------------------------------------------- content
 GITHUB = "https://github.com/omgupta0603-creator"
 EMAIL = "omgupta0603@gmail.com"
+PHONE = "+91 98999 07821"
+PHONE_HREF = "tel:+919899907821"
+PORTFOLIO = "Om-Gupta-Portfolio-2026.pdf"
 ROLES = ["SEO Strategist", "Content Strategist", "GEO / AEO Specialist", "SMO Specialist"]
 TEAMS = ["AdLift Marketing", "Ebslon Infotech", "Solarman Technology Project", "Shadow Infosystem"]
 ENGINES = ["Google Search", "AI Overviews", "ChatGPT", "Gemini", "Perplexity", "Bing"]
 SERVICES = [
-    ("search", "SEO", "Keyword research, on-page and technical SEO, from GSC audits to Core Web Vitals.", "skills.html#seo"),
-    ("pin", "Local SEO", "Google Business Profile, local keywords and consistent business details across the web.", "skills.html#local"),
-    ("share", "SMO &amp; paid social", "Profile optimization, content calendars, and Meta Ads and Google Ads campaigns.", "skills.html#ads"),
-    ("spark", "AI visibility", "Citation tracking across LLMs, prompt sets and content tuned to get cited.", "skills.html#ai"),
+    ("gear", "Technical SEO", "Site audits, GSC coverage fixes and Core Web Vitals.", "skills.html#seo"),
+    ("pen", "Content strategy", "Gap analysis, blog optimization and snippet-ready FAQs.", "skills.html#content"),
+    ("spark", "AI visibility", "GEO / AEO work to get brands cited in ChatGPT, Gemini and AI Overviews.", "skills.html#ai"),
+    ("pin", "Local SEO &amp; GBP", "Google Business Profile, citations and map-pack visibility.", "skills.html#local"),
+    ("mega", "Paid ads", "Google Ads and Meta Ads campaigns optimized with data.", "skills.html#ads"),
+    ("chart", "Reporting", "GA4 and Search Console dashboards that turn data into next steps.", "skills.html#content"),
 ]
 CORE_SKILLS = ["SEO", "Local SEO", "SMO", "Social Media Marketing", "Meta Ads", "Google Ads", "Technical SEO",
                "On-page SEO", "Keyword Research", "GEO / AEO", "Content Strategy", "Google Business Profile", "GA4 Reporting"]
 KEY_SKILLS = 6  # the first N core skills are highlighted
 TOOLS = [("GA", "GA4", "analytics"), ("GSC", "Search Console", "search data"), ("Se", "Semrush", "research"),
-         ("Ah", "Ahrefs", "backlinks"), ("SF", "Screaming Frog", "crawling"), ("Mz", "Moz", "authority"),
-         ("Ub", "Ubersuggest", "keywords"), ("Hj", "Hotjar", "behaviour"), ("Cl", "Clarity", "behaviour"),
-         ("Bi", "Bing Webmaster", "search data"), ("Xl", "Excel", "reporting"), ("PP", "PowerPoint", "decks")]
-INDUSTRIES = [("B2B SaaS", "Software"), ("Logistics", "Supply chain"), ("Finance", "Financial services"),
-              ("Healthcare &amp; Education", "Health &amp; learning"), ("D2C", "Direct to consumer")]
+         ("Ah", "Ahrefs", "backlinks"), ("SF", "Screaming Frog", "crawling"), ("Ub", "Ubersuggest", "keywords"),
+         ("Mz", "Moz", "authority"), ("Hj", "Hotjar", "behaviour"), ("Cl", "Clarity", "behaviour"),
+         ("Xl", "Excel", "reporting"), ("PP", "PowerPoint", "decks"), ("Ca", "Canva", "design"),
+         ("CG", "ChatGPT", "AI assistant"), ("Cd", "Claude", "AI assistant"), ("Gm", "Gemini", "AI assistant"),
+         ("Hf", "Higgsfield AI", "AI video"), ("HG", "HeyGen", "AI video"), ("EL", "ElevenLabs", "AI voice")]
+HOME_TOOLS = 12  # the home page shows the first N tools
+# Brands from the portfolio (docs/assets/brands): file, name
+BRANDS = [("fareye", "FarEye"), ("orientbell", "Orientbell Tiles"), ("maison-darome", "Maison D&rsquo;Ar&ocirc;me"),
+          ("dtdc", "DTDC"), ("icici-home-finance", "ICICI Home Finance"), ("roadload", "Roadload"),
+          ("beach-bum", "Beach Bum"), ("aaft", "AAFT"), ("dental-care", "Multispeciality Family Dental Care"),
+          ("apollo", "Apollo Hospitals"), ("anko-ka-khel", "Anko Ka Khel LLP"), ("ajmera", "Ajmera Fashion")]
+INDUSTRIES = [("Logistics SaaS", "Software"), ("Medical education", "Learning"), ("Home finance", "Financial services"),
+              ("Healthcare", "Clinics &amp; hospitals"), ("Infrastructure", "Building &amp; tiles"), ("D2C", "Direct to consumer")]
 # Home-page industry explorer: name, icon, accent, what I do for that sector, chips on its visual
 INDUSTRY_DETAIL = [
     ("B2B SaaS", "saas", "#38BDF8",
@@ -66,8 +79,8 @@ INDUSTRY_ICONS = {  # 24px stroke icons; shapes get pathLength="100" below so th
     "cap": '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6"/>',
     "bag": '<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
 }
-STATS = [("4", "", "Teams, agency &amp; in-house"), ("5", "", "Industries served"),
-         ("5", "", "Search &amp; AI engines"), ("12", "", "Tools in daily use")]
+STATS = [("10", "+", "Brands worked with"), ("4", "", "Companies, agency &amp; in-house"),
+         ("12", "+", "SEO tools"), ("4", "", "AI engines tracked")]
 PROCESS = [("Audit", "Crawl, GSC coverage and a baseline of how AI engines cite you."),
            ("Strategy", "Prioritised fixes, topics, local and social plans."),
            ("Execute", "Technical fixes, content and posts that earn rankings and citations."),
@@ -76,44 +89,74 @@ RESOURCES = [("check", "SEO audit checklist", "The checks I run before any recom
              ("search", "GEO / AEO tracking template", "Prompt sets and a citation log for AI engines."),
              ("doc", "Content optimization workflow", "From content gap to a published, optimized page.")]
 JOBS = [
-    ("SEO &amp; Content Strategist", "AdLift Marketing", "Mar 2026 &ndash; Present", True,
-     ["AI visibility: citation tracking across LLMs, prompt sets and source-priority analysis",
-      "Blog and product-page optimization, FAQ sets and topic clusters",
-      "GA4, GSC and Semrush data turned into client decks and KPI dashboards"]),
-    ("SEO Executive", "Ebslon Infotech", "May 2025 &ndash; Mar 2026", False,
-     ["Technical SEO: canonicals, robots.txt, Core Web Vitals and GSC coverage audits",
-      "Content gap analysis and on-page optimization"]),
-    ("SMO &amp; SEO Executive", "Solarman Technology Project", "Apr 2024 &ndash; May 2025", False,
-     ["Social media optimization alongside organic search",
-      "Google Business Profile and local visibility"]),
-    ("SEO Executive", "Shadow Infosystem", "Apr 2023 &ndash; Apr 2024", False,
-     ["Keyword research, on-page SEO and reporting foundations",
-      "Supported Google Ads and Meta Ads campaigns"]),
+    ("SEO &amp; Content Strategist", "AdLift Marketing", "adlift", "Mar 2026 &ndash; Present", True,
+     ["Leads client calls, strategy decks and AI visibility (GEO / AEO) programs",
+      "Leads SEO, content optimization and AI visibility for FarEye, a logistics SaaS platform",
+      "GA4, GSC and Semrush data turned into monthly AI visibility reports"]),
+    ("SEO Executive", "Ebslon Infotech", "ebslon", "May 2025 &ndash; Mar 2026", False,
+     ["SEO plus Facebook and Google Ads for D2C perfume and luxury dinnerware brands",
+      "Technical SEO, content gap analysis and on-page optimization"]),
+    ("SMO &amp; SEO Executive", "Solarman Technology Project", "solarman", "Apr 2024 &ndash; May 2025", False,
+     ["Built the digital presence from scratch and ran Facebook ads",
+      "Social media optimization alongside organic search"]),
+    ("SEO Executive", "Shadow Infosystem", "shadow-infosystem", "Apr 2023 &ndash; Apr 2024", False,
+     ["Technical audits, keyword strategy and backlinks"]),
 ]
 APPROACH = [("pen", "Clear answers", "Content that answers the real question, so people and AI engines can use it."),
             ("gear", "Technically sound sites", "Crawlable, indexable, fast. The basics come first."),
             ("chart", "Honest measurement", "Report what moved and what didn&rsquo;t, with the data to show it.")]
 LEVELS = {3: "Advanced", 2: "Proficient", 1: "Familiar"}
 SKILL_CATS = [
-    ("seo", "search", "SEO", [("Keyword research", 3), ("On-page SEO", 3), ("Technical SEO audits", 3), ("Core Web Vitals", 2)]),
-    ("local", "pin", "Local SEO", [("Google Business Profile", 2), ("Local keyword targeting", 2), ("NAP consistency", 2), ("Location pages", 2)]),
-    ("smo", "share", "SMO", [("Profile optimization", 2), ("Post &amp; hashtag optimization", 2), ("Content calendars", 2), ("Engagement tracking", 2)]),
+    ("seo", "search", "SEO", [("Site audits &amp; GSC coverage fixes", 3), ("Keyword research", 3), ("On-page SEO", 3), ("Core Web Vitals", 2), ("Schema markup", 2)]),
+    ("local", "pin", "Local SEO", [("Google Business Profile", 2), ("Citations", 2), ("Map-pack visibility", 2), ("Local keyword targeting", 2)]),
+    ("smo", "share", "SMO", [("Profile optimization", 2), ("Reel hooks &amp; on-screen text", 2), ("Hindi Reel scripting", 2), ("Content calendars", 2)]),
     ("smm", "mega", "Social Media Marketing", [("Campaign planning", 2), ("Audience targeting", 2), ("Social analytics", 2), ("Content repurposing", 2)]),
-    ("ai", "spark", "AI Visibility (GEO / AEO)", [("LLM citation tracking", 3), ("Prompt set design", 3), ("Source-priority analysis", 2), ("AI Overview optimization", 2)]),
-    ("content", "pen", "Content &amp; Reporting", [("Content strategy", 3), ("FAQ sets", 3), ("GA4 &amp; GSC reporting", 3), ("KPI dashboards", 2)]),
+    ("ai", "spark", "AI Visibility (GEO / AEO)", [("Prompt tracking", 3), ("Citation gap analysis", 3), ("AI Overview optimization", 3), ("LLM answer content", 2)]),
+    ("content", "pen", "Content &amp; Reporting", [("Content gap analysis", 3), ("Blog optimization", 3), ("Snippet-ready FAQs", 3), ("GA4 &amp; GSC reporting", 3), ("Excel dashboards", 2)]),
 ]
 # Full-width Paid Ads card on the Skills page
-PAID_ADS = [("Google Ads", 2), ("Meta Ads", 2), ("Conversion tracking", 2), ("Campaign reporting", 2)]
+PAID_ADS = [("Meta Ads messaging campaigns", 2), ("Google Ads", 2), ("Cost-per-result tracking", 2), ("Campaign reporting", 2)]
 STRENGTHS = [("Search", [("SEO", 3, 90), ("Technical SEO", 3, 88), ("AI search (GEO / AEO)", 3, 86), ("Local SEO", 2, 68)]),
              ("Social &amp; paid", [("SMO", 2, 68), ("Social media marketing", 2, 64), ("Meta Ads", 2, 62), ("Google Ads", 2, 60)])]
-HELP_TOPICS = ["SEO", "Local SEO", "SMO / social media", "Paid ads", "AI visibility"]
+HELP_TOPICS = ["SEO", "Local SEO", "SMO / social media", "Paid ads", "AI visibility", "Reporting"]
 NEXT_STEPS = [("You send a message", "Tell me about your site, your goals and what isn&rsquo;t working yet."),
               ("I reply by email", "With questions, first thoughts and a time to talk."),
               ("We plan the first step", "Usually an audit, or a baseline of how AI engines cite you.")]
-FAQ = [("Which industries do you work with?", "B2B SaaS, logistics, finance, healthcare-education and D2C so far, across SEO, local SEO and social media."),
+FAQ = [("Which industries do you work with?", "Logistics SaaS, medical education, home finance, healthcare, infrastructure and D2C so far, with brands such as FarEye, ICICI Home Finance, DTDC, Orientbell Tiles and Apollo Hospitals."),
        ("What does an engagement usually start with?", "An audit: a crawl, a look at Google Search Console coverage, and a baseline of how ChatGPT, Gemini, Perplexity and AI Overviews mention your brand."),
        ("Can you track how AI tools cite my brand?", "Yes. I build prompt sets for your category, log which sources each engine cites, and track it over time alongside rankings."),
-       ("Do you also handle social media and paid ads?", "Yes: SMO, content calendars and social media marketing, plus Google Ads and Meta Ads campaigns measured in GA4.")]
+       ("Do you also handle social media and paid ads?", "Yes: Reel-led social media (one account I supported grew to 123K followers) and Meta Ads messaging campaigns that brought in 3,382 conversations at &#8377;5.49 each, plus Google Ads.")]
+
+# Work page (from the 2026 portfolio PDF)
+WORK_TEASERS = [("fareye", "SEO &amp; AI search", "2k", "Keywords in the top 10 for FarEye",
+                 "Logistics SaaS: page-one rankings in Google US and citations in AI Overviews."),
+                ("meta-ads", "Meta Ads", "&#8377;5.49", "Per messaging conversation",
+                 "3,382 conversations from 14 campaigns, with Reel ThruPlays at &#8377;0.01."),
+                ("dr-mradul-gupta", "Social media", "10M", "Total reach for a Noida dental clinic",
+                 "Hindi Reels and Facebook ads: 48.8K new followers at a 6.5% engagement rate.")]
+FAREYE_WORK = ["Blog and product-page optimization for search and AI Overviews",
+               "Snippet-ready FAQs built from each page&rsquo;s own content",
+               "Citation tracking across ChatGPT, Gemini, Perplexity and Google AI Overviews",
+               "Internal-linking recommendations and technical audits",
+               "Monthly AI visibility reporting decks for the client"]
+FAREYE_STATS = [("111", "organic clicks growth"), ("2k", "AI citations gained"), ("9.1k", "featured snippets won"),
+                ("2k", "keywords in top 10"), ("100+", "pages optimized"), ("4", "AI engines tracked")]
+RANKINGS = [("what is last mile tracking", 2), ("best delivery routing software", 2), ("routing software for deliveries", 3),
+            ("logistics route optimization software", 6), ("routing software", 7), ("route planning software", 9)]
+AIO = [("last mile courier tracking", "cites FarEye as a source"), ("last mile logistics tracking", "cites FarEye as a source"),
+       ("last mile delivery software", "names FarEye among leading platforms")]
+META_APPROACH = ["Ran 14 campaigns, mainly with the messaging objective so people could start a chat straight from the ad",
+                 "Tested engagement, video and Reel-view campaigns alongside them",
+                 "Tracked cost per conversation for every campaign in Ads Manager"]
+META_STATS = [("3,382", "messaging conversations started"), ("&#8377;5.49", "average cost per conversation"),
+              ("417K", "impressions across 14 campaigns"), ("19,264", "Reel ThruPlays at &#8377;0.01 each")]
+META_TABLE = [("Call team", "4,627.17", "927", "4.99"), ("CA ex engagement", "3,480.20", "710", "4.90"),
+              ("NC engagement", "2,247.52", "546", "4.12"), ("Engagement (11/4/2026)", "2,011.39", "520", "3.87"),
+              ("IG Reel views (ThruPlays)", "177.84", "19,264", "0.01")]
+SANDEEP_STATS = [("123K", "followers"), ("3.4M", "top Reel views"), ("1.3M", "Reel views"),
+                 ("158K", "views on a Reel"), ("72.4K", "views on a Reel"), ("283", "posts published")]
+MRADUL_STATS = [("48.8K", "new followers gained"), ("10M", "total reach"), ("6.5%", "engagement rate"),
+                ("2.9M", "top Reel views"), ("15.9K", "views on a Reel"), ("10.4K", "views on a Reel")]
 
 # ---------------------------------------------------------------- helpers
 PERSON = '''<svg class="person" viewBox="0 0 400 460" aria-hidden="true"><defs>
@@ -133,6 +176,8 @@ def portrait(key, img, alt, attrs=""):
 
 
 def meet_media():
+    if (OUT / "assets" / "portrait-suit.png").exists():
+        return portrait("w", "portrait-suit.png", "Om Gupta in a navy blazer")
     if (OUT / "assets" / "working.jpg").exists():
         return portrait("w", "working.jpg", "Om Gupta at work")
     if (OUT / "assets" / "workspace.jpg").exists():
@@ -166,7 +211,10 @@ def tool_mark(letters, name):
 
 # Full-colour logos supplied by Om (docs/assets/logos); other tools show their brand-colour mark
 TOOL_LOGOS = {"GA4": "ga4.png", "Search Console": "search-console.png", "Semrush": "semrush.png",
-              "Ahrefs": "ahrefs.png", "Screaming Frog": "screaming-frog.png"}
+              "Ahrefs": "ahrefs.png", "Screaming Frog": "screaming-frog.png", "Ubersuggest": "ubersuggest.png",
+              "Moz": "moz.png", "Hotjar": "hotjar.png", "Clarity": "clarity.png", "Excel": "excel.png",
+              "PowerPoint": "powerpoint.png", "Canva": "canva.png", "ChatGPT": "chatgpt.png", "Claude": "claude.png",
+              "Gemini": "gemini.png", "Higgsfield AI": "higgsfield.png", "HeyGen": "heygen.png", "ElevenLabs": "elevenlabs.png"}
 
 
 def tool_logo(letters, name):
@@ -175,15 +223,30 @@ def tool_logo(letters, name):
     if logo and (OUT / "assets" / "logos" / logo).exists():
         inner = f'<img src="assets/logos/{logo}" alt="" loading="lazy" decoding="async">'
     else:
-        vb, body, hex_ = TOOL_ICONS[name]
+        vb, body, hex_ = TOOL_ICONS.get(name, (None, None, "#0F172A"))
         inner = (f'<svg viewBox="{vb}" class="{"wide" if vb != "0 0 24 24" else ""}" style="color:{hex_}" aria-hidden="true">{body}</svg>'
                  if body else f'<span style="color:{hex_}">{letters}</span>')
     return f'<div class="logo-plate" aria-hidden="true">{inner}</div>'
 
 
-def tool_cards():
+def tool_cards(limit=None):
     return "".join(f'<div class="card spot tool-card">{tool_logo(m, n)}<b>{n}</b><small>{k}</small></div>'
-                   for m, n, k in TOOLS)
+                   for m, n, k in TOOLS[:limit])
+
+
+def brand_grid():
+    return "".join(f'<li class="brand-plate"><img src="assets/brands/{f}.png" alt="{n}" loading="lazy" decoding="async"></li>'
+                   for f, n in BRANDS)
+
+
+def stat_tiles(items):
+    return "".join(f'<div class="result"><b>{v}</b><span>{l}</span></div>' for v, l in items)
+
+
+def shot(src, caption, cls=""):
+    """A screenshot that opens full size in a new tab."""
+    return (f'<figure class="shot{cls}"><a href="assets/work/{src}" target="_blank" rel="noopener">'
+            f'<img src="assets/work/{src}" alt="{caption}" loading="lazy" decoding="async"></a><figcaption>{caption}</figcaption></figure>')
 
 
 INDUSTRY_ICONS = {k: re.sub(r"<(rect|path|circle|ellipse)\b", r'<\1 pathLength="100"', v) for k, v in INDUSTRY_ICONS.items()}
@@ -241,7 +304,7 @@ def industry_explorer():
     </section>'''
 
 
-NAV = [("index.html", "Home"), ("about.html", "About"), ("skills.html", "Skills"), ("contact.html", "Contact")]
+NAV = [("index.html", "Home"), ("about.html", "About"), ("work.html", "Work"), ("skills.html", "Skills"), ("contact.html", "Contact")]
 
 
 def page(fname, title, desc, body):
@@ -284,7 +347,7 @@ def page(fname, title, desc, body):
       <div><span class="logo">om<b>.</b>gupta</span><p style="margin-top:16px;line-height:1.7">SEO &amp; Content Strategist helping brands get found on Google, cited by AI and seen on social.</p></div>
       <div class="footer-links"><h4>Pages</h4>{"".join(f'<a href="{h}">{t}</a>' for h, t in NAV)}</div>
       <div class="footer-links"><h4>Follow</h4><a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a><a href="mailto:{EMAIL}">Email</a></div>
-      <div><h4>Get in touch</h4><p><a href="mailto:{EMAIL}" style="color:var(--text)">{EMAIL}</a></p><p>Delhi, India &middot; IST</p></div>
+      <div><h4>Get in touch</h4><p><a href="mailto:{EMAIL}" style="color:var(--text)">{EMAIL}</a></p><p><a href="{PHONE_HREF}" style="color:var(--text)">{PHONE}</a></p><p>Delhi, India &middot; IST</p></div>
     </div>
     <div class="wordmark" aria-hidden="true">OM GUPTA</div>
     <div class="footer-base"><div class="wrap"><span>&copy; <span id="year">2026</span> Om Gupta &middot; SEO &amp; Content Strategist</span><a href="#top">Back to top &uarr;</a></div></div>
@@ -316,7 +379,7 @@ def cta():
       <div class="wrap">
         <div class="card cta-card" data-reveal>
           <div>{label("Next step")}<h2>Want your brand in the answer?</h2><p>Tell me about your site and goals, and we&rsquo;ll find where organic growth is hiding.</p></div>
-          <div class="btn-row"><a class="btn btn-solid" href="contact.html">Let&rsquo;s Talk <span class="arrow">&rarr;</span></a><a class="btn" href="resume.pdf" download>Download Resume</a></div>
+          <div class="btn-row"><a class="btn btn-solid" href="contact.html">Let&rsquo;s Talk <span class="arrow">&rarr;</span></a><a class="btn" href="{PORTFOLIO}" download>Download Portfolio (PDF)</a></div>
         </div>
       </div>
     </section>'''
@@ -334,11 +397,11 @@ home = f'''    <section class="hero" id="top">
           <span class="chip chip-ok" data-hero><span class="dot"></span>Available for new projects</span>
           <p class="hero-hello" data-hero>&#128075; Hello, World &middot; I&rsquo;m an <span class="sr-only">SEO &amp; Content Strategist</span><span class="rotator" aria-hidden="true">{rotator}</span></p>
           <h1 data-hero>Get found on Google.<br>Get <span class="accent">cited</span> by AI.</h1>
-          <p class="hero-lead" data-hero>I&rsquo;m Om Gupta, an SEO &amp; Content Strategist in Delhi. I help B2B SaaS, logistics, finance, healthcare-education and D2C brands rank in search, show up in AI answers and grow on social.</p>
-          <div class="btn-row" data-hero><a class="btn btn-solid" href="skills.html">See what I do <span class="arrow">&rarr;</span></a><a class="btn" href="resume.pdf" download>Download Resume</a></div>
+          <p class="hero-lead" data-hero>I&rsquo;m Om Gupta, an SEO &amp; Content Strategist at AdLift Marketing with 3.7+ years across agency and in-house teams. I help logistics SaaS, medical education, home finance, infrastructure and D2C brands grow on Google and in AI search.</p>
+          <div class="btn-row" data-hero><a class="btn btn-solid" href="work.html">See my work <span class="arrow">&rarr;</span></a><a class="btn" href="{PORTFOLIO}" download>Download Portfolio (PDF)</a></div>
         </div>
         <div class="hero-visual" data-hero>
-          {portrait("h", "portrait.jpg", "Portrait of Om Gupta")}
+          {portrait("h", "portrait.png", "Portrait of Om Gupta")}
           <div class="engine" role="img" aria-label="An AI answer to &lsquo;{QUERY}&rsquo; that cites Om Gupta&rsquo;s About and Skills pages">
             <div class="engine-bar" aria-hidden="true">{ICON["search"]}<span class="engine-query" data-query="{QUERY}">{QUERY}</span><span class="caret"></span></div>
             <div class="engine-body" aria-hidden="true"><span class="engine-tag">Answer</span><p class="engine-answer"><strong>Om Gupta</strong> tracks how brands get cited across ChatGPT, Gemini, Perplexity and AI Overviews, then shapes content to earn those citations <span class="cite">1</span>. Backed by technical SEO <span class="cite">2</span>.</p></div>
@@ -360,9 +423,24 @@ home = f'''    <section class="hero" id="top">
 
     <section class="section">
       <div class="wrap">
-        <div class="section-head" data-reveal><div>{label("What I do")}<h2>How I grow organic visibility</h2></div><p>Search, local and social, usually combined into one plan for your brand.</p></div>
-        <div class="grid cols-4" data-reveal data-stagger>
+        <div class="section-head" data-reveal><div>{label("What I do")}<h2>How I grow organic visibility</h2></div><p>I help brands grow organic visibility on Google and AI search through technical SEO, content strategy and clear reporting.</p></div>
+        <div class="grid cols-3" data-reveal data-stagger>
 {"".join(f'          <a class="card spot service" href="{h}"><div class="ico">{ICON[i]}</div><h3>{t}</h3><p>{d}</p><span class="more">Explore <span class="arrow">&rarr;</span></span></a>{chr(10)}' for i, t, d, h in SERVICES)}        </div>
+      </div>
+    </section>
+
+    <section class="section line-top">
+      <div class="wrap">
+        <div class="section-head" data-reveal><div>{label("Featured brands")}<h2>Brands I&rsquo;ve worked on</h2></div><p>Multiple industries &middot; agency experience &middot; real client work.</p></div>
+        <ul class="brand-grid" data-reveal>{brand_grid()}</ul>
+      </div>
+    </section>
+
+    <section class="section line-top">
+      <div class="wrap">
+        <div class="section-head" data-reveal><div>{label("Selected work")}<h2>Results, not promises</h2></div><a class="btn" href="work.html">All case studies <span class="arrow">&rarr;</span></a></div>
+        <div class="grid cols-3" data-reveal data-stagger>
+{"".join(f'          <a class="card spot work-card" href="work.html#{a}"><span class="chip">{c}</span><b class="grad-text">{v}</b><h3>{t}</h3><p>{d}</p><span class="more">Read the case study <span class="arrow">&rarr;</span></span></a>{chr(10)}' for a, c, v, t, d in WORK_TEASERS)}        </div>
       </div>
     </section>
 
@@ -371,7 +449,7 @@ home = f'''    <section class="hero" id="top">
         <div class="section-head" data-reveal><div>{label("Skills &amp; tools")}<h2>What I bring to the work</h2></div><a class="btn btn-sm" href="skills.html">All skills <span class="arrow">&rarr;</span></a></div>
         <div class="skills-tools">
           <div class="card spot" data-reveal><h3 class="block-title">Core skills</h3><div class="skill-pills">{"".join(f'<span class="skill-pill{" key" if k < KEY_SKILLS else ""}">{n}</span>' for k, n in enumerate(CORE_SKILLS))}</div></div>
-          <div><h3 class="block-title" data-reveal>Tools I use</h3><div class="grid cols-4" style="gap:14px" data-reveal data-stagger>{tool_cards()}</div></div>
+          <div><h3 class="block-title" data-reveal>Tools I use</h3><div class="grid cols-4" style="gap:14px" data-reveal data-stagger>{tool_cards(HOME_TOOLS)}</div></div>
         </div>
       </div>
     </section>
@@ -383,9 +461,9 @@ home = f'''    <section class="hero" id="top">
         <div data-reveal>{meet_media()}</div>
         <div data-reveal data-stagger>
           {label("Meet Om")}
-          <h2>Three-plus years of making brands easier to find.</h2>
-          <p style="margin-top:24px">I&rsquo;ve worked across agencies and in-house teams on technical SEO, content strategy, local search and social media. Today most of my work sits where classic search meets AI search.</p>
-          <p>I&rsquo;m an SEO &amp; Content Strategist at AdLift Marketing, based in Delhi.</p>
+          <h2>3.7+ years of making brands easier to find.</h2>
+          <p style="margin-top:24px">I&rsquo;ve worked with brands across logistics SaaS, medical education, home finance, infrastructure and D2C, helping them grow organic visibility on Google and in AI search.</p>
+          <p>My work covers technical SEO, content strategy, AI visibility (GEO / AEO), Google and Meta Ads, and reporting built on GA4, Search Console and Semrush data.</p>
           <div class="btn-row" style="margin-top:16px"><a class="btn" href="about.html">More about me <span class="arrow">&rarr;</span></a></div>
         </div>
       </div>
@@ -393,7 +471,7 @@ home = f'''    <section class="hero" id="top">
 
     <section class="section line-top">
       <div class="wrap numbers" data-reveal data-stagger>
-        <div class="card big-card">{label("Experience")}<div><div class="stat-big grad-text"><span data-count="3" data-suffix="+">3+</span></div><h3 style="font-size:1.75rem;margin-top:12px">Years in SEO &amp; content</h3><p style="margin:10px 0 0">Since April 2023, across four teams.</p></div></div>
+        <div class="card big-card">{label("Experience")}<div><div class="stat-big grad-text"><span>3.7+</span></div><h3 style="font-size:1.75rem;margin-top:12px">Years in SEO &amp; content</h3><p style="margin:10px 0 0">Since April 2023, across four companies.</p></div></div>
 {"".join(f'        <div class="card"><div class="stat" data-count="{n}" data-suffix="{s}">{n}{s}</div><p class="stat-label">{l}</p></div>{chr(10)}' for n, s, l in STATS)}      </div>
     </section>
 
@@ -417,40 +495,40 @@ home = f'''    <section class="hero" id="top">
 # ---------------------------------------------------------------- about
 timeline = "".join(f'''          <article class="card tl-item{" now" if cur else ""}" data-reveal>
             <span class="tl-node" aria-hidden="true"></span>
-            <div class="tl-head"><h3>{r}</h3><span class="chip{" chip-blue" if cur else ""}">{d}</span></div>
-            <div class="tl-company">{c}</div>
+            <div class="tl-head"><div class="tl-title"><span class="tl-logo"><img src="assets/companies/{lg}.png" alt="" loading="lazy"></span><div><h3>{r}</h3><div class="tl-company">{c}</div></div></div><span class="chip{" chip-blue" if cur else ""}">{d}</span></div>
             <ul>{"".join(f"<li>{b}</li>" for b in bs)}</ul>
           </article>
-''' for r, c, d, cur, bs in JOBS)
+''' for r, c, lg, d, cur, bs in JOBS)
 
 about = page_head("About", 'About <span class="grad-text">Me</span>', "The person behind the rankings and the citations.") + f'''
 
     <section class="section" style="padding-top:0">
       <div class="wrap bio">
         <div class="bio-photo" data-reveal>
-          {portrait("a", "portrait.jpg", "Portrait of Om Gupta")}
+          {portrait("a", "portrait-suit.png", "Portrait of Om Gupta")}
           <div class="photo-caption"><span>Om Gupta (OMG)</span><span>Delhi &middot; IST</span></div>
         </div>
         <div class="bio-text" data-reveal data-stagger>
           {label("My story")}
           <h2>Hi, I&rsquo;m Om.<br>People call me OMG.</h2>
-          <p style="margin-top:28px">Over the last three-plus years I&rsquo;ve worked across agencies and in-house teams on technical SEO, content strategy, local search and social media.</p>
-          <p>Today a lot of my work sits where classic search meets AI search. I track how brands get cited across ChatGPT, Gemini, Perplexity and Google AI Overviews, then shape content so it earns those citations as well as rankings.</p>
+          <p style="margin-top:28px">I&rsquo;m an SEO &amp; Content Strategist at AdLift Marketing with 3.7+ years of experience across agency and in-house teams.</p>
+          <p>I have worked with brands across logistics SaaS, medical education, home finance, infrastructure and D2C, helping them grow organic visibility on Google and in AI search.</p>
+          <p>My work covers technical SEO, content strategy, AI visibility (GEO / AEO), Google and Meta Ads, and reporting built on GA4, Search Console and Semrush data. I track how brands get cited across ChatGPT, Gemini, Perplexity and Google AI Overviews, then shape content so it earns those citations as well as rankings.</p>
           <blockquote class="quote">Good SEO is clear answers on a technically sound site, measured honestly. Rankings and citations follow.</blockquote>
-          <dl class="facts">{"".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in [("Currently", "AdLift Marketing"), ("Education", "BCA, IGNOU"), ("Based in", "Delhi, India"), ("Languages", "English &middot; Hindi")])}</dl>
-          <div class="btn-row" style="margin-top:36px"><a class="btn btn-solid" href="resume.pdf" download>Download Resume</a><a class="btn" href="contact.html">Let&rsquo;s Talk <span class="arrow">&rarr;</span></a></div>
+          <dl class="facts">{"".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in [("Currently", "AdLift Marketing"), ("Experience", "3.7+ years"), ("Education", "BCA, IGNOU (2023&ndash;2026)"), ("Based in", "Delhi, India"), ("Languages", "English &middot; Hindi"), ("Phone", f'<a href="{PHONE_HREF}">{PHONE}</a>')])}</dl>
+          <div class="btn-row" style="margin-top:36px"><a class="btn btn-solid" href="{PORTFOLIO}" download>Download Portfolio (PDF)</a><a class="btn" href="contact.html">Let&rsquo;s Talk <span class="arrow">&rarr;</span></a></div>
         </div>
       </div>
     </section>
 
     <section class="section line-top" style="padding:64px 0">
       <div class="wrap grid cols-4" data-reveal data-stagger>
-{"".join(f'        <div class="card stat-card"><div class="stat grad-text" data-count="{n}" data-suffix="{s}">{n}{s}</div><p class="stat-label">{l}</p></div>{chr(10)}' for n, s, l in [("3", "+", "Years of experience"), ("4", "", "Teams"), ("5", "", "Industries"), ("5", "", "Search &amp; AI engines")])}      </div>
+{"".join(f'        <div class="card stat-card"><div class="stat grad-text" data-count="{n}" data-suffix="{s}">{n}{s}</div><p class="stat-label">{l}</p></div>{chr(10)}' for n, s, l in [("3.7", "+", "Years of experience"), ("10", "+", "Brands worked with"), ("4", "", "Companies"), ("4", "", "AI engines tracked")])}      </div>
     </section>
 
     <section class="section line-top">
       <div class="wrap timeline-wrap">
-        <div data-reveal>{label("Experience")}<h2>Where I&rsquo;ve worked</h2><p style="margin-top:18px">Most recent first. Each role added a layer: research, social and local, technical, then AI search.</p></div>
+        <div data-reveal>{label("Experience")}<h2>Where I&rsquo;ve worked</h2><p style="margin-top:18px">Most recent first. Each role added a layer: technical audits and backlinks, social and Facebook ads, paid ads for D2C, then AI search.</p></div>
         <div class="timeline">
           <div class="timeline-track" aria-hidden="true"><div class="timeline-fill"></div></div>
 {timeline}        </div>
@@ -459,7 +537,7 @@ about = page_head("About", 'About <span class="grad-text">Me</span>', "The perso
 
     <section class="section line-top">
       <div class="wrap grid cols-2" style="gap:48px">
-        <div data-reveal>{label("Education")}<div class="card"><span class="chip chip-blue">Degree</span><h3 style="margin-top:18px;font-size:1.65rem">Bachelor of Computer Applications</h3><p style="margin:8px 0 0">Indira Gandhi National Open University (IGNOU)</p></div></div>
+        <div data-reveal>{label("Education")}<div class="card"><span class="chip chip-blue">BCA &middot; 2023 &ndash; 2026</span><h3 style="margin-top:18px;font-size:1.65rem">Bachelor of Computer Applications</h3><p style="margin:8px 0 0">Indira Gandhi National Open University (IGNOU)</p></div></div>
         <div data-reveal data-stagger>{label("How I approach SEO")}{"".join(f'<div class="card spot approach"><div class="ico">{ICON[i]}</div><div><h3>{t}</h3><p>{d}</p></div></div>' for i, t, d in APPROACH)}</div>
       </div>
     </section>
@@ -505,8 +583,9 @@ skills = page_head("Skills", 'Skills &amp; <span class="grad-text">Expertise</sp
 
     <section class="section line-top">
       <div class="wrap">
-        <div class="section-head" data-reveal><div>{label("Toolkit")}<h2>Tools of the Trade</h2></div><p>What I use for audits, research, tracking and reporting.</p></div>
+        <div class="section-head" data-reveal><div>{label("Toolkit")}<h2>Tools of the Trade</h2></div><p>What I use to audit, optimize and measure search performance.</p></div>
         <div class="grid cols-6" style="gap:16px" data-reveal data-stagger>{tool_cards()}</div>
+        <p class="tools-also">Also: Bing Webmaster Tools</p>
       </div>
     </section>
 
@@ -528,8 +607,8 @@ contact = page_head("Contact", 'Get in <span class="grad-text">Touch</span>', "H
         <aside data-reveal data-stagger>
           <div><span class="chip chip-ok"><span class="dot"></span>Available for new projects</span></div>
           <a class="big-mail" href="mailto:{EMAIL}">{EMAIL}</a>
-          <dl class="info-list">{"".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in [("Location", "Delhi, India"), ("Time zone", "IST (UTC+5:30)"), ("Languages", "English &middot; Hindi")])}</dl>
-          <div class="socials-block">{label("Find me online")}<div class="socials"><a class="social" href="{GITHUB}" aria-label="GitHub" target="_blank" rel="noopener">{ICON["github"]}</a><a class="social" href="mailto:{EMAIL}" aria-label="Email">{ICON["mail"]}</a></div></div>
+          <dl class="info-list">{"".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in [("Phone", f'<a href="{PHONE_HREF}">{PHONE}</a>'), ("Location", "Delhi, India"), ("Time zone", "IST (UTC+5:30)"), ("Languages", "English &middot; Hindi")])}</dl>
+          <div class="socials-block">{label("Find me online")}<div class="socials"><a class="social" href="{GITHUB}" aria-label="GitHub" target="_blank" rel="noopener">{ICON["github"]}</a><a class="social" href="mailto:{EMAIL}" aria-label="Email">{ICON["mail"]}</a><a class="social" href="{PHONE_HREF}" aria-label="Call {PHONE}">{ICON["chat"]}</a></div></div>
         </aside>
         <div data-reveal>
           <form id="contact-form" class="card form-card" novalidate>
@@ -564,9 +643,102 @@ contact = page_head("Contact", 'Get in <span class="grad-text">Touch</span>', "H
       </div>
     </section>'''
 
+# ---------------------------------------------------------------- work
+rank_shots = "".join(shot(f"rank-{k + 1}.webp", f"&lsquo;{kw}&rsquo; ranks at position {pos} on Google (US)") for k, (kw, pos) in enumerate(RANKINGS))
+aio_shots = "".join(shot(f"aio-{k + 1}.webp", f"&lsquo;{kw}&rsquo; {what} in the AI Overview") for k, (kw, what) in enumerate(AIO))
+meta_rows = "".join(f'<tr><td>{c}</td><td>&#8377;{a}</td><td>{r}</td><td>&#8377;{cpr}</td></tr>' for c, a, r, cpr in META_TABLE)
+
+
+def social_case(aid, name, intro, goal, stats, prefix, alts):
+    return f'''    <section class="section line-top case" id="{aid}">
+      <div class="wrap case-split">
+        <div class="phones" data-reveal>{"".join(f'<img class="ph{k}" src="assets/work/{prefix}-{k + 1}.webp" alt="{a}" loading="lazy" decoding="async">' for k, a in enumerate(alts))}</div>
+        <div data-reveal>
+          {label("Social media")}
+          <h2>{name}</h2>
+          <p class="case-intro">{intro}</p>
+          <h3 class="block-title">Social media objectives</h3>
+          <p>{goal}</p>
+          <h3 class="block-title" style="margin-top:32px">Result</h3>
+          <div class="result-grid">{stat_tiles(stats)}</div>
+        </div>
+      </div>
+    </section>'''
+
+
+work = page_head("Work", 'Work &amp; <span class="grad-text">Results</span>',
+                 "Real client work across SEO, AI search, social media and Meta Ads, with the numbers behind it.") + f'''
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head" data-reveal><div>{label("Featured brands")}<h2>Brands I&rsquo;ve worked on</h2></div><p>Across logistics, finance, healthcare, education, infrastructure and D2C.</p></div>
+        <ul class="brand-grid" data-reveal>{brand_grid()}</ul>
+      </div>
+    </section>
+
+    <section class="section line-top case" id="fareye">
+      <div class="wrap">
+        <div class="case-head" data-reveal><div class="brand-plate big"><img src="assets/brands/fareye.png" alt="FarEye" loading="lazy"></div><p>FarEye is a logistics and last-mile delivery SaaS platform. At AdLift Marketing I lead SEO, content optimization and AI visibility (GEO / AEO) for the account.</p></div>
+        <div class="case-split" style="margin-top:48px">
+          <div class="card" data-reveal>
+            {label("SEO &amp; AI visibility")}
+            <ul class="ticks">{"".join(f"<li>{b}</li>" for b in FAREYE_WORK)}</ul>
+          </div>
+          <div data-reveal>
+            <h3 class="block-title">Result</h3>
+            <div class="result-grid">{stat_tiles(FAREYE_STATS)}</div>
+          </div>
+        </div>
+        <div class="section-head" style="margin-top:96px" data-reveal><div>{label("Keyword rankings")}<h2>Page one of Google US</h2></div><p>FarEye pages ranking for routing and last-mile keywords.</p></div>
+        <div class="shots" data-reveal data-stagger>{rank_shots}</div>
+        <div class="section-head" style="margin-top:96px" data-reveal><div>{label("AI Overviews")}<h2>Cited by Google&rsquo;s AI</h2></div><p>AEO keywords where Google&rsquo;s AI Overview cites or names FarEye.</p></div>
+        <div class="shots cols-3" data-reveal data-stagger>{aio_shots}</div>
+        <p class="source">Google US AI Overviews, checked 13 Nov 2026. Click a screenshot to see it full size.</p>
+      </div>
+    </section>
+
+    <section class="section line-top case" id="meta-ads">
+      <div class="wrap">
+        <div class="case-split">
+          <div data-reveal>
+            {label("Case study &middot; Meta Ads")}
+            <h2>3,382 messaging conversations at <span class="grad-text">&#8377;5.49</span> each.</h2>
+            <h3 class="block-title" style="margin-top:36px">Challenge</h3>
+            <p>Bring in a steady flow of enquiries by message at a low cost per conversation.</p>
+            <h3 class="block-title" style="margin-top:28px">Approach</h3>
+            <ul class="ticks">{"".join(f"<li>{b}</li>" for b in META_APPROACH)}</ul>
+            <p class="tools-used">Tools used: Instagram &middot; Facebook &middot; Meta Ads Manager &middot; ChatGPT &middot; Photoshop</p>
+          </div>
+          <div data-reveal>
+            <div class="result-grid two">{stat_tiles(META_STATS)}</div>
+            <figure class="ad-shot"><img src="assets/work/meta-ad.webp" alt="A Sanddeep Bajaj Numero ad on Meta with a Book now button" loading="lazy" decoding="async"></figure>
+          </div>
+        </div>
+        <div class="card table-card" style="margin-top:56px" data-reveal>
+          <h3>Campaign performance &amp; results</h3>
+          <div class="table-scroll"><table class="data-table"><thead><tr><th>Campaign</th><th>Amount spent</th><th>Results</th><th>Cost per result</th></tr></thead><tbody>{meta_rows}</tbody></table></div>
+        </div>
+        <div class="grid cols-2" style="margin-top:24px" data-reveal data-stagger>
+          <div class="card"><span class="chip chip-ok">Best cost</span><p style="margin:14px 0 0">One engagement campaign brought 520 conversations at &#8377;3.87 each.</p></div>
+          <div class="card"><span class="chip chip-blue">Highest volume</span><p style="margin:14px 0 0">The call-team campaign brought 927 conversations at &#8377;4.99 each.</p></div>
+        </div>
+        <p class="source">Key insight: the top conversation campaigns kept cost per conversation between &#8377;3.87 and &#8377;5.49, while a Reel-views campaign delivered ThruPlays at &#8377;0.01. Source: Meta Ads Manager, lifetime data for 14 campaigns (13 Oct 2023 &ndash; 13 Nov 2026). Total spend &#8377;18,992.</p>
+      </div>
+    </section>
+
+{social_case("sanddeep-bajaj", "Sanddeep Bajaj", "Sanddeep Bajaj is a numerology and Vastu Shastra trainer with 123K Instagram followers. I supported his Reel-led content, built around short educational videos with bold on-screen hooks.",
+             "Reel-led content on numerology and Vastu, with clear hooks and on-screen text, to grow reach, build trust and bring in consultation enquiries.",
+             SANDEEP_STATS, "sandeep", ["A Reel titled Never make these 5 mistakes, 1.3M views", "A Reel titled Avoid these 6 bedroom mistakes, 3.4M views", "The sanddeepbajajnumero Instagram profile with 123K followers"])}
+
+{social_case("dr-mradul-gupta", "Dr. Mradul Gupta", "Dr. Mradul Gupta is a Noida dentist focused on preventive care and smile makeovers. I built and ran the clinic&rsquo;s social media, from Hindi Reels to Facebook ads, to grow reach and patient awareness.",
+             "End-to-end social media management, including content planning, Hindi Reel scripting and Facebook ad campaigns, to drive reach, engagement and brand growth.",
+             MRADUL_STATS, "mradul", ["A Hindi Reel about children sleeping with their mouth open, 15.9K views", "A dental Reel with 2.9M views", "The drmradulguptadentist Instagram profile with 48.9K followers"])}
+{cta()}'''
+
 PAGES = [
     ("index.html", "Om Gupta | SEO & Content Strategist", "Om Gupta is an SEO & Content Strategist in Delhi helping brands get found on Google, cited by AI search and seen on social.", home),
     ("about.html", "About | Om Gupta", "Background, philosophy and experience of Om Gupta, SEO & Content Strategist in Delhi.", about),
+    ("work.html", "Work & Results | Om Gupta", "Case studies from Om Gupta: FarEye SEO and AI Overview citations, Meta Ads at Rs 5.49 per conversation, and Reel-led social media growth.", work),
     ("skills.html", "Skills & Expertise | Om Gupta", "SEO, local SEO, SMO, social media marketing, AI visibility and the tools Om Gupta uses.", skills),
     ("contact.html", "Contact | Om Gupta", "Get in touch with Om Gupta about SEO, local SEO, social media or AI visibility.", contact),
 ]
