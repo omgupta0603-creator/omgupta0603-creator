@@ -194,5 +194,24 @@ if (form) {
   });
 }
 
+// ===== Lightbox: result cards open their full screenshot in place =====
+const lightbox = document.querySelector('.lightbox');
+if (lightbox && typeof lightbox.showModal === 'function') {
+  const img = lightbox.querySelector('img');
+  const cap = lightbox.querySelector('.lightbox-cap');
+  document.querySelectorAll('[data-lightbox]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const thumb = a.querySelector('img');
+      img.src = a.getAttribute('href');
+      img.alt = thumb ? thumb.alt : '';
+      cap.textContent = thumb ? thumb.alt.replace(/[‘’]/g, '"') : '';
+      lightbox.showModal();
+    });
+  });
+  lightbox.querySelector('.lightbox-close').addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.close(); });
+}
+
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();

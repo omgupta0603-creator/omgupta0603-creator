@@ -143,8 +143,9 @@ FAREYE_STATS = [("111", "organic clicks growth"), ("2k", "AI citations gained"),
                 ("2k", "keywords in top 10"), ("100+", "pages optimized"), ("4", "AI engines tracked")]
 RANKINGS = [("what is last mile tracking", 2), ("best delivery routing software", 2), ("routing software for deliveries", 3),
             ("logistics route optimization software", 6), ("routing software", 7), ("route planning software", 9)]
-AIO = [("last mile courier tracking", "cites FarEye as a source"), ("last mile logistics tracking", "cites FarEye as a source"),
-       ("last mile delivery software", "names FarEye among leading platforms")]
+AIO = [("last mile courier tracking", "cites FarEye as a source", "Cited as a source"),
+       ("last mile logistics tracking", "cites FarEye as a source", "Cited as a source"),
+       ("last mile delivery software", "names FarEye among leading platforms", "Named among leaders")]
 META_APPROACH = ["Ran 14 campaigns, mainly with the messaging objective so people could start a chat straight from the ad",
                  "Tested engagement, video and Reel-view campaigns alongside them",
                  "Tracked cost per conversation for every campaign in Ads Manager"]
@@ -243,10 +244,11 @@ def stat_tiles(items):
     return "".join(f'<div class="result"><b>{v}</b><span>{l}</span></div>' for v, l in items)
 
 
-def shot(src, caption, cls=""):
-    """A screenshot that opens full size in a new tab."""
-    return (f'<figure class="shot{cls}"><a href="assets/work/{src}" target="_blank" rel="noopener">'
-            f'<img src="assets/work/{src}" alt="{caption}" loading="lazy" decoding="async"></a><figcaption>{caption}</figcaption></figure>')
+def proof(name, badge, keyword, alt):
+    """A results card: the highlighted part of a Google screenshot, opening the full screenshot in the lightbox."""
+    return (f'<figure class="proof"><a class="proof-img" href="assets/work/{name}.webp" target="_blank" rel="noopener" data-lightbox aria-label="View the full screenshot: {alt}">'
+            f'<img src="assets/work/{name}-focus.webp" alt="{alt}" loading="lazy" decoding="async"><span class="proof-zoom" aria-hidden="true">View full screenshot</span></a>'
+            f'<figcaption>{badge}<span class="proof-kw">&ldquo;{keyword}&rdquo;</span></figcaption></figure>')
 
 
 INDUSTRY_ICONS = {k: re.sub(r"<(rect|path|circle|ellipse)\b", r'<\1 pathLength="100"', v) for k, v in INDUSTRY_ICONS.items()}
@@ -352,6 +354,7 @@ def page(fname, title, desc, body):
     <div class="wordmark" aria-hidden="true">OM GUPTA</div>
     <div class="footer-base"><div class="wrap"><span>&copy; <span id="year">2026</span> Om Gupta &middot; SEO &amp; Content Strategist</span><a href="#top">Back to top &uarr;</a></div></div>
   </footer>
+  <dialog class="lightbox" aria-label="Screenshot"><button class="lightbox-close" type="button" aria-label="Close">&times;</button><img alt=""><p class="lightbox-cap"></p></dialog>
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="js/spotlight.js"></script>
@@ -644,8 +647,10 @@ contact = page_head("Contact", 'Get in <span class="grad-text">Touch</span>', "H
     </section>'''
 
 # ---------------------------------------------------------------- work
-rank_shots = "".join(shot(f"rank-{k + 1}.webp", f"&lsquo;{kw}&rsquo; ranks at position {pos} on Google (US)") for k, (kw, pos) in enumerate(RANKINGS))
-aio_shots = "".join(shot(f"aio-{k + 1}.webp", f"&lsquo;{kw}&rsquo; {what} in the AI Overview") for k, (kw, what) in enumerate(AIO))
+rank_shots = "".join(proof(f"rank-{k + 1}", f'<span class="proof-pos"><b>#{pos}</b><small>Google US</small></span>', kw,
+                           f"&lsquo;{kw}&rsquo; ranks at position {pos} on Google (US)") for k, (kw, pos) in enumerate(RANKINGS))
+aio_shots = "".join(proof(f"aio-{k + 1}", f'<span class="chip chip-blue">{tag}</span>', kw,
+                          f"&lsquo;{kw}&rsquo; {what} in the AI Overview") for k, (kw, what, tag) in enumerate(AIO))
 meta_rows = "".join(f'<tr><td>{c}</td><td>&#8377;{a}</td><td>{r}</td><td>&#8377;{cpr}</td></tr>' for c, a, r, cpr in META_TABLE)
 
 
@@ -690,10 +695,10 @@ work = page_head("Work", 'Work &amp; <span class="grad-text">Results</span>',
           </div>
         </div>
         <div class="section-head" style="margin-top:96px" data-reveal><div>{label("Keyword rankings")}<h2>Page one of Google US</h2></div><p>FarEye pages ranking for routing and last-mile keywords.</p></div>
-        <div class="shots" data-reveal data-stagger>{rank_shots}</div>
+        <div class="proofs" data-reveal data-stagger>{rank_shots}</div>
         <div class="section-head" style="margin-top:96px" data-reveal><div>{label("AI Overviews")}<h2>Cited by Google&rsquo;s AI</h2></div><p>AEO keywords where Google&rsquo;s AI Overview cites or names FarEye.</p></div>
-        <div class="shots cols-3" data-reveal data-stagger>{aio_shots}</div>
-        <p class="source">Google US AI Overviews, checked 13 Nov 2026. Click a screenshot to see it full size.</p>
+        <div class="proofs" data-reveal data-stagger>{aio_shots}</div>
+        <p class="source">Google US, checked 13 Nov 2026. Click any card to see the full screenshot.</p>
       </div>
     </section>
 
